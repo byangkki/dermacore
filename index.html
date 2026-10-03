@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dermacore - Advanced & Basic Dermatology Reviewer</title>
+    <title>Dermacore - Comprehensive Dermatology Reviewer</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --accent: #06b6d4;
             --bg-main: #f8fafc;
-            --sidebar-width: 300px;
+            --sidebar-width: 320px;
             --text-color: #1e293b;
             --border-color: #e2e8f0;
         }
@@ -103,7 +103,7 @@
             letter-spacing: 0.5px;
             color: #64748b;
             margin-bottom: 6px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .topic-link {
@@ -196,7 +196,7 @@
             display: none;
             max-width: 850px;
             margin: 40px auto;
-            padding: 0 20px 60px 20px;
+            padding: 0 20px 80px 20px;
             width: 100%;
         }
 
@@ -212,6 +212,12 @@
         .lesson-header h2 {
             font-size: 1.8rem;
             color: #0f172a;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .audio-btn {
@@ -235,7 +241,6 @@
         .audio-status {
             font-size: 0.85rem;
             color: #64748b;
-            margin-left: 10px;
             font-style: italic;
         }
 
@@ -259,9 +264,29 @@
 
         .lesson-body {
             font-size: 1.05rem;
-            line-height: 1.7;
+            line-height: 1.8;
             color: #334155;
             margin-bottom: 30px;
+        }
+
+        .lesson-body p {
+            margin-bottom: 15px;
+        }
+
+        .lesson-body h4 {
+            color: var(--primary-dark);
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 1.15rem;
+        }
+
+        .lesson-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .lesson-body li {
+            margin-bottom: 6px;
         }
 
         /* Complete Lesson & Quiz Area */
@@ -342,6 +367,7 @@
             font-size: 0.9rem;
             background: #f8fafc;
             border-left: 4px solid var(--primary);
+            line-height: 1.5;
         }
 
         .next-lesson-btn {
@@ -402,8 +428,8 @@
                 <a href="#" class="topic-link" onclick="loadLesson('mod3_vesicles', event)">3.2 Vesicles, Bullae, & Pustules</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 4: Inflammatory Skin Conditions</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod4_acne', event)">4.1 Acne Vulgaris & Comedones</a>
+                <div class="module-title">Module 4: Inflammatory Conditions</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_acne', event)">4.1 Acne Vulgaris & Pathogenesis</a>
                 <a href="#" class="topic-link" onclick="loadLesson('mod4_eczema', event)">4.2 Atopic Dermatitis (Eczema)</a>
                 <a href="#" class="topic-link" onclick="loadLesson('mod4_psoriasis', event)">4.3 Psoriasis Plaque Formations</a>
             </div>
@@ -414,13 +440,13 @@
             </div>
             <div class="module-group">
                 <div class="module-title">Module 6: Dermatologic Oncology</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod6_benign', event)">6.1 Benign Nevi & Seborrheic Keratosis</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod6_benign', event)">6.1 Benign Nevi & Keratoses</a>
                 <a href="#" class="topic-link" onclick="loadLesson('mod6_malignant', event)">6.2 Malignant: Melanoma & ABCDEs</a>
             </div>
             <div class="module-group">
                 <div class="module-title">Module 7: Advanced Therapies</div>
                 <a href="#" class="topic-link" onclick="loadLesson('mod7_topical', event)">7.1 Topical Retinoids & Steroids</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod7_procedures', event)">7.2 Dermatoscope & Clinical Diagnostics</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod7_procedures', event)">7.2 Dermatoscope & Biopsy Techniques</a>
             </div>
         </div>
     </sidebar>
@@ -444,7 +470,7 @@
         <section id="lessonScreen" class="lesson-container">
             <div class="lesson-header">
                 <h2 id="lessonTitle">Lesson Title</h2>
-                <div>
+                <div class="audio-controls">
                     <button class="audio-btn" onclick="toggleAudio()">🔊 Listen Lesson</button>
                     <span class="audio-status" id="audioStatus"></span>
                 </div>
@@ -469,206 +495,317 @@
     </main>
 
     <script>
-        // Comprehensive Curriculum Database (Modules 1-7)
+        // Highly Detailed Textbook Curriculum Database (Modules 1-7)
         const lessons = {
             'mod1_epidermis': {
                 title: "1.1 Epidermis & Keratinocytes",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
-                text: "The epidermis is the avascular outermost layer of skin. It is stratified into layers including the stratum corneum, granulosum, spinosum, and basale. Keratinocytes form the primary cell line, migrating upward from the basal layer while synthesizing keratin and generating a protective waterproof barrier.",
+                text: `
+                    <p>The epidermis is the outermost cellular layer of the cutaneous system, serving as the primary physical and biochemical shield against environmental toxins, microbial pathogens, and excessive moisture loss. Because it is completely avascular, all epidermal cells rely on diffusion from the underlying dermal capillary loops for nourishment and gas exchange.</p>
+                    
+                    <h4>Stratified Sub-Layers</h4>
+                    <p>From deepest to most superficial, the epidermis is structured into four primary strata (five in thick palmar/plantar skin):</p>
+                    <ul>
+                        <li><strong>Stratum Basale (Germinativum):</strong> A single layer of cuboidal or columnar stem cells anchored to the basement membrane by hemidesmosomes. This is the site of active mitotic division. As basal stem cells divide, daughter cells are pushed upward to begin terminal differentiation.</li>
+                        <li><strong>Stratum Spinosum ('Prickle Cell' Layer):</strong> Characterized by polyhedral keratinocytes connected tightly via prominent intercellular desmosomes, giving them a spiny appearance under light microscopy. Langerhans cells (immune sentinels) reside here.</li>
+                        <li><strong>Stratum Granulosum:</strong> Contains flattened keratinocytes filled with basophilic keratohyalin granules and lamellar bodies. These lamellar bodies secrete lipids into the extracellular space, establishing the vital waterproof barrier.</li>
+                        <li><strong>Stratum Corneum:</strong> The outermost horny layer composed of 15 to 30 layers of dead, anucleated, flattened corneocytes packed with robust structural keratin fibers embedded in a lipid matrix.</li>
+                    </ul>
+
+                    <h4>Key Cell Lines</h4>
+                    <p>In addition to keratinocytes, which comprise over 90% of epidermal cells, the epidermis hosts melanocytes (pigment-producing cells residing in the basal layer that transfer melanin via melanosomes to shield DNA from UV radiation), Langerhans cells (antigen-presenting immune cells), and Merkel cells (mechanoreceptors sensitive to light touch).</p>
+                `,
                 quiz: [
                     {
                         q: "Which basal layer cell component is primarily responsible for generating new keratinocytes?",
                         options: ["Melanocytes", "Stratum Basale Stem Cells", "Langerhans Cells", "Fibroblasts"],
                         correct: 1,
-                        explanation: "Stem cells located in the stratum basale undergo active mitosis, pushing daughter cells upward into suprabasal epidermal compartments."
+                        explanation: "Stem cells located in the stratum basale undergo active mitosis, pushing daughter cells upward into suprabasal epidermal compartments to replace shed skin cells."
                     },
                     {
-                        q: "What waterproof protein accumulates heavily within cells of the stratum corneum?",
-                        options: ["Collagen", "Elastin", "Keratin", "Fibrin"],
-                        correct: 2,
-                        explanation: "Keratin is a tough, fibrous structural protein that provides the structural integrity and water impermeability of the outer skin layer."
+                        q: "What waterproof barrier structure is secreted by keratinocytes in the stratum granulosum?",
+                        options: ["Collagen fibrils", "Lamellar lipid bodies", "Melanosome granules", "Elastin networks"],
+                        correct: 1,
+                        explanation: "Lamellar bodies release lipid-rich contents into the intercellular spaces of the stratum granulosum and corneum, forming an impenetrable waterproof seal."
                     }
                 ]
             },
             'mod1_dermis': {
                 title: "1.2 Dermis & Fibroblasts",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
-                text: "Lying directly beneath the basement membrane, the dermis gives skin its mechanical strength and elasticity. It contains vascular networks, nerve endings, and specialized dermal cells called fibroblasts that synthesize extracellular matrix proteins like type I and III collagen.",
+                text: `
+                    <p>Lying directly beneath the epidermal basement membrane, the dermis is a robust, fibrous connective tissue matrix that provides the skin with its mechanical strength, elasticity, resilience, and vascular supply. It houses hair follicles, sebaceous glands, sweat glands, blood vessels, lymphatic channels, and cutaneous nerve receptors.</p>
+
+                    <h4>Anatomical Divisions</h4>
+                    <ul>
+                        <li><strong>Papillary Dermis:</strong> The thin, superficial layer adjacent to the epidermis. It consists of loose connective tissue forming dermal papillae that interdigitate with epidermal rete ridges, increasing surface area for nutrient exchange and anchoring strength.</li>
+                        <li><strong>Reticular Dermis:</strong> The thicker, deeper layer composed of dense irregular connective tissue. It is dominated by thick bundles of type I collagen fibers and elastic fibers that provide tensile strength and recoil capability.</li>
+                    </ul>
+
+                    <h4>Cellular and Matrix Composition</h4>
+                    <p>The principal resident cell of the dermis is the <strong>fibroblast</strong>, responsible for synthesizing the extracellular matrix (ECM), including collagen (types I and III), elastin, and glycosaminoglycans like hyaluronic acid. Other resident immune cells include mast cells (key mediators of immediate hypersensitivity and histamine release) and macrophages.</p>
+                `,
                 quiz: [
                     {
-                        q: "Which primary dermal cell type synthesizes collagen and elastin fibers?",
-                        options: ["Adipocytes", "Fibroblasts", "Mast cells", "Macrophage"],
+                        q: "Which primary dermal cell type synthesizes collagen and elastin extracellular matrix proteins?",
+                        options: ["Adipocytes", "Fibroblasts", "Mast cells", "Melanocytes"],
                         correct: 1,
-                        explanation: "Fibroblasts are the principal connective tissue cells responsible for maintaining the dermal extracellular matrix framework."
+                        explanation: "Fibroblasts are specialized connective tissue cells that continuously manufacture and maintain the collagen and elastin framework of the dermis."
                     }
                 ]
             },
             'mod2_sebaceous': {
                 title: "2.1 Sebaceous & Sweat Glands",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
-                text: "Cutaneous glands include eccrine sweat glands (thermoregulation), apocrine glands (odor production in intertriginous zones), and holocrine sebaceous glands, which secrete lipid-rich sebum into hair follicles to lubricate skin and hair.",
+                text: `
+                    <p>Cutaneous exocrine glands are critical for thermoregulation, hydration, chemical defense, and lubrication. Clinicians categorize them into three main glandular structures:</p>
+                    
+                    <ul>
+                        <li><strong>Eccrine Sweat Glands:</strong> Widely distributed across the body surface, these simple coiled tubular glands open directly onto the skin surface via pores. They secrete a hypotonic, watery fluid rich in sodium chloride and water, regulated by cholinergic sympathetic fibers to manage thermoregulation.</li>
+                        <li><strong>Apocrine Glands:</strong> Confined primarily to intertriginous regions (axillae, groin, areolae), these glands empty their viscous, odorless protein-lipid secretions directly into hair follicles. Bacterial breakdown of these secretions produces distinctive body odor.</li>
+                        <li><strong>Sebaceous Glands:</strong> Holocrine glands attached directly to pilosebaceous units. They secrete sebum—a rich mixture of triglycerides, wax esters, squalene, and cholesterol—into hair canals to lubricate and waterproof skin and hair.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "What secretory mechanism do sebaceous glands utilize to release sebum?",
-                        options: ["Merocrine", "Apocrine", "Holocrine", "Endocrine"],
+                        q: "What specialized secretory mechanism do sebaceous glands use to discharge sebum?",
+                        options: ["Merocrine exocytosis", "Apocrine pinching", "Holocrine cell rupture", "Endocrine diffusion"],
                         correct: 2,
-                        explanation: "Holocrine secretion involves the complete rupture and breakdown of mature glandular cells, releasing their lipid contents as sebum."
+                        explanation: "Holocrine secretion involves total cellular degeneration; mature sebaceous cells burst open, releasing their accumulated lipid contents into the follicle duct."
                     }
                 ]
             },
             'mod2_hair': {
                 title: "2.2 Hair Follicle Structure",
                 image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-                text: "Hair follicles are complex invaginations of the epidermis housing dermal papillae, matrix cells, and arrector pili muscles. Growth cycles progress through anagen (active), catagen (regression), and telogen (resting) phases.",
+                text: `
+                    <p>The hair follicle is a complex epidermal invagination that cycles continuously through distinct physiological phases. At its base, the bulb expands around the dermal papilla, where matrix keratinocytes proliferate rapidly.</p>
+
+                    <h4>The Hair Growth Cycle</h4>
+                    <ul>
+                        <li><strong>Anagen Phase:</strong> The active growth phase lasting years on the scalp, during which matrix cells proliferate rapidly and push the hair shaft upward.</li>
+                        <li><strong>Catagen Phase:</strong> A brief transitional regression phase (lasting a few weeks) where cell division ceases and the follicle shrinks.</li>
+                        <li><strong>Telogen Phase:</strong> The resting phase where hair growth stops entirely before the old club hair eventually sheds and a new anagen cycle begins.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "Which muscle contraction causes 'goosebumps' associated with hair follicles?",
-                        options: ["Frontalis muscle", "Arrector pili muscle", "Platysma", "Masseter"],
-                        correct: 1,
-                        explanation: "The arrector pili muscle is a smooth muscle band attached to hair follicles that contracts under sympathetic nervous stimulation."
+                        q: "Which physiological hair cycle stage represents the active period of rapid cellular proliferation?",
+                        options: ["Telogen", "Catagen", "Anagen", "Exogen"],
+                        correct: 2,
+                        explanation: "Anagen is the prolonged active growth stage where hair matrix cells divide rapidly to lengthen the hair shaft."
                     }
                 ]
             },
             'mod3_macules': {
                 title: "3.1 Macules, Papules, & Plaques",
                 image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
-                text: "Primary dermatologic lesions define initial pathological changes. A macule is a flat, non-palpable color change smaller than 1 cm (e.g., freckle). A papule is solid and elevated (< 1 cm), while a plaque is a broader elevated plateau-like lesion (> 1 cm).",
+                text: `
+                    <p>Accurate dermatologic diagnosis begins with precise physical examination terminology used to categorize primary skin lesions based on size, elevation, and consistency.</p>
+                    <ul>
+                        <li><strong>Macule:</strong> A flat, circumscribed area of distinct color change that is non-palpable (neither raised nor depressed), measuring less than 1 cm in diameter (e.g., freckles, flat pigmented moles). If larger than 1 cm, it is termed a <strong>patch</strong>.</li>
+                        <li><strong>Papule:</strong> A solid, elevated, circumscribed skin lesion measuring less than 1 cm in diameter (e.g., small insect bites, early acne pimples).</li>
+                        <li><strong>Plaque:</strong> A broad, elevated, plateau-like solid lesion greater than 1 cm in diameter, often formed by the coalescence of multiple papules (classic hallmark of psoriasis).</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "How is a macule structurally distinguished from a papule upon physical examination?",
-                        options: ["Macules are elevated; papules are flat", "Macules are flat and non-palpable; papules are solid and elevated", "Macules exceed 2 cm in diameter", "Macules contain purulent fluid"],
+                        q: "What structural characteristic differentiates a macule from a papule during palpation?",
+                        options: ["Macules are elevated; papules are flat", "Macules are flat and non-palpable; papules present solid elevation", "Macules contain purulent exudate", "Macules exceed 5 cm in size"],
                         correct: 1,
-                        explanation: "A macule is flat with color variance only, whereas a papule presents palpable elevation above the skin plane."
+                        explanation: "A macule is purely a flat color alteration with zero elevation, whereas a papule is palpable and elevated above the surrounding skin plane."
                     }
                 ]
             },
             'mod3_vesicles': {
                 title: "3.2 Vesicles, Bullae, & Pustules",
                 image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
-                text: "Fluid-filled skin lesions include small vesicles (< 1 cm, like herpes simplex blisters), large bullae (> 1 cm, like pemphigus vulgaris), and pustules containing cloudy purulent white blood cell exudate.",
+                text: `
+                    <p>Fluid-filled lesions are categorized according to their size and the exact nature of the fluid contained within the epidermal or subepidermal compartments:</p>
+                    <ul>
+                        <li><strong>Vesicle:</strong> A small, circumscribed, fluid-filled blister measuring less than 1 cm in diameter, containing clear serous fluid (e.g., herpes simplex viral clusters, acute contact dermatitis).</li>
+                        <li><strong>Bulla:</strong> A large fluid-filled blister measuring 1 cm or greater in diameter, formed by intraepidermal or subepidermal cleavage (e.g., autoimmune pemphigus vulgaris or severe friction blisters).</li>
+                        <li><strong>Pustule:</strong> A circumscribed skin elevation containing cloudy purulent exudate consisting of degenerated neutrophils and necrotic debris (e.g., bacterial folliculitis, pustular acne).</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "What defines a fluid-filled skin blister larger than 1 centimeter in clinical terminology?",
-                        options: ["Vesicle", "Bulla", "Nodule", "Wheal"],
+                        q: "What defines a circumscribed fluid-filled skin blister measuring 1 centimeter or greater in diameter?",
+                        options: ["Vesicle", "Bulla", "Papule", "Nodule"],
                         correct: 1,
-                        explanation: "A bulla is a circumscribed fluid-filled epidermal blister measuring greater than 1 cm in diameter."
+                        explanation: "A bulla is a large blister (>= 1 cm) containing serous or serosanguinous fluid caused by separation of skin layers."
                     }
                 ]
             },
             'mod4_acne': {
-                title: "4.1 Acne Vulgaris & Comedones",
+                title: "4.1 Acne Vulgaris & Pathogenesis",
                 image: "https://images.unsplash.com/photo-1512290900722-9a70f8a85d39?auto=format&fit=crop&w=800&q=80",
-                text: "Acne vulgaris is driven by hyperkeratinization of the pilosebaceous unit, excess sebum secretion, proliferation of Cutibacterium acnes, and localized inflammation resulting in open/closed comedones, papules, and cysts.",
+                text: `
+                    <p>Acne vulgaris is a chronic inflammatory disease of the pilosebaceous unit affecting nearly 85% of adolescents and young adults. Its multifaceted pathogenesis involves four hallmark mechanisms:</p>
+                    <ol>
+                        <li><strong>Follicular Hyperkeratinization:</strong> Abnormal shedding and accumulation of corneocytes within the follicular duct creates a microcomedo block.</li>
+                        <li><strong>Secretion Overload (Seborrhea):</strong> Androgenic stimulation increases sebaceous gland size and sebum output.</li>
+                        <li><strong>Bacterial Proliferation:</strong> <em>Cutibacterium acnes</em> (formerly <em>Propionibacterium acnes</em>), an anaerobic bacterium, multiplies rapidly within the lipid-rich occluded follicle.</li>
+                        <li><strong>Inflammation:</strong> <em>C. acnes</em> triggers local immune responses, releasing pro-inflammatory cytokines that transform closed/open comedones into erythematous papules, pustules, and deep nodules.</li>
+                    </ol>
+                `,
                 quiz: [
                     {
-                        q: "Which bacterial microorganism plays a major role in the inflammatory cascade of acne vulgaris?",
+                        q: "Which anaerobic bacterium plays a central role in driving inflammation within occluded pilosebaceous units in acne?",
                         options: ["Staphylococcus aureus", "Cutibacterium acnes", "Pseudomonas aeruginosa", "Streptococcus pyogenes"],
                         correct: 1,
-                        explanation: "Cutibacterium acnes thrives in anaerobic sebum-rich blocked follicles, triggering immune responses and inflammation."
+                        explanation: "Cutibacterium acnes thrives in anaerobic sebum-plugged follicles, metabolizing lipids and activating innate immune pathways that cause inflammation."
                     }
                 ]
             },
             'mod4_eczema': {
                 title: "4.2 Atopic Dermatitis (Eczema)",
                 image: "https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80",
-                text: "Atopic dermatitis is a chronic pruritic inflammatory skin disease linked to filaggrin gene mutations, epidermal barrier dysfunction, and Th2-mediated immune skewing, manifesting as dry erythematous scaly patches.",
+                text: `
+                    <p>Atopic dermatitis is a chronic, highly pruritic inflammatory skin disorder frequently associated with an atopic family history (asthma, allergic rhinitis). Key underlying mechanisms include genetic epidermal barrier defects—most notably loss-of-function mutations in the <strong>filaggrin</strong> gene—coupled with immune dysregulation skewed toward Th2 cytokine pathways (IL-4, IL-13).</p>
+                    <p>Clinically, patients present with intense pruritus, xerosis (severe dryness), and erythematous weeping papules/plaques in acute phases, progressing to lichenified (thickened) plaques from chronic scratching.</p>
+                `,
                 quiz: [
                     {
-                        q: "Which structural protein deficiency is commonly associated with defective skin barrier function in atopic dermatitis?",
-                        options: ["Filaggrin", "Keratin-14", "Dystrophin", "Spectrin"],
+                        q: "Loss-of-function mutations in which key structural epidermal protein are heavily implicated in atopic dermatitis barrier failure?",
+                        options: ["Filaggrin", "Collagen Type VII", "Laminin-332", "Keratin-5"],
                         correct: 0,
-                        explanation: "Filaggrin mutations impair keratinocyte aggregation and natural moisturizing factor production, causing severe skin dryness."
+                        explanation: "Filaggrin deficiency impairs keratinocyte aggregation and natural moisturizing factor synthesis, resulting in severe skin barrier leakage and dryness."
                     }
                 ]
             },
             'mod4_psoriasis': {
                 title: "4.3 Psoriasis Plaque Formations",
                 image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80",
-                text: "Psoriasis is an immune-mediated chronic papulosquamous disease characterized by accelerated keratinocyte proliferation (reduced epidermal turnover time down to 3-5 days), featuring silvery-white scales over well-demarcated red plaques.",
+                text: `
+                    <p>Psoriasis is a chronic immune-mediated inflammatory skin disease driven primarily by T-cell activation (Th1 and Th17 pathways) that prompts accelerated epidermal proliferation. Normal epidermal turnover drops from 28 days down to an abnormally rapid 3 to 5 days.</p>
+                    <p>Classic plaque psoriasis manifests as sharply demarcated erythematous plaques covered by characteristic silvery-white micaceous scales. Scraping these scales reveals <strong>Auspitz sign</strong>—pinpoint capillary bleeding caused by trauma to elongated dermal papillae underlying a thin suprapapillary epidermis.</p>
+                `,
                 quiz: [
                     {
-                        q: "What physical bleeding sign typically appears when silvery scales are scraped off a psoriatic plaque?",
-                        options: ["Nikolsky's sign", "Auspitz sign", "Tinel's sign", "Darier's sign"],
+                        q: "What diagnostic physical sign is demonstrated when scraping silvery scales off a psoriatic plaque reveals pinpoint capillary bleeding?",
+                        options: ["Nikolsky's sign", "Auspitz sign", "Darier's sign", "Tinel's sign"],
                         correct: 1,
-                        explanation: "Auspitz sign describes pinpoint capillary bleeding revealed after stripping thin psoriatic scales overlying elongated dermal papillae."
+                        explanation: "Auspitz sign occurs because epidermal cell turnover thins the plate over elongated, engorged dermal blood vessels, which rupture upon minor scale scraping."
                     }
                 ]
             },
             'mod5_bacterial': {
                 title: "5.1 Bacterial: Impetigo & Cellulitis",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
-                text: "Common skin infections include contagious honey-colored crusted impetigo (Staph/Strep) and deeper dermal spreading erythema known as cellulitis.",
+                text: `
+                    <p>Bacterial skin infections are frequently encountered in clinical practice, commonly caused by <em>Staphylococcus aureus</em> and <em>Streptococcus pyogenes</em>:</p>
+                    <ul>
+                        <li><strong>Impetigo:</strong> A highly contagious superficial skin infection common in children. Non-bullous impetigo evolves from small vesicles into characteristic honey-colored crusted plaques. Bullous impetigo features fragile fluid-filled blisters caused by staphylococcal exfoliative toxins.</li>
+                        <li><strong>Cellulitis:</strong> An acute, spreading bacterial infection of the deep dermis and subcutaneous adipose tissue. Patients present with expanding local erythema, warmth, edema, and tenderness, frequently accompanied by systemic fever and chills.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "What distinct clinical feature characterizes non-bullous impetigo lesions?",
-                        options: ["Honey-colored crusts", "Targetoid rings", "Purplish bullae", "Flesh-colored umbilicated papules"],
+                        q: "Which distinct macroscopic finding characterizes non-bullous impetigo lesions?",
+                        options: ["Honey-colored crusts", "Targetoid erythematous rings", "Waxy stuck-on papules", "Flesh-colored umbilicated nodules"],
                         correct: 0,
-                        explanation: "Non-bullous impetigo typically ruptures rapidly to leave characteristic amber honey-colored crusts around the face and extremities."
+                        explanation: "Non-bullous impetigo vesicles rupture rapidly, drying to form classic amber honey-colored crusts primarily around the nose and mouth."
                     }
                 ]
             },
             'mod5_fungal': {
                 title: "5.2 Fungal: Tinea & Candidiasis",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
-                text: "Superficial dermatophytoses (tinea infections caused by Trichophyton, Microsporum, or Epidermophyton) present with annular active-border scaling, whereas Candida yeast flourishes in warm, moist skin folds.",
+                text: `
+                    <p>Superficial mycoses involve the keratinized layers of skin, hair, and nails:</p>
+                    <ul>
+                        <li><strong>Dermatophytosis (Tinea):</strong> Caused by dermatophyte molds (<em>Trichophyton</em>, <em>Microsporum</em>, <em>Epidermophyton</em>) that feed on keratin. Lesions often present as annular (ring-shaped) plaques with central clearing and an active, scaly leading border.</li>
+                        <li><strong>Candidiasis:</strong> Caused by <em>Candida albicans</em> yeast, thriving in warm, humid skin folds (intertrigo). It typically displays bright red macerated patches surrounded by characteristic satellite pustules.</li>
+                    </ul>
+                    <p><strong>Diagnostic Test:</strong> A bedside potassium hydroxide (KOH) skin scraping preparation dissolves keratinocytes while preserving fungal cell walls, displaying branching septate hyphae or yeast spores under microscopy.</p>
+                `,
                 quiz: [
                     {
-                        q: "What diagnostic microscopy technique utilizes potassium hydroxide (KOH) to reveal fungal hyphae?",
-                        options: ["Gram stain", "KOH skin scraping preparation", "Acid-fast stain", "Tzanck smear"],
+                        q: "What bedside diagnostic solution is applied to skin scrapings to dissolve keratinocytes and visualize fungal hyphae under a microscope?",
+                        options: ["Gram stain solution", "Potassium Hydroxide (KOH)", "Acetic acid solution", "Methylene blue"],
                         correct: 1,
-                        explanation: "KOH solution dissolves keratinocytes while preserving fungal cell walls, displaying branching septate hyphae or spores."
+                        explanation: "KOH solution clears epidermal keratin debris, allowing clinicians to clearly visualize branching fungal hyphae or spores."
                     }
                 ]
             },
             'mod6_benign': {
-                title: "6.1 Benign Nevi & Seborrheic Keratosis",
+                title: "6.1 Benign Nevi & Keratoses",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
-                text: "Benign cutaneous growths include acquired melanocytic nevi and stuck-on waxy seborrheic keratoses, which present harmless pigmented features common with aging.",
+                text: `
+                    <p>Differentiating benign lesions from malignant growths is essential in dermatology:</p>
+                    <ul>
+                        <li><strong>Melanocytic Nevi (Moles):</strong> Benign proliferations of melanocytes that can be junctional, compound, or intradermal. They are typically symmetric, uniform in color, and well-demarcated.</li>
+                        <li><strong>Seborrheic Keratosis:</strong> One of the most common benign epidermal neoplasms in older adults. They appear as well-circumscribed, pigmented plaques with a velvety, waxy, or rough 'stuck-on' appearance, often clinically mimicking melanoma despite being completely harmless.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "Which classic clinical description best fits a seborrheic keratosis lesion?",
-                        options: ["Ulcerated pearly papule", "Stuck-on waxy hyperpigmented plaque", "Translucent fluid vesicle", "Painful erythematous subcutaneous nodule"],
+                        q: "Which clinical description best matches a benign seborrheic keratosis lesion?",
+                        options: ["Pearly ulcerated nodule with telangiectasias", "Stuck-on waxy hyperpigmented velvety plaque", "Rapidly evolving asymmetric dark macule", "Tense fluid-filled subepidermal bulla"],
                         correct: 1,
-                        explanation: "Seborrheic keratoses characteristically look stuck onto the skin surface with a rough, velvety, or waxy texture."
+                        explanation: "Seborrheic keratoses classically appear 'stuck-on' to the skin with a waxy, stuck-on texture and varied brown-to-black pigmentation."
                     }
                 ]
             },
             'mod6_malignant': {
                 title: "6.2 Malignant: Melanoma & ABCDEs",
                 image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
-                text: "Cutaneous malignancies include basal cell carcinoma, squamous cell carcinoma, and malignant melanoma. Melanoma screening uses the ABCDE criteria: Asymmetry, Border irregularity, Color variation, Diameter > 6mm, and Evolving morphology.",
+                text: `
+                    <p>Cutaneous malignancies include basal cell carcinoma (most common, locally invasive), squamous cell carcinoma, and malignant melanoma (the deadliest skin cancer arising from melanocytes).</p>
+                    <p>Early clinical detection of melanoma relies heavily on the <strong>ABCDE criteria</strong>:</p>
+                    <ul>
+                        <li><strong>A - Asymmetry:</strong> One half of the lesion does not match the other half.</li>
+                        <li><strong>B - Border irregularity:</strong> Edges are ragged, notched, or blurred.</li>
+                        <li><strong>C - Color variation:</strong> Pigmentation is not uniform, showing shades of brown, black, tan, red, or blue.</li>
+                        <li><strong>D - Diameter:</strong> Greater than 6 mm (although melanomas can be smaller).</li>
+                        <li><strong>E - Evolving:</strong> A lesion or mole that is changing in size, shape, color, or symptoms (itching, bleeding) over time.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "In the melanoma ABCDE screening guide, what does the letter 'E' stand for?",
-                        options: ["Erythematous", "Evolving", "Elevated", "Exudative"],
+                        q: "In the melanoma ABCDE screening guidelines, what does the letter 'E' represent?",
+                        options: ["Erythematous border", "Evolving and changing morphology", "Exudative surface crust", "Elevated papular depth"],
                         correct: 1,
-                        explanation: "'E' stands for Evolving, representing a mole or skin lesion changing in size, shape, color, or symptoms over time."
+                        explanation: "'E' stands for Evolving, highlighting that any mole or spot undergoing changes in size, shape, color, or elevation warrants urgent evaluation."
                     }
                 ]
             },
             'mod7_topical': {
                 title: "7.1 Topical Retinoids & Steroids",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
-                text: "Dermatological pharmacology heavily relies on topical corticosteroids for anti-inflammatory control and topical retinoids (vitamin A derivatives) for acne and anti-aging cell turnover regulation.",
+                text: `
+                    <p>Topical pharmacological agents are the cornerstone of dermatologic therapy:</p>
+                    <ul>
+                        <li><strong>Topical Corticosteroids:</strong> Potent anti-inflammatory and immunosuppressive agents categorized by potency classes (I to VII). They inhibit phospholipase A2 and reduce inflammatory cytokine transcription. <em>Side effect of chronic overuse:</em> Skin atrophy, striae, and telangiectasias due to suppressed dermal collagen synthesis.</li>
+                        <li><strong>Topical Retinoids:</strong> Vitamin A derivatives (e.g., tretinoin, adapalene) that normalize follicular keratinization and stimulate collagen production, widely used for acne vulgaris and photoaging.</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "What is a primary cutaneous side effect of prolonged potent topical corticosteroid application?",
-                        options: ["Skin thickening and hyperpigmentation", "Skin atrophy and telangiectasias", "Excessive collagen hardening", "Increased subcutaneous fat accumulation"],
+                        q: "What is a well-known cutaneous adverse effect associated with prolonged potent topical corticosteroid misuse?",
+                        options: ["Marked dermal thickening and hyperpigmentation", "Skin atrophy, striae, and telangiectasias", "Excessive subcutaneous adipose accumulation", "Accelerated hair follicle proliferation"],
                         correct: 1,
-                        explanation: "Topical steroid overuse suppresses local fibroblast collagen synthesis, leading to skin thinning (atrophy), striae, and visible blood vessels (telangiectasias)."
+                        explanation: "Chronic potent topical steroids suppress local fibroblast activity and collagen production, leading to skin thinning (atrophy), striae, and prominent visible blood vessels."
                     }
                 ]
             },
             'mod7_procedures': {
-                title: "7.2 Dermatoscope & Clinical Diagnostics",
+                title: "7.2 Dermatoscope & Biopsy Techniques",
                 image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
-                text: "Diagnostic procedures include dermoscopy (polarized and non-polarized magnification for subsurface pigmented pattern analysis), Wood's lamp examination, and diagnostic skin punch biopsies.",
+                text: `
+                    <p>Advanced diagnostic procedures allow clinicians to look beyond the naked eye:</p>
+                    <ul>
+                        <li><strong>Dermoscopy:</strong> A non-invasive handheld optical device utilizing polarized or non-polarized light and magnification. It eliminates surface reflection from the stratum corneum, enabling visualization of subsurface pigment networks, vascular structures, and globules crucial for diagnosing pigmented lesions.</li>
+                        <li><strong>Skin Biopsy Techniques:</strong> Punch biopsy (obtaining a full-thickness cylindrical core of tissue), shave biopsy (for superficial epidermal/dermal lesions), and excisional biopsy (removing the entire lesion with a margin of normal skin for definitive histological staging).</li>
+                    </ul>
+                `,
                 quiz: [
                     {
-                        q: "What main diagnostic advantage does a dermatoscope provide during skin examination?",
-                        options: ["It measures internal body temperature", "It visualizes subsurface skin structures hidden beneath the stratum corneum", "It completely replaces histopathology staining", "It delivers targeted ultraviolet therapy"],
+                        q: "What primary clinical advantage does dermoscopy offer over standard visual inspection?",
+                        options: ["It measures internal body temperature accurately", "It visualizes subsurface pigment networks and vascular structures hidden beneath the stratum corneum", "It completely replaces the need for histopathologic confirmation", "It administers localized ultraviolet therapy"],
                         correct: 1,
-                        explanation: "Dermoscopy uses cross-polarized light and magnification to eliminate surface glare and visualize diagnostic subsurface vascular and pigment patterns."
+                        explanation: "Dermoscopy utilizes polarized magnification to eliminate surface glare, allowing clinicians to evaluate diagnostic subsurface patterns invisible to the naked eye."
                     }
                 ]
             }
@@ -716,14 +853,14 @@
 
             document.getElementById('lessonTitle').innerText = data.title;
             document.getElementById('lessonImage').src = data.image;
-            document.getElementById('lessonText').innerText = data.text;
+            document.getElementById('lessonText').innerHTML = data.text;
 
             // Reset action & quiz elements
             document.getElementById('completeBtn').style.display = 'inline-block';
             document.getElementById('quizPanel').style.display = 'none';
             document.getElementById('nextLessonBtn').style.display = 'none';
 
-            // Build dynamic 1-5 quiz questions
+            // Build dynamic quiz questions
             const container = document.getElementById('quizQuestionsContainer');
             container.innerHTML = '';
             
@@ -786,7 +923,11 @@
             }
 
             const titleText = document.getElementById('lessonTitle').innerText;
-            const bodyText = document.getElementById('lessonText').innerText;
+            // Extract clean text without HTML tags for speech reader
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = document.getElementById('lessonText').innerHTML;
+            const bodyText = tempDiv.textContent || tempDiv.innerText || "";
+            
             const speechString = titleText + ". " + bodyText;
 
             const utterance = new SpeechSynthesisUtterance(speechString);
@@ -815,6 +956,7 @@
         function completeLesson() {
             document.getElementById('completeBtn').style.display = 'none';
             document.getElementById('quizPanel').style.display = 'block';
+            window.scrollBy({ top: 300, behavior: 'smooth' });
         }
 
         // Handle Quiz choice selection with instant feedback and explanation
