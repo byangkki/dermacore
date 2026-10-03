@@ -1,1254 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DermaCore – Clinical Dermatology Reviewer</title>
-  <style>
-    :root {
-      --bg-slate-900: #0f172a;
-      --bg-slate-800: #1e293b;
-      --bg-slate-700: #334155;
-      --accent-teal: #0d9488;
-      --accent-teal-light: #14b8a6;
-      --accent-sky: #0284c7;
-      --accent-amber: #f59e0b;
-      --accent-emerald: #10b981;
-      --accent-rose: #f43f5e;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dermacore - Interactive Dermatology Learning</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #06b6d4;
+            --bg-main: #f8fafc;
+            --sidebar-width: 280px;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    body {
-      background-color: var(--bg-slate-900);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    /* HEADER */
-    header {
-      background: var(--bg-slate-800);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+        /* Top Left Hamburger Button */
+        .menu-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
 
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, var(--accent-teal), var(--accent-sky));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.2rem;
-      color: white;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
-    }
+        /* Sidebar / Content Panel */
+        sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+        }
 
-    .brand-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
+        sidebar.minimized {
+            transform: translateX(calc(-1 * var(--sidebar-width)));
+        }
 
-    .brand-subtitle {
-      font-size: 0.75rem;
-      color: var(--accent-teal-light);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+        .sidebar-header {
+            padding: 20px;
+            padding-left: 60px; /* Space for hamburger */
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
 
-    .header-progress {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 0.5rem 1rem;
-      border-radius: 30px;
-      border: 1px solid var(--border-subtle);
-    }
+        .sidebar-content {
+            overflow-y: auto;
+            flex: 1;
+            padding: 15px;
+        }
 
-    .progress-bar-bg {
-      width: 100px;
-      height: 8px;
-      background: var(--bg-slate-700);
-      border-radius: 4px;
-      overflow: hidden;
-    }
+        .module-group {
+            margin-bottom: 15px;
+        }
 
-    .progress-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light));
-      transition: width 0.4s ease;
-    }
+        .module-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
 
-    .progress-text {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
+        .topic-link {
+            display: block;
+            padding: 8px 12px;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            transition: background 0.2s;
+        }
 
-    /* MAIN APP LAYOUT */
-    .app-container {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      flex: 1;
-      max-width: 1400px;
-      width: 100%;
-      margin: 0 auto;
-    }
+        .topic-link:hover, .topic-link.active {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 500;
+        }
 
-    @media (max-width: 850px) {
-      .app-container {
-        grid-template-columns: 1fr;
-      }
-    }
+        /* Main Workspace Area */
+        main {
+            flex: 1;
+            margin-left: 0; /* Default since sidebar starts minimized */
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* SIDEBAR */
-    .sidebar {
-      background: var(--bg-slate-800);
-      border-right: 1px solid var(--border-subtle);
-      padding: 1.5rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      overflow-y: auto;
-      max-height: calc(100vh - 70px);
-    }
+        body.sidebar-open main {
+            margin-left: var(--sidebar-width);
+        }
 
-    .sidebar-section-label {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 0.6rem 0.75rem 0.2rem 0.75rem;
-      margin-top: 0.4rem;
-    }
+        /* Hero Welcome Screen */
+        .welcome-screen {
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
 
-    .nav-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      padding: 0.65rem 0.85rem;
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all 0.2s ease;
-    }
+        .welcome-screen h1 {
+            font-size: 2.5rem;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
 
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-primary);
-    }
+        .welcome-screen p {
+            font-size: 1.1rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
 
-    .nav-btn.active {
-      background: rgba(13, 148, 136, 0.15);
-      border-color: rgba(13, 148, 136, 0.3);
-      color: var(--accent-teal-light);
-    }
+        .motivational-card {
+            background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: left;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
 
-    .check-icon {
-      font-size: 0.85rem;
-      opacity: 0;
-      color: var(--accent-teal-light);
-    }
+        .motivational-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
 
-    .nav-btn.completed .check-icon {
-      opacity: 1;
-    }
+        .start-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
-    /* CONTENT AREA */
-    .content-area {
-      padding: 2rem;
-      overflow-y: auto;
-      max-width: 900px;
-    }
+        .start-btn:hover {
+            background: var(--primary-dark);
+        }
 
-    /* AUDIO CONTROLLER BAR */
-    .audio-player-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      backdrop-filter: blur(8px);
-      box-shadow: var(--card-shadow);
-    }
+        /* Lesson View */
+        .lesson-container {
+            display: none;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
 
-    .audio-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+        .lesson-header {
+            margin-bottom: 20px;
+        }
 
-    .audio-icon {
-      width: 36px;
-      height: 36px;
-      background: rgba(13, 148, 136, 0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-teal-light);
-      font-size: 1.1rem;
-    }
+        .lesson-header h2 {
+            font-size: 2rem;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
 
-    .audio-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
+        .topic-image-container {
+            width: 100%;
+            height: 320px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
 
-    .audio-status {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
+        .topic-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .lesson-body {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 30px;
+        }
 
-    .btn-audio {
-      background: var(--accent-teal);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: background 0.2s;
-    }
+        /* Complete Lesson & Quiz Area */
+        .action-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            margin-top: 30px;
+        }
 
-    .btn-audio:hover {
-      background: var(--accent-teal-light);
-    }
+        .complete-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
 
-    .btn-audio.stop {
-      background: var(--bg-slate-700);
-      color: var(--text-secondary);
-    }
+        .complete-btn:hover {
+            background: #059669;
+        }
 
-    /* CHAPTER CONTENT FORMATTING */
-    .chapter-badge {
-      display: inline-block;
-      background: rgba(2, 132, 199, 0.15);
-      color: var(--accent-sky);
-      border: 1px solid rgba(2, 132, 199, 0.3);
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.75rem;
-    }
+        .quiz-panel {
+            display: none;
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
 
-    .chapter-title {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      letter-spacing: -0.5px;
-    }
+        .quiz-panel h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
 
-    .chapter-text {
-      color: var(--text-secondary);
-      font-size: 0.98rem;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-    .section-card {
-      background: var(--bg-slate-800);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--card-shadow);
-    }
+        .quiz-option {
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-    .section-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .quiz-option:hover {
+            background: #f1f5f9;
+        }
 
-    /* DIAGRAM CONTAINER */
-    .diagram-box {
-      background: #020617;
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin: 1.5rem 0;
-      text-align: center;
-    }
+        .quiz-option.selected {
+            background: #eff6ff;
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
 
-    .diagram-caption {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.75rem;
-      font-style: italic;
-    }
+        .next-lesson-btn {
+            display: none;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
 
-    .clinical-note {
-      background: rgba(13, 148, 136, 0.1);
-      border-left: 3px solid var(--accent-teal);
-      border-radius: 0 8px 8px 0;
-      padding: 1rem;
-      margin: 1rem 0;
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
-
-    .clinical-note-title {
-      font-weight: 700;
-      color: var(--accent-teal-light);
-      margin-bottom: 0.25rem;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-    }
-
-    /* QUIZ SECTION */
-    .quiz-card {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--accent-sky);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .quiz-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--accent-sky);
-      font-weight: 800;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-
-    .quiz-question {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .quiz-opt-btn {
-      background: var(--bg-slate-800);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      color: var(--text-primary);
-      font-size: 0.88rem;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .quiz-opt-btn:hover {
-      background: var(--bg-slate-700);
-      border-color: var(--accent-sky);
-    }
-
-    .quiz-opt-btn.correct {
-      background: rgba(16, 185, 129, 0.2) !important;
-      border-color: var(--accent-emerald) !important;
-      color: #34d399 !important;
-      font-weight: 700;
-    }
-
-    .quiz-opt-btn.incorrect {
-      background: rgba(244, 63, 94, 0.2) !important;
-      border-color: var(--accent-rose) !important;
-      color: #f87171 !important;
-    }
-
-    .quiz-feedback {
-      margin-top: 1rem;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      display: none;
-    }
-
-    .quiz-feedback.show {
-      display: block;
-    }
-
-    .quiz-feedback.correct-bg {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #a7f3d0;
-    }
-
-    .quiz-feedback.incorrect-bg {
-      background: rgba(244, 63, 94, 0.15);
-      border: 1px solid rgba(244, 63, 94, 0.3);
-      color: #fecdd3;
-    }
-
-    /* ACTION BUTTON */
-    .btn-complete {
-      background: linear-gradient(135deg, var(--accent-teal), var(--accent-sky));
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 0.85rem 1.75rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-complete:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-subtle);
-      margin-top: auto;
-      background: var(--bg-slate-900);
-    }
-  </style>
+        @media(max-width: 768px) {
+            body.sidebar-open main {
+                margin-left: 0;
+            }
+            sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+            sidebar.minimized {
+                transform: translateX(-100%);
+            }
+            sidebar.mobile-visible {
+                transform: translateX(0);
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="brand">
-      <div class="brand-icon">D</div>
-      <div>
-        <div class="brand-title">DermaCore</div>
-        <div class="brand-subtitle">Clinical Dermatology Reviewer</div>
-      </div>
+    <!-- Toggle Hamburger Button (Top Left) -->
+    <div class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <div class="header-progress">
-      <div class="progress-bar-bg">
-        <div id="progress-fill" class="progress-bar-fill"></div>
-      </div>
-      <div id="progress-text" class="progress-text">0% Completed</div>
-    </div>
-  </header>
-
-  <!-- APP LAYOUT -->
-  <div class="app-container">
-    
-    <!-- SIDEBAR -->
-    <nav class="sidebar">
-      <div class="sidebar-section-label">Module 1: Foundations</div>
-      <button class="nav-btn active" onclick="loadChapter(0)">
-        <span>1. Microanatomy & Functions</span>
-        <span class="check-icon">✓</span>
-      </button>
-      <button class="nav-btn" onclick="loadChapter(1)">
-        <span>2. Epidermal Strata & Cells</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 2: Diagnostics & Morphology</div>
-      <button class="nav-btn" onclick="loadChapter(2)">
-        <span>3. Primary Cutaneous Lesions</span>
-        <span class="check-icon">✓</span>
-      </button>
-      <button class="nav-btn" onclick="loadChapter(3)">
-        <span>4. Secondary Cutaneous Lesions</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 3: Inflammatory & Autoimmune</div>
-      <button class="nav-btn" onclick="loadChapter(4)">
-        <span>5. Papulosquamous Disorders</span>
-        <span class="check-icon">✓</span>
-      </button>
-      <button class="nav-btn" onclick="loadChapter(5)">
-        <span>6. Vesiculobullous Diseases</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 4: Cutaneous Infections</div>
-      <button class="nav-btn" onclick="loadChapter(6)">
-        <span>7. Bacterial & Viral Infections</span>
-        <span class="check-icon">✓</span>
-      </button>
-      <button class="nav-btn" onclick="loadChapter(7)">
-        <span>8. Fungal & Parasitic Infections</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 5: Cutaneous Oncology</div>
-      <button class="nav-btn" onclick="loadChapter(8)">
-        <span>9. Benign & Premalignant Neoplasms</span>
-        <span class="check-icon">✓</span>
-      </button>
-      <button class="nav-btn" onclick="loadChapter(9)">
-        <span>10. Malignant Skin Tumors</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 6: Pediatric Dermatology</div>
-      <button class="nav-btn" onclick="loadChapter(10)">
-        <span>11. Viral Exanthems & Birthmarks</span>
-        <span class="check-icon">✓</span>
-      </button>
-
-      <div class="sidebar-section-label">Module 7: Pharmacology & Therapeutics</div>
-      <button class="nav-btn" onclick="loadChapter(11)">
-        <span>12. Topical Steroids & Biologics</span>
-        <span class="check-icon">✓</span>
-      </button>
-    </nav>
-
-    <!-- CONTENT AREA -->
-    <main class="content-area">
-      
-      <!-- AUDIO LECTURE BAR -->
-      <div class="audio-player-card">
-        <div class="audio-info">
-          <div class="audio-icon">🎧</div>
-          <div>
-            <div id="audio-chapter-title" class="audio-title">Audio Lecture: Chapter 1</div>
-            <div id="audio-status" class="audio-status">Text-to-Speech Ready</div>
-          </div>
+    <!-- Sidebar / Table of Contents Panel (Minimized by Default) -->
+    <sidebar id="appSidebar" class="minimized">
+        <div class="sidebar-header">Dermacore</div>
+        <div class="sidebar-content">
+            <div class="module-group">
+                <div class="module-title">Module 1: Skin Anatomy</div>
+                <a href="#" class="topic-link" onclick="loadLesson('epidermis')">1.1 The Epidermis Layers</a>
+                <a href="#" class="topic-link" onclick="loadLesson('dermis')">1.2 Dermis & Appendages</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 2: Pathologies</div>
+                <a href="#" class="topic-link" onclick="loadLesson('acne')">2.1 Acne Vulgaris Breakdown</a>
+            </div>
         </div>
-        <div class="audio-controls">
-          <button id="btn-play-audio" class="btn-audio" onclick="toggleAudio()">
-            <span id="play-icon">▶</span> <span id="play-text">Listen</span>
-          </button>
-        </div>
-      </div>
+    </sidebar>
 
-      <!-- TEXTBOOK CHAPTER CONTENT -->
-      <div id="chapter-container">
-        <!-- Injected dynamically via JS -->
-      </div>
+    <!-- Main Dynamic Content Workspace -->
+    <main id="mainWorkspace">
+        <!-- Full Display Welcome Page -->
+        <section id="welcomeScreen" class="welcome-screen">
+            <h1>Welcome to Dermacore</h1>
+            <p>Your comprehensive portal for mastering advanced dermatological concepts, structural layers, clinical assessments, and condition management.</p>
+            
+            <div class="motivational-card">
+                <h3>💡 Daily Learning Motivation</h3>
+                <p>"Every expert was once a beginner who refused to give up. Dive into your modules, understand the micro-structures of the skin, and sharpen your clinical eye today!"</p>
+            </div>
 
+            <button class="start-btn" onclick="startLearning()">Get Started</button>
+        </section>
+
+        <!-- Lesson View Template -->
+        <section id="lessonScreen" class="lesson-container">
+            <div class="lesson-header">
+                <h2 id="lessonTitle">Lesson Title</h2>
+            </div>
+            
+            <!-- Contextual Specific Image Container -->
+            <div class="topic-image-container">
+                <img id="lessonImage" src="" alt="Topic Specific Illustration">
+            </div>
+
+            <div class="lesson-body" id="lessonText">
+                <!-- Dynamic text content loaded here -->
+            </div>
+
+            <div class="action-section">
+                <button class="complete-btn" id="completeBtn" onclick="completeLesson()">Mark Lesson Complete & Take Quiz</button>
+                
+                <div class="quiz-panel" id="quizPanel">
+                    <h3 id="quizQuestion">Quick Check</h3>
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- Options injected dynamically -->
+                    </div>
+                    <button class="next-lesson-btn" id="nextLessonBtn" onclick="nextLesson()">Proceed to Next Lesson ➔</button>
+                </div>
+            </div>
+        </section>
     </main>
-  </div>
 
-  <!-- DISCLAIMER FOOTER -->
-  <footer>
-    <p><strong>Educational Medical Disclaimer:</strong> DermaCore is an independent medical reviewer designed strictly for academic study, board review, and learning purposes. It does not constitute formal clinical medical advice, official diagnosis, or treatment guidelines.</p>
-  </footer>
+    <script>
+        // Lesson Database with contextually accurate images of specific parts
+        const lessons = {
+            'epidermis': {
+                title: "1.1 The Epidermis Layers",
+                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", // Medical/cellular visualization style
+                text: "The epidermis is the outermost layer of the skin, providing a waterproof barrier and creating our skin tone. It consists of multiple sub-layers including the stratum corneum, stratum granulosum, stratum spinosum, and stratum basale where keratinocytes originate and push upward.",
+                question: "Which sub-layer of the epidermis is responsible for the continuous production of new keratinocytes?",
+                options: ["Stratum Corneum", "Stratum Basale", "Stratum Lucidum"],
+                correct: 1
+            },
+            'dermis': {
+                title: "1.2 Dermis & Appendages",
+                image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80", // Structural tissue visualization
+                text: "Located right beneath the epidermis, the dermis contains tough connective tissue, hair follicles, and sweat glands. It is primarily divided into two layers: the papillary layer and the reticular layer, housing robust collagen and elastin networks.",
+                question: "What primary protein fibers provide the dermis with its strength and tensile resilience?",
+                options: ["Collagen", "Keratin", "Melanin"],
+                correct: 0
+            },
+            'acne': {
+                title: "2.1 Acne Vulgaris Breakdown",
+                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", // Microscopic medical representation
+                text: "Acne vulgaris is a long-term skin condition that occurs when hair follicles become clogged with dead skin cells and oil from the skin. It manifests as blackheads, whiteheads, pimples, or deeper cysts, heavily tied to sebaceous gland activity.",
+                question: "Which gland is primarily responsible for the excess sebum production seen in acne flare-ups?",
+                options: ["Eccrine sweat gland", "Sebaceous gland", "Apocrine gland"],
+                correct: 1
+            }
+        };
 
-  <script>
-    // --- COMPREHENSIVE CHAPTER DATABASE WITH VISUAL DIAGRAMS & QUIZZES ---
-    const chapters = [
-      {
-        id: 0,
-        badge: "Module 1 • Foundations",
-        title: "1. Skin Microanatomy & Functions",
-        audioText: "Skin Microanatomy and Functions. The integumentary system consists of three main structural layers: Epidermis, Dermis, and Subcutanea or Hypodermis. Primary functions include physical barrier protection, thermoregulation, metabolic synthesis of Vitamin D3, and neurosensory perception.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 180" width="100%" height="180" style="max-width:480px;">
-              <rect x="10" y="10" width="480" height="40" fill="#1e293b" stroke="#0d9488" stroke-width="2" rx="6"/>
-              <text x="250" y="35" fill="#14b8a6" font-weight="700" font-size="14" text-anchor="middle">EPIDERMIS (Avascular Stratified Squamous)</text>
-              <rect x="10" y="60" width="480" height="60" fill="#1e293b" stroke="#0284c7" stroke-width="2" rx="6"/>
-              <text x="250" y="95" fill="#38bdf8" font-weight="700" font-size="14" text-anchor="middle">DERMIS (Papillary & Reticular Connective Tissue)</text>
-              <rect x="10" y="130" width="480" height="40" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="6"/>
-              <text x="250" y="155" fill="#fbbf24" font-weight="700" font-size="14" text-anchor="middle">HYPODERMIS / SUBCUTANEA (Adipose Layer)</text>
-            </svg>
-            <div class="diagram-caption">Figure 1.1: Anatomical Layering of the Human Cutaneous System</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">The human integumentary system is the largest organ of the body, accounting for roughly 16% of total body weight. It provides vital barrier protection, thermoregulation, and neurosensory input.</p>
-          <div class="section-card">
-            <h3>🔬 The Three Primary Structural Layers</h3>
-            <p class="chapter-text">
-              1. <strong>Epidermis:</strong> Stratified squamous keratinized epithelium consisting primarily of keratinocytes. Totally avascular; relies on dermal diffusion.<br><br>
-              2. <strong>Dermis:</strong> Connective tissue layer providing structural elasticity and tensile strength. Rich in collagen, elastin, microvascular networks, and nerve appendages.<br><br>
-              3. <strong>Hypodermis (Subcutanea):</strong> Adipose-rich subcutaneous layer functioning in shock absorption, thermal insulation, and metabolic energy storage.
-            </p>
-          </div>
-          <div class="clinical-note">
-            <div class="clinical-note-title">💡 Clinical Pearl</div>
-            Skin thickness varies significantly across anatomic sites: eyelid skin measures roughly 0.05 mm, whereas palmar and plantar skin can exceed 1.5 mm in epidermal thickness alone.
-          </div>
-        `,
-        quiz: {
-          question: "Which primary layer of the human skin is completely avascular and relies on diffusion for metabolic nutrients?",
-          options: ["Epidermis", "Papillary Dermis", "Reticular Dermis", "Hypodermis"],
-          correct: 0,
-          rationale: "Correct! The Epidermis is a stratified squamous epithelium that lacks blood vessels and receives nutrients via diffusion from dermal capillaries."
+        let currentLessonKey = '';
+
+        // Toggle Sidebar visibility via Top-Left 3-dash hamburger menu
+        function toggleSidebar() {
+            const sidebar = document.getElementById('appSidebar');
+            const body = document.body;
+            
+            sidebar.classList.toggle('minimized');
+            body.classList.toggle('sidebar-open');
         }
-      },
-      {
-        id: 1,
-        badge: "Module 1 • Foundations",
-        title: "2. Epidermal Strata & Key Cell Types",
-        audioText: "Epidermal Strata and Key Cell Types. The five histological strata from deep to superficial are Basale, Spinosum, Granulosum, Lucidum, and Corneum. Resident non-keratinocytes include Melanocytes, Langerhans Cells, and Merkel Cells.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 160" width="100%" height="160" style="max-width:480px;">
-              <rect x="20" y="10" width="460" height="24" fill="#334155" rx="4"/><text x="250" y="27" fill="#f8fafc" font-size="11" font-weight="700" text-anchor="middle">5. Stratum Corneum (Anucleated Squames)</text>
-              <rect x="20" y="38" width="460" height="24" fill="#1e293b" rx="4"/><text x="250" y="55" fill="#cbd5e1" font-size="11" font-weight="700" text-anchor="middle">4. Stratum Lucidum (Thick Skin Palms/Soles Only)</text>
-              <rect x="20" y="66" width="460" height="24" fill="#0f172a" rx="4"/><text x="250" y="83" fill="#a7f3d0" font-size="11" font-weight="700" text-anchor="middle">3. Stratum Granulosum (Keratohyalin Granules)</text>
-              <rect x="20" y="94" width="460" height="24" fill="#1e293b" rx="4"/><text x="250" y="111" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle">2. Stratum Spinosum (Desmosomes / Prickle Layer)</text>
-              <rect x="20" y="122" width="460" height="24" fill="#0d9488" rx="4"/><text x="250" y="139" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">1. Stratum Basale (Mitotic Stem Cell Layer)</text>
-            </svg>
-            <div class="diagram-caption">Figure 2.1: Histological Strata of the Epidermis (Deep to Superficial)</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Epidermal differentiation involves progressive maturation of keratinocytes migrating upward from the basal layer to the cornified surface layer over 28 to 40 days.</p>
-          <div class="section-card">
-            <h3>🧱 Histological Strata (Deep to Superficial)</h3>
-            <p class="chapter-text">
-              • <strong>Stratum Basale:</strong> Single layer of mitotically active stem cells bound to basement membrane by hemidesmosomes.<br>
-              • <strong>Stratum Spinosum:</strong> Polyhedral cells linked by desmosomes ("prickle cell layer").<br>
-              • <strong>Stratum Granulosum:</strong> Contains basophilic keratohyalin granules containing profilaggrin.<br>
-              • <strong>Stratum Lucidum:</strong> Clear layer present exclusively in thick palmar and plantar skin.<br>
-              • <strong>Stratum Corneum:</strong> Anucleated dead squames forming the physical lipid-protein barrier.
-            </p>
-          </div>
-          <div class="section-card">
-            <h3>🧬 Resident Non-Keratinocyte Cells</h3>
-            <p class="chapter-text">
-              • <strong>Melanocytes:</strong> Neural crest derivatives synthesizing melanin packaged into melanosomes.<br>
-              • <strong>Langerhans Cells:</strong> Dendritic antigen-presenting cells expressing CD1a and Birbeck granules.<br>
-              • <strong>Merkel Cells:</strong> Mechanoreceptors for light touch sensation.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "Which cell type in the epidermis functions as a specialized dendritic antigen-presenting cell containing Birbeck granules?",
-          options: ["Melanocyte", "Langerhans Cell", "Merkel Cell", "Basal Keratinocyte"],
-          correct: 1,
-          rationale: "Correct! Langerhans cells are bone-marrow derived antigen-presenting cells characterized by tennis-racket shaped Birbeck granules on electron microscopy."
+
+        function startLearning() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('lessonScreen').style.display = 'block';
+            loadLesson('epidermis');
         }
-      },
-      {
-        id: 2,
-        badge: "Module 2 • Diagnostics",
-        title: "3. Primary Cutaneous Lesions",
-        audioText: "Primary Cutaneous Lesions. Primary lesions are initial unmodified skin changes. Macules are flat color changes under 1 cm, Patches are flat over 1 cm. Papules are raised solid lesions under 1 cm, Plaques are raised over 1 cm.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 500 120" width="100%" height="120" style="max-width:480px;">
-              <circle cx="80" cy="50" r="30" fill="none" stroke="#38bdf8" stroke-width="3"/>
-              <text x="80" y="55" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">Macule (&lt;1cm)</text>
-              <rect x="180" y="20" width="80" height="60" fill="none" stroke="#14b8a6" stroke-width="3" rx="8"/>
-              <text x="220" y="55" fill="#14b8a6" font-size="10" font-weight="700" text-anchor="middle">Patch (&gt;1cm)</text>
-              <path d="M 330 70 Q 350 20 370 70 Z" fill="rgba(245, 158, 11, 0.3)" stroke="#f59e0b" stroke-width="3"/>
-              <text x="350" y="85" fill="#fbbf24" font-size="10" font-weight="700" text-anchor="middle">Papule (&lt;1cm)</text>
-              <path d="M 410 70 L 420 30 L 470 30 L 480 70 Z" fill="rgba(244, 63, 94, 0.3)" stroke="#f43f5e" stroke-width="3"/>
-              <text x="445" y="85" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">Plaque (&gt;1cm)</text>
-            </svg>
-            <div class="diagram-caption">Figure 3.1: Size Cutoff & Elevation Morphology for Primary Lesions</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Primary lesions represent initial pathological skin changes unaffected by secondary trauma, scratching, or infection.</p>
-          <div class="section-card">
-            <h3>🔍 Morphology Classification</h3>
-            <p class="chapter-text">
-              • <strong>Macule:</strong> Flat, non-palpable color change &lt; 1.0 cm (e.g., freckle, petechiae).<br>
-              • <strong>Patch:</strong> Flat, non-palpable color change &gt; 1.0 cm (e.g., vitiligo, melasma).<br>
-              • <strong>Papule:</strong> Elevated solid lesion &lt; 1.0 cm (e.g., acne comedone, mole).<br>
-              • <strong>Plaque:</strong> Elevated broad plateau-like lesion &gt; 1.0 cm (e.g., psoriasis).<br>
-              • <strong>Nodule:</strong> Deep palpable firm lesion &gt; 1.0 cm involving dermis or subcutaneous fat.<br>
-              • <strong>Vesicle / Bulla:</strong> Fluid-filled blister &lt; 1.0 cm (Vesicle) or &gt; 1.0 cm (Bulla).
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "How is a flat, non-palpable cutaneous lesion measuring 1.8 cm in diameter correctly classified?",
-          options: ["Macule", "Patch", "Papule", "Plaque"],
-          correct: 1,
-          rationale: "Correct! A flat, non-palpable color change greater than 1.0 cm in diameter is classified as a Patch (e.g., vitiligo)."
+
+        // Load a specific lesson and auto-minimize/hide sidebar panel
+        function loadLesson(key) {
+            currentLessonKey = key;
+            const data = lessons[key];
+
+            document.getElementById('lessonTitle').innerText = data.title;
+            document.getElementById('lessonImage').src = data.image;
+            document.getElementById('lessonText').innerText = data.text;
+
+            // Reset quiz and action UI states
+            document.getElementById('completeBtn').style.display = 'inline-block';
+            document.getElementById('quizPanel').style.display = 'none';
+            document.getElementById('nextLessonBtn').style.display = 'none';
+
+            // Setup Quiz Options
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            document.getElementById('quizQuestion').innerText = data.question;
+
+            data.options.forEach((opt, index) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerText = opt;
+                div.onclick = () => selectOption(index, data.correct);
+                optionsContainer.appendChild(div);
+            });
+
+            // Highlight active link in sidebar
+            document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
+            event && event.target && event.target.classList.add('active');
+
+            // Minimize/hide the sidebar panel automatically when a lesson loads
+            if(window.innerWidth <= 768) {
+                document.getElementById('appSidebar').classList.remove('mobile-visible');
+            } else {
+                document.getElementById('appSidebar').classList.add('minimized');
+                document.body.classList.remove('sidebar-open');
+            }
         }
-      },
-      {
-        id: 3,
-        badge: "Module 2 • Diagnostics",
-        title: "4. Secondary Cutaneous Lesions",
-        audioText: "Secondary Cutaneous Lesions. Secondary lesions develop from trauma or evolution of primary lesions. Important terms include Scale, Crust, Erosion, Ulcer, and Lichenification.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="200" height="40" fill="#1e293b" stroke="#0284c7" stroke-width="2" rx="6"/>
-              <text x="120" y="45" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">Erosion (Epidermis Only)</text>
-              <rect x="260" y="20" width="200" height="60" fill="#1e293b" stroke="#f43f5e" stroke-width="2" rx="6"/>
-              <text x="360" y="55" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Ulcer (Dermis / Deep)</text>
-              <text x="120" y="80" fill="#94a3b8" font-size="10" text-anchor="middle">✓ Heals Without Scar</text>
-              <text x="360" y="95" fill="#94a3b8" font-size="10" text-anchor="middle">⚠️ Leaves Permanent Scar</text>
-            </svg>
-            <div class="diagram-caption">Figure 4.1: Erosion vs. Ulceration Tissue Depth Comparison</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Secondary changes develop as primary cutaneous lesions evolve or suffer external manipulation.</p>
-          <div class="section-card">
-            <h3>📋 Key Secondary Findings</h3>
-            <p class="chapter-text">
-              • <strong>Scale:</strong> Shedding stratum corneum flakes.<br>
-              • <strong>Crust:</strong> Dried exudate composed of blood, serum, or pus (e.g., honey-colored crusts in impetigo).<br>
-              • <strong>Erosion:</strong> Superficial epidermal loss that heals without scarring.<br>
-              • <strong>Ulcer:</strong> Full-thickness loss extending into the dermis; leaves a permanent scar.<br>
-              • <strong>Lichenification:</strong> Epidermal thickening with accentuated skin lines due to chronic rubbing.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "Which secondary lesion involves full-thickness epidermal loss extending into the dermis and heals with permanent scarring?",
-          options: ["Erosion", "Excoriation", "Ulcer", "Fissure"],
-          correct: 2,
-          rationale: "Correct! An Ulcer extends past the basement membrane into the dermis or subcutaneous tissue, resulting in scar formation."
+
+        // Reveal Quiz only after hitting Complete Lesson
+        function completeLesson() {
+            document.getElementById('completeBtn').style.display = 'none';
+            document.getElementById('quizPanel').style.display = 'block';
         }
-      },
-      {
-        id: 4,
-        badge: "Module 3 • Inflammatory",
-        title: "5. Papulosquamous Disorders & Psoriasis",
-        audioText: "Papulosquamous Disorders and Psoriasis. Psoriasis vulgaris features hyperkeratosis, parakeratosis, and epidermal hyperplasia. Key clinical findings are Auspitz sign and Koebner phenomenon.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="200" height="70" fill="rgba(13,148,136,0.15)" stroke="#0d9488" stroke-width="2" rx="8"/>
-              <text x="120" y="50" fill="#14b8a6" font-size="13" font-weight="700" text-anchor="middle">Auspitz Sign</text>
-              <text x="120" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Pinpoint Bleeding on Scraping</text>
-              <rect x="260" y="20" width="200" height="70" fill="rgba(2,132,199,0.15)" stroke="#0284c7" stroke-width="2" rx="8"/>
-              <text x="360" y="50" fill="#38bdf8" font-size="13" font-weight="700" text-anchor="middle">Koebner Phenomenon</text>
-              <text x="360" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">New Lesions at Trauma Sites</text>
-            </svg>
-            <div class="diagram-caption">Figure 5.1: High-Yield Clinical Signs of Psoriasis Vulgaris</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Psoriasis is a T-cell mediated autoimmune inflammatory condition characterized by epidermal hyperproliferation and reduced keratinocyte transit time (from 28 days down to 4 days).</p>
-          <div class="section-card">
-            <h3>🩺 Clinical Presentation & Signs</h3>
-            <p class="chapter-text">
-              • Well-demarcated erythematous plaques with silvery-white micaceous scales.<br>
-              • Predilection for extensor surfaces (elbows, knees, sacrum, scalp).<br>
-              • <strong>Auspitz Sign:</strong> Pinpoint bleeding upon scale removal due to dilated dermal capillaries.<br>
-              • <strong>Koebner Phenomenon:</strong> Isomorphic response where new lesions form at sites of minor skin trauma.
-            </p>
-          </div>
-          <div class="clinical-note">
-            <div class="clinical-note-title">💡 Histopathology Highlight</div>
-            Characteristic histology shows Munro microabscesses (neutrophils in stratum corneum) and regular elongation of rete ridges.
-          </div>
-        `,
-        quiz: {
-          question: "Pinpoint bleeding resulting from the removal of silvery psoriatic scales is known as which clinical sign?",
-          options: ["Nikolsky Sign", "Auspitz Sign", "Koebner Phenomenon", "Darier Sign"],
-          correct: 1,
-          rationale: "Correct! Auspitz sign occurs due to thinning of the epidermal layer over elongated dermal papillae containing dilated capillaries."
+
+        function selectOption(selectedIndex, correctIndex) {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((opt, idx) => {
+                opt.style.pointerEvents = 'none';
+                if(idx === correctIndex) {
+                    opt.style.background = '#dcfce7';
+                    opt.style.borderColor = '#10b981';
+                    opt.style.color = '#065f46';
+                } else if(idx === selectedIndex) {
+                    opt.style.background = '#fee2e2';
+                    opt.style.borderColor = '#ef4444';
+                    opt.style.color = '#991b1b';
+                }
+            });
+            document.getElementById('nextLessonBtn').style.display = 'inline-block';
         }
-      },
-      {
-        id: 5,
-        badge: "Module 3 • Inflammatory",
-        title: "6. Autoimmune Vesiculobullous Diseases",
-        audioText: "Autoimmune Vesiculobullous Diseases. Pemphigus vulgaris involves anti-desmoglein antibodies resulting in flaccid blisters and positive Nikolsky sign. Bullous Pemphigoid involves anti-hemidesmosome antibodies resulting in tense subepidermal blisters.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 120" width="100%" height="120" style="max-width:460px;">
-              <rect x="20" y="15" width="210" height="90" fill="#1e293b" stroke="#f43f5e" stroke-width="2" rx="8"/>
-              <text x="125" y="40" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Pemphigus Vulgaris</text>
-              <text x="125" y="60" fill="#cbd5e1" font-size="10" text-anchor="middle">• Anti-Desmoglein (Desmosome)</text>
-              <text x="125" y="75" fill="#cbd5e1" font-size="10" text-anchor="middle">• Intraepidermal Flaccid Blister</text>
-              <text x="125" y="90" fill="#fecdd3" font-size="10" font-weight="700" text-anchor="middle">• Positive Nikolsky Sign</text>
-              <rect x="250" y="15" width="210" height="90" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="8"/>
-              <text x="355" y="40" fill="#34d399" font-size="12" font-weight="700" text-anchor="middle">Bullous Pemphigoid</text>
-              <text x="355" y="60" fill="#cbd5e1" font-size="10" text-anchor="middle">• Anti-BP180/230 (Hemidesmosome)</text>
-              <text x="355" y="75" fill="#cbd5e1" font-size="10" text-anchor="middle">• Subepidermal Tense Blister</text>
-              <text x="355" y="90" fill="#a7f3d0" font-size="10" font-weight="700" text-anchor="middle">• Negative Nikolsky Sign</text>
-            </svg>
-            <div class="diagram-caption">Figure 6.1: High-Yield Diagnostic Distinctions for Autoimmune Blistering</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Differentiating autoimmune blistering diseases is a classic high-yield medical topic based on target antigens and blister tension.</p>
-          <div class="section-card">
-            <h3>⚖️ Pemphigus Vulgaris vs. Bullous Pemphigoid</h3>
-            <p class="chapter-text">
-              • <strong>Pemphigus Vulgaris:</strong> IgG antibodies against Desmoglein 1/3 (desmosomes). Causes intraepidermal acantholysis, <em>flaccid blisters</em> that rupture easily, oral mucosal involvement, and <strong>Positive Nikolsky Sign</strong>.<br><br>
-              • <strong>Bullous Pemphigoid:</strong> IgG antibodies against BP180/BP230 (hemidesmosomes). Causes subepidermal cleavage, <em>tense firm blisters</em>, rare mucosal involvement, and <strong>Negative Nikolsky Sign</strong>.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "An elderly patient presents with tense, intact cutaneous bullae. Direct immunofluorescence reveals linear IgG along the basement membrane zone. What is the diagnosis?",
-          options: ["Pemphigus Vulgaris", "Bullous Pemphigoid", "Dermatitis Herpetiformis", "Erythema Multiforme"],
-          correct: 1,
-          rationale: "Correct! Bullous Pemphigoid is characterized by anti-hemidesmosome antibodies leading to subepidermal cleavage and tense blisters with negative Nikolsky sign."
+
+        function nextLesson() {
+            const keys = Object.keys(lessons);
+            const currentIndex = keys.indexOf(currentLessonKey);
+            if(currentIndex < keys.length - 1) {
+                loadLesson(keys[currentIndex + 1]);
+            } else {
+                alert('Congratulations! You have completed all available lessons.');
+                location.reload();
+            }
         }
-      },
-      {
-        id: 6,
-        badge: "Module 4 • Infections",
-        title: "7. Bacterial & Viral Cutaneous Infections",
-        audioText: "Bacterial and Viral Cutaneous Infections. Impetigo presents with honey-colored crusts. Shingles presents as painful grouped vesicles along a single sensory dermatome.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="210" height="70" fill="rgba(245,158,11,0.15)" stroke="#f59e0b" stroke-width="2" rx="8"/>
-              <text x="125" y="50" fill="#fbbf24" font-size="12" font-weight="700" text-anchor="middle">Impetigo (S. aureus)</text>
-              <text x="125" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Classic Honey-Colored Crusts</text>
-              <rect x="250" y="20" width="210" height="70" fill="rgba(14,165,233,0.15)" stroke="#0ea5e9" stroke-width="2" rx="8"/>
-              <text x="355" y="50" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">Herpes Zoster (VZV)</text>
-              <text x="355" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Unilateral Dermatomal Vesicles</text>
-            </svg>
-            <div class="diagram-caption">Figure 7.1: Hallmark Clinical Features of Cutaneous Infections</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Cutaneous infections present distinct morphological patterns depending on the pathogen class.</p>
-          <div class="section-card">
-            <h3>🧫 Bacterial Cutaneous Pathologies</h3>
-            <p class="chapter-text">
-              • <strong>Impetigo:</strong> Superficial infection presenting with characteristic "honey-colored crusts". Caused by <em>S. aureus</em> or <em>S. pyogenes</em>.<br>
-              • <strong>Erysipelas vs Cellulitis:</strong> Erysipelas shows sharply demarcated raised superficial edema; cellulitis exhibits ill-defined deep dermal/subcutaneous erythema and warmth.
-            </p>
-          </div>
-          <div class="section-card">
-            <h3>🦠 Viral Infections</h3>
-            <p class="chapter-text">
-              • <strong>Herpes Zoster (Shingles):</strong> Reactivation of latent VZV in sensory dorsal root ganglia presenting as painful grouped vesicles in a unilateral dermatomal distribution.<br>
-              • <strong>Molluscum Contagiosum:</strong> Poxvirus causing firm, dome-shaped umbilicated papules.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "Which hallmark morphological crust is characteristic of superficial non-bullous impetigo?",
-          options: ["Black eschar", "Honey-colored crust", "Silvery micaceous scale", "Adherent hemorrhagic crust"],
-          correct: 1,
-          rationale: "Correct! Non-bullous impetigo classically presents with fragile vesicles that rupture to release dried serous exudate forming golden honey-colored crusts."
-        }
-      },
-      {
-        id: 7,
-        badge: "Module 4 • Infections",
-        title: "8. Fungal & Parasitic Cutaneous Infections",
-        audioText: "Fungal and Parasitic Cutaneous Infections. Dermatophytoses present as annular scaling plaques diagnosed by KOH prep showing hyphae. Scabies presents as intense nocturnal itching with interdigital web burrows.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <circle cx="120" cy="55" r="35" fill="none" stroke="#10b981" stroke-width="3"/>
-              <circle cx="120" cy="55" r="20" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4"/>
-              <text x="120" y="100" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">Tinea: Annular Active Border</text>
-              <rect x="250" y="20" width="210" height="70" fill="rgba(244,63,94,0.15)" stroke="#f43f5e" stroke-width="2" rx="8"/>
-              <text x="355" y="50" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Scabies (Sarcoptes)</text>
-              <text x="355" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Web Space Nocturnal Pruritus</text>
-            </svg>
-            <div class="diagram-caption">Figure 8.1: Diagnostic Visual Patterns for Superficial Mycoses & Parasites</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Fungal and ectoparasitic infestations represent very high-volume ambulatory dermatology visits.</p>
-          <div class="section-card">
-            <h3>🍄 Superficial Mycoses (Dermatophytes)</h3>
-            <p class="chapter-text">
-              • Characterized by active scaling borders with central clearing (annular plaques).<br>
-              • Diagnosed using <strong>KOH Preparation</strong> demonstrating segmented branching hyphae.<br>
-              • Named by anatomic location: <em>Tinea Capitis</em> (scalp), <em>Tinea Corporis</em> (body), <em>Tinea Pedis</em> (foot/athlete's foot), <em>Tinea Cruris</em> (groin).
-            </p>
-          </div>
-          <div class="section-card">
-            <h3>🕷️️ Ectoparasites: Scabies</h3>
-            <p class="chapter-text">
-              • Caused by <em>Sarcoptes scabiei</em> mite burrowing into stratum corneum.<br>
-              • Hallmark: Intense, generalized nocturnal pruritus with interdigital web space burrows.<br>
-              • First-line treatment: Topical Permethrin 5% cream applied neck-down.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "What diagnostic bed-side preparation confirms dermatophyte infection by dissolving keratin to reveal segmented branching hyphae?",
-          options: ["Tzanck Smear", "Gram Stain", "KOH (Potassium Hydroxide) Prep", "Darkfield Microscopy"],
-          correct: 2,
-          rationale: "Correct! Potassium Hydroxide (KOH) dissolves keratinaceous debris while leaving fungal cell walls intact for direct microscopic visualization."
-        }
-      },
-      {
-        id: 8,
-        badge: "Module 5 • Oncology",
-        title: "9. Benign & Premalignant Neoplasms",
-        audioText: "Benign and Premalignant Neoplasms. Seborrheic keratosis is a benign stuck-on lesion. Actinic keratosis is a gritty sandpaper-like lesion caused by solar radiation that can progress to squamous cell carcinoma.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="210" height="70" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="8"/>
-              <text x="125" y="50" fill="#fbbf24" font-size="12" font-weight="700" text-anchor="middle">Seborrheic Keratosis</text>
-              <text x="125" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Benign "Stuck-On" Verrucous</text>
-              <rect x="250" y="20" width="210" height="70" fill="#1e293b" stroke="#f43f5e" stroke-width="2" rx="8"/>
-              <text x="355" y="50" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Actinic Keratosis</text>
-              <text x="355" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">Gritty Sandpaper ➔ SCC Precursor</text>
-            </svg>
-            <div class="diagram-caption">Figure 9.1: Clinical Distinction Between Common Benign and Dysplastic Tumors</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Distinguishing benign skin growths from premalignant dysplasia is fundamental in cutaneous oncology.</p>
-          <div class="section-card">
-            <h3>🔍 Diagnostic Comparison</h3>
-            <p class="chapter-text">
-              • <strong>Seborrheic Keratosis:</strong> Most common benign epithelial tumor. Verrucous waxy papule with a classic "stuck-on" appearance. Shows horn cysts on dermoscopy.<br><br>
-              • <strong>Actinic Keratosis (AK):</strong> Rough, gritty "sandpaper-like" erythematous papule on sun-exposed skin. Represents dysplasia of lower epidermal keratinocytes; precursor to invasive <strong>Squamous Cell Carcinoma (SCC)</strong>.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "Actinic keratosis represents localized epidermal dysplasia resulting from chronic ultraviolet radiation and is a precursor for which invasive malignancy?",
-          options: ["Basal Cell Carcinoma", "Squamous Cell Carcinoma", "Malignant Melanoma", "Merkel Cell Carcinoma"],
-          correct: 1,
-          rationale: "Correct! Actinic Keratosis represents intraepidermal keratinocyte dysplasia with potential progression to invasive Squamous Cell Carcinoma."
-        }
-      },
-      {
-        id: 9,
-        badge: "Module 5 • Oncology",
-        title: "10. Malignant Cutaneous Neoplasms",
-        audioText: "Malignant Cutaneous Neoplasms. Basal Cell Carcinoma features pearly papules and telangiectasias. Melanoma evaluation uses the ABCDE criteria: Asymmetry, Border irregularity, Color variation, Diameter over 6mm, and Evolving.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 120" width="100%" height="120" style="max-width:460px;">
-              <rect x="20" y="20" width="80" height="80" fill="rgba(14,165,233,0.15)" stroke="#0ea5e9" stroke-width="2" rx="8"/>
-              <text x="60" y="55" fill="#38bdf8" font-size="18" font-weight="800" text-anchor="middle">A B C</text>
-              <text x="60" y="75" fill="#38bdf8" font-size="18" font-weight="800" text-anchor="middle">D E</text>
-              <rect x="120" y="20" width="340" height="80" fill="#1e293b" stroke="#0284c7" stroke-width="1" rx="8"/>
-              <text x="135" y="40" fill="#f8fafc" font-size="11" font-weight="700">A: Asymmetry | B: Border Irregularity</text>
-              <text x="135" y="60" fill="#f8fafc" font-size="11" font-weight="700">C: Color Variation | D: Diameter &gt; 6mm</text>
-              <text x="135" y="80" fill="#14b8a6" font-size="11" font-weight="800">E: Evolving (Most Sensitive Indicator)</text>
-            </svg>
-            <div class="diagram-caption">Figure 10.1: ABCDE Mnemonic Guide for Melanoma Screening</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Early recognition of cutaneous malignancies dramatically improves patient prognosis and survival.</p>
-          <div class="section-card">
-            <h3>🦀 Malignant Skin Tumors</h3>
-            <p class="chapter-text">
-              • <strong>Basal Cell Carcinoma (BCC):</strong> Most common skin cancer. Pearly papule with rolled borders and telangiectasias. Rarely metastasizes.<br>
-              • <strong>Squamous Cell Carcinoma (SCC):</strong> Erythematous hyperkeratotic ulcerated nodule with potential for regional nodal metastasis.<br>
-              • <strong>Malignant Melanoma:</strong> Highly aggressive malignancy of melanocytes. Prognosis depends on <em>Breslow depth of invasion</em>.
-            </p>
-          </div>
-          <div class="clinical-note">
-            <div class="clinical-note-title">💡 ABCDE Criteria for Melanoma</div>
-            <strong>A:</strong> Asymmetry | <strong>B:</strong> Border Irregularity | <strong>C:</strong> Color Variation | <strong>D:</strong> Diameter &gt; 6 mm | <strong>E:</strong> Evolving over time.
-          </div>
-        `,
-        quiz: {
-          question: "Which single criterion in the ABCDE melanoma framework is considered the most sensitive indicator for malignant melanoma?",
-          options: ["Asymmetry", "Color Variation", "Diameter > 6mm", "Evolving over time"],
-          correct: 3,
-          rationale: "Correct! Evolving (changes in size, shape, color, or symptoms) is clinically regarded as the most sensitive single indicator for cutaneous melanoma."
-        }
-      },
-      {
-        id: 10,
-        badge: "Module 6 • Pediatrics",
-        title: "11. Pediatric Viral Exanthems & Birthmarks",
-        audioText: "Pediatric Viral Exanthems and Birthmarks. Parvovirus B19 causes slapped cheek erythema. HHV-6 causes Roseola Infantum with high fever dropping right as the rash appears.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="210" height="70" fill="rgba(244,63,94,0.15)" stroke="#f43f5e" stroke-width="2" rx="8"/>
-              <text x="125" y="50" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Fifth Disease (B19)</text>
-              <text x="125" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">"Slapped-Cheek" Exanthem</text>
-              <rect x="250" y="20" width="210" height="70" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2" rx="8"/>
-              <text x="355" y="50" fill="#34d399" font-size="12" font-weight="700" text-anchor="middle">Roseola (HHV-6)</text>
-              <text x="355" y="70" fill="#cbd5e1" font-size="10" text-anchor="middle">High Fever Drops ➔ Rash Appears</text>
-            </svg>
-            <div class="diagram-caption">Figure 11.1: Classic Clinical Timings of Pediatric Viral Rashes</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Pediatric dermatology requires evaluating acute viral rashes and congenital vascular anomalies.</p>
-          <div class="section-card">
-            <h3>👶 Classic Pediatric Exanthems</h3>
-            <p class="chapter-text">
-              • <strong>Measles (Rubeola):</strong> Cough, Coryza, Conjunctivitis + Koplik spots on buccal mucosa.<br>
-              • <strong>Erythema Infectiosum (Fifth Disease):</strong> Parvovirus B19 causing "slapped-cheek" facial rash followed by reticulated lacy body rash.<br>
-              • <strong>Roseola Infantum (Sixth Disease):</strong> HHV-6 causing high fever for 3-5 days, which drops precipitously right as a maculopapular trunk rash appears.
-            </p>
-          </div>
-          <div class="section-card">
-            <h3>🍓 Vascular Anomalies</h3>
-            <p class="chapter-text">
-              • <strong>Infantile Hemangioma:</strong> "Strawberry nevus". Proliferates during infancy and undergoes spontaneous involution.<br>
-              • <strong>Port-Wine Stain (Nevus Flammeus):</strong> Capillary malformation that grows proportionally with the child and does not regress; associated with Sturge-Weber syndrome.
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "A toddler experiences 4 days of high fever (39.5°C) without localizing signs. The fever suddenly drops normal, and a maculopapular rash breaks out on the trunk. What is the pathogen?",
-          options: ["Parvovirus B19", "Human Herpesvirus 6 (HHV-6)", "Coxsackievirus A16", "Measles Virus"],
-          correct: 1,
-          rationale: "Correct! Roseola Infantum (Exanthem Subitum) caused by HHV-6 classically presents with high fever that defervesces immediately prior to the appearance of a trunk rash."
-        }
-      },
-      {
-        id: 11,
-        badge: "Module 7 • Therapeutics",
-        title: "12. Dermatologic Pharmacology & Therapeutics",
-        audioText: "Dermatologic Pharmacology and Therapeutics. Topical steroids range from Class 1 ultra-potent to Class 7 mild. Biologics target specific inflammatory pathways like TNF-alpha and IL-17.",
-        diagram: `
-          <div class="diagram-box">
-            <svg viewBox="0 0 480 110" width="100%" height="110" style="max-width:460px;">
-              <rect x="20" y="20" width="210" height="70" fill="rgba(244,63,94,0.15)" stroke="#f43f5e" stroke-width="2" rx="8"/>
-              <text x="125" y="45" fill="#f43f5e" font-size="12" font-weight="700" text-anchor="middle">Class 1: Clobetasol</text>
-              <text x="125" y="65" fill="#cbd5e1" font-size="10" text-anchor="middle">Ultra-High Potency</text>
-              <text x="125" y="80" fill="#fecdd3" font-size="9" text-anchor="middle">Thick Palms/Soles Only</text>
-              <rect x="250" y="20" width="210" height="70" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2" rx="8"/>
-              <text x="355" y="45" fill="#34d399" font-size="12" font-weight="700" text-anchor="middle">Class 7: Hydrocortisone</text>
-              <text x="355" y="65" fill="#cbd5e1" font-size="10" text-anchor="middle">Low Potency</text>
-              <text x="355" y="80" fill="#a7f3d0" font-size="9" text-anchor="middle">Safe for Face & Intertriginous Folds</text>
-            </svg>
-            <div class="diagram-caption">Figure 12.1: Anatomic Prescribing Guidelines for Topical Corticosteroid Classes</div>
-          </div>
-        `,
-        content: `
-          <p class="chapter-text">Mastering vehicle selection and potency classes is crucial for effective dermatologic prescribing.</p>
-          <div class="section-card">
-            <h3>🧴 Topical Corticosteroid Potency Classes</h3>
-            <p class="chapter-text">
-              • <strong>Class 1 (Ultra-High Potency):</strong> E.g., Clobetasol propionate 0.05%. Used for thick, lichenified plaques (palms/soles). Never use on face or intertriginous areas.<br>
-              • <strong>Class 4-5 (Medium Potency):</strong> E.g., Triamcinolone acetonide 0.1%. Used for body trunk and limbs.<br>
-              • <strong>Class 7 (Low Potency):</strong> E.g., Hydrocortisone 1%. Safe for thin face, eyelid, and intertriginous skin.
-            </p>
-          </div>
-          <div class="section-card">
-            <h3>💉 Targeted Biologic Therapies</h3>
-            <p class="chapter-text">
-              • <strong>TNF-alpha Inhibitors:</strong> Adalimumab, Infliximab (used in Psoriasis & Hidradenitis Suppurativa).<br>
-              • <strong>IL-17A Inhibitors:</strong> Secukinumab (highly effective in moderate-to-severe Psoriasis).<br>
-              • <strong>IL-4/IL-13 Inhibitors:</strong> Dupilumab (targeted therapy for severe Atopic Dermatitis).
-            </p>
-          </div>
-        `,
-        quiz: {
-          question: "Which topical corticosteroid potency class is appropriate for treating thin skin areas such as facial or intertriginous flexural dermatitis?",
-          options: ["Class 1 (Ultra-High Potency)", "Class 2 (High Potency)", "Class 4 (Medium Potency)", "Class 7 (Low Potency)"],
-          correct: 3,
-          rationale: "Correct! Class 7 low-potency corticosteroids (e.g., hydrocortisone 1%) are preferred on facial and intertriginous areas to prevent cutaneous atrophy and striae."
-        }
-      }
-    ];
-
-    // --- STATE MANAGEMENT ---
-    let currentChapterIndex = 0;
-    let completedChapters = new Set(JSON.parse(localStorage.getItem('dermacore_completed') || '[]'));
-    let speechSynth = window.speechSynthesis;
-    let isSpeaking = false;
-
-    // --- UI RENDER FUNCTIONS ---
-    function renderChapter() {
-      const ch = chapters[currentChapterIndex];
-      const isCompleted = completedChapters.has(ch.id);
-
-      document.getElementById('audio-chapter-title').textContent = `Audio Lecture: ${ch.title}`;
-      stopAudio();
-
-      const quizHtml = `
-        <div class="quiz-card">
-          <div class="quiz-header">💡 High-Yield Board Review Quiz</div>
-          <div class="quiz-question">${ch.quiz.question}</div>
-          <div class="quiz-options">
-            ${ch.quiz.options.map((opt, i) => `
-              <button class="quiz-opt-btn" onclick="checkQuizAnswer(${i},${ch.quiz.correct}, '${ch.quiz.rationale.replace(/'/g, "\\'")}')">${opt}</button>
-            `).join('')}
-          </div>
-          <div id="quiz-feedback" class="quiz-feedback"></div>
-        </div>
-      `;
-
-      const html = `
-        <span class="chapter-badge">${ch.badge}</span>
-        <h1 class="chapter-title">${ch.title}</h1>
-        ${ch.diagram}
-        ${ch.content}
-        ${quizHtml}
-        <button class="btn-complete" onclick="toggleChapterComplete(${ch.id})">
-          ${isCompleted ? '✓ Completed (Click to Reset)' : '✓ Mark Chapter as Completed'}
-        </button>
-      `;
-
-      document.getElementById('chapter-container').innerHTML = html;
-
-      // Update active state in sidebar
-      const navBtns = document.querySelectorAll('.nav-btn');
-      navBtns.forEach((btn, idx) => {
-        btn.classList.toggle('active', idx === currentChapterIndex);
-        btn.classList.toggle('completed', completedChapters.has(idx));
-      });
-
-      updateProgress();
-    }
-
-    function checkQuizAnswer(selected, correct, rationale) {
-      const btns = document.querySelectorAll('.quiz-opt-btn');
-      const feedback = document.getElementById('quiz-feedback');
-
-      btns.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === correct) {
-          btn.classList.add('correct');
-        } else if (idx === selected) {
-          btn.classList.add('incorrect');
-        }
-      });
-
-      feedback.classList.add('show');
-      if (selected === correct) {
-        feedback.className = 'quiz-feedback show correct-bg';
-        feedback.innerHTML = `<strong>Correct!</strong> ${rationale}`;
-      } else {
-        feedback.className = 'quiz-feedback show incorrect-bg';
-        feedback.innerHTML = `<strong>Incorrect.</strong> ${rationale}`;
-      }
-    }
-
-    function loadChapter(idx) {
-      currentChapterIndex = idx;
-      renderChapter();
-    }
-
-    function toggleChapterComplete(id) {
-      if (completedChapters.has(id)) {
-        completedChapters.delete(id);
-      } else {
-        completedChapters.add(id);
-      }
-      localStorage.setItem('dermacore_completed', JSON.stringify([...completedChapters]));
-      renderChapter();
-    }
-
-    function updateProgress() {
-      const pct = Math.round((completedChapters.size / chapters.length) * 100);
-      document.getElementById('progress-fill').style.width = `${pct}%`;
-      document.getElementById('progress-text').textContent = `${pct}% Completed`;
-    }
-
-    // --- AUDIO LECTURE (TEXT-TO-SPEECH) ---
-    function toggleAudio() {
-      if (isSpeaking) {
-        stopAudio();
-      } else {
-        playAudio();
-      }
-    }
-
-    function playAudio() {
-      if (!speechSynth) return;
-      speechSynth.cancel();
-
-      const ch = chapters[currentChapterIndex];
-      const utterance = new SpeechSynthesisUtterance(ch.audioText);
-      utterance.rate = 0.95;
-
-      utterance.onend = () => {
-        isSpeaking = false;
-        updateAudioBtn();
-      };
-
-      speechSynth.speak(utterance);
-      isSpeaking = true;
-      updateAudioBtn();
-    }
-
-    function stopAudio() {
-      if (speechSynth) {
-        speechSynth.cancel();
-      }
-      isSpeaking = false;
-      updateAudioBtn();
-    }
-
-    function updateAudioBtn() {
-      const btn = document.getElementById('btn-play-audio');
-      const icon = document.getElementById('play-icon');
-      const text = document.getElementById('play-text');
-      const status = document.getElementById('audio-status');
-
-      if (isSpeaking) {
-        btn.classList.add('stop');
-        icon.textContent = '⏹';
-        text.textContent = 'Pause';
-        status.textContent = 'Playing Audio Lecture...';
-      } else {
-        btn.classList.remove('stop');
-        icon.textContent = '▶';
-        text.textContent = 'Listen';
-        status.textContent = 'Text-to-Speech Ready';
-      }
-    }
-
-    // INITIALIZE
-    window.addEventListener('DOMContentLoaded', () => {
-      renderChapter();
-    });
-  </script>
+    </main>
 </body>
 </html>
