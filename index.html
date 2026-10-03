@@ -38,10 +38,10 @@
             z-index: 1000;
             background: white;
             border: 1px solid var(--border-color);
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -79,7 +79,7 @@
 
         .sidebar-header {
             padding: 20px;
-            padding-left: 60px; /* Space for hamburger */
+            padding-left: 65px; /* Space for hamburger button */
             border-bottom: 1px solid var(--border-color);
             font-size: 1.2rem;
             font-weight: bold;
@@ -125,7 +125,7 @@
         /* Main Workspace Area */
         main {
             flex: 1;
-            margin-left: 0; /* Default since sidebar starts minimized */
+            margin-left: 0;
             width: 100%;
             height: 100vh;
             overflow-y: auto;
@@ -219,7 +219,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .topic-image-container img {
@@ -240,6 +239,7 @@
             border-top: 1px solid var(--border-color);
             padding-top: 25px;
             margin-top: 30px;
+            padding-bottom: 50px;
         }
 
         .complete-btn {
@@ -291,13 +291,6 @@
             background: #f1f5f9;
         }
 
-        .quiz-option.selected {
-            background: #eff6ff;
-            border-color: var(--primary);
-            color: var(--primary-dark);
-            font-weight: 500;
-        }
-
         .next-lesson-btn {
             display: none;
             background: var(--primary);
@@ -320,7 +313,7 @@
             sidebar.minimized {
                 transform: translateX(-100%);
             }
-            sidebar.mobile-visible {
+            sidebar.open {
                 transform: translateX(0);
             }
         }
@@ -341,12 +334,12 @@
         <div class="sidebar-content">
             <div class="module-group">
                 <div class="module-title">Module 1: Skin Anatomy</div>
-                <a href="#" class="topic-link" onclick="loadLesson('epidermis')">1.1 The Epidermis Layers</a>
-                <a href="#" class="topic-link" onclick="loadLesson('dermis')">1.2 Dermis & Appendages</a>
+                <a href="#" class="topic-link" onclick="loadLesson('epidermis', event)">1.1 The Epidermis Layers</a>
+                <a href="#" class="topic-link" onclick="loadLesson('dermis', event)">1.2 Dermis & Appendages</a>
             </div>
             <div class="module-group">
                 <div class="module-title">Module 2: Pathologies</div>
-                <a href="#" class="topic-link" onclick="loadLesson('acne')">2.1 Acne Vulgaris Breakdown</a>
+                <a href="#" class="topic-link" onclick="loadLesson('acne', event)">2.1 Acne Vulgaris Breakdown</a>
             </div>
         </div>
     </sidebar>
@@ -386,9 +379,7 @@
                 
                 <div class="quiz-panel" id="quizPanel">
                     <h3 id="quizQuestion">Quick Check</h3>
-                    <div class="quiz-options" id="quizOptions">
-                        <!-- Options injected dynamically -->
-                    </div>
+                    <div class="quiz-options" id="quizOptions"></div>
                     <button class="next-lesson-btn" id="nextLessonBtn" onclick="nextLesson()">Proceed to Next Lesson ➔</button>
                 </div>
             </div>
@@ -400,7 +391,7 @@
         const lessons = {
             'epidermis': {
                 title: "1.1 The Epidermis Layers",
-                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", // Medical/cellular visualization style
+                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
                 text: "The epidermis is the outermost layer of the skin, providing a waterproof barrier and creating our skin tone. It consists of multiple sub-layers including the stratum corneum, stratum granulosum, stratum spinosum, and stratum basale where keratinocytes originate and push upward.",
                 question: "Which sub-layer of the epidermis is responsible for the continuous production of new keratinocytes?",
                 options: ["Stratum Corneum", "Stratum Basale", "Stratum Lucidum"],
@@ -408,7 +399,7 @@
             },
             'dermis': {
                 title: "1.2 Dermis & Appendages",
-                image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80", // Structural tissue visualization
+                image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
                 text: "Located right beneath the epidermis, the dermis contains tough connective tissue, hair follicles, and sweat glands. It is primarily divided into two layers: the papillary layer and the reticular layer, housing robust collagen and elastin networks.",
                 question: "What primary protein fibers provide the dermis with its strength and tensile resilience?",
                 options: ["Collagen", "Keratin", "Melanin"],
@@ -416,7 +407,7 @@
             },
             'acne': {
                 title: "2.1 Acne Vulgaris Breakdown",
-                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80", // Microscopic medical representation
+                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
                 text: "Acne vulgaris is a long-term skin condition that occurs when hair follicles become clogged with dead skin cells and oil from the skin. It manifests as blackheads, whiteheads, pimples, or deeper cysts, heavily tied to sebaceous gland activity.",
                 question: "Which gland is primarily responsible for the excess sebum production seen in acne flare-ups?",
                 options: ["Eccrine sweat gland", "Sebaceous gland", "Apocrine gland"],
@@ -432,17 +423,28 @@
             const body = document.body;
             
             sidebar.classList.toggle('minimized');
+            sidebar.classList.toggle('open');
             body.classList.toggle('sidebar-open');
         }
 
+        // Open content list and jump straight to the first lesson when Get Started is clicked
         function startLearning() {
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('lessonScreen').style.display = 'block';
+            
+            // Load first lesson
             loadLesson('epidermis');
+
+            // Explicitly open/unhide the sidebar content panel
+            const sidebar = document.getElementById('appSidebar');
+            sidebar.classList.remove('minimized');
+            sidebar.classList.add('open');
+            document.body.classList.add('sidebar-open');
         }
 
-        // Load a specific lesson and auto-minimize/hide sidebar panel
-        function loadLesson(key) {
+        // Load a specific lesson and minimize/hide the sidebar automatically
+        function loadLesson(key, event) {
+            if (event) event.preventDefault();
             currentLessonKey = key;
             const data = lessons[key];
 
@@ -470,15 +472,15 @@
 
             // Highlight active link in sidebar
             document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
-            event && event.target && event.target.classList.add('active');
-
-            // Minimize/hide the sidebar panel automatically when a lesson loads
-            if(window.innerWidth <= 768) {
-                document.getElementById('appSidebar').classList.remove('mobile-visible');
-            } else {
-                document.getElementById('appSidebar').classList.add('minimized');
-                document.body.classList.remove('sidebar-open');
+            if(event && event.target) {
+                event.target.classList.add('active');
             }
+
+            // Minimize/hide the sidebar panel once a lesson loads so it doesn't block the screen
+            const sidebar = document.getElementById('appSidebar');
+            sidebar.classList.add('minimized');
+            sidebar.classList.remove('open');
+            document.body.classList.remove('sidebar-open');
         }
 
         // Reveal Quiz only after hitting Complete Lesson
@@ -495,6 +497,7 @@
                     opt.style.background = '#dcfce7';
                     opt.style.borderColor = '#10b981';
                     opt.style.color = '#065f46';
+                    opt.style.fontWeight = 'bold';
                 } else if(idx === selectedIndex) {
                     opt.style.background = '#fee2e2';
                     opt.style.borderColor = '#ef4444';
@@ -514,6 +517,6 @@
                 location.reload();
             }
         }
-    </main>
+    </script>
 </body>
 </html>
