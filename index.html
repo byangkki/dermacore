@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dermacore Adult Care - Gabay sa Ligtas, Magandang Balat at Katawan</title>
+    <title>Dermacore Adult Care - Ultimate Confidence & Body Guide</title>
     <style>
         :root {
             --primary: #3b82f6;
@@ -218,24 +218,37 @@
             color: #1e3a8a;
         }
 
-        .audio-controls {
+        /* Audio Controls with Voice Selector */
+        .audio-container {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .audio-top-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .audio-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 6px;
-            font-weight: bold;
             transition: background 0.2s;
         }
 
@@ -247,6 +260,23 @@
             font-size: 0.85rem;
             color: #64748b;
             font-style: italic;
+        }
+
+        .voice-select-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .voice-select-group select {
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-size: 0.85rem;
+            max-width: 240px;
         }
 
         .topic-image-container {
@@ -443,7 +473,7 @@
 
     <!-- Sidebar / Content Panel -->
     <sidebar id="appSidebar" class="minimized">
-        <div class="sidebar-header">🌿 Dermacore Adult Care</div>
+        <div class="sidebar-header">🌿 Dermacore Ultimate</div>
         <div class="sidebar-content">
             <div class="module-group">
                 <div class="module-title">Module 1: Uri at Katangian ng Balat</div>
@@ -480,6 +510,19 @@
                 <a href="#" class="topic-link" onclick="loadLesson('mod7_doublechin', event)">7.1 Paano Mawawala ang Double Chin (Leeg at Panga)</a>
                 <a href="#" class="topic-link" onclick="loadLesson('mod7_bellyfat', event)">7.2 Solusyon sa Matigas o Malaking Tiyan (Belly Fat)</a>
             </div>
+            <div class="module-group">
+                <div class="module-title">Module 8: Glutes & Lower Body Confidence</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod8_glutesgrowth', event)">8.1 Gabay sa Pagpapaganda at Pagpapatibay ng Glutes</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod8_cellulite', event)">8.2 Pag-unawa at Pag-minimize ng Cellulites</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 9: Pawis at Body Freshness</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod9_sweatodor', event)">9.1 Solusyon sa Labis na Pawis at Body Odor</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 10: Ngiti at White Smile Care</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod10_whilesmile', event)">10.1 Puti ng Ngipin at Fresh Breath para sa Gandang Ngiti</a>
+            </div>
         </div>
     </sidebar>
 
@@ -487,12 +530,12 @@
     <main id="mainWorkspace">
         <!-- Welcome Screen -->
         <section id="welcomeScreen" class="welcome-screen">
-            <h1>Gabay Mo sa Malusog na Balat at Katawan 🌟</h1>
-            <p>Isang madaling intindihing gabay para sa mga adults na gustong maunawaan ang kanilang katawan, mapalakas ang tiwala sa sarili, at maayos ang mga problema sa mukha, balat, buhok, paa, hanggang sa double chin at tummy fat!</p>
+            <h1>Gabay Mo sa Kumpletong Kumpyansa at Ganda 🌟</h1>
+            <p>Isang malawak at madaling intindihing gabay para sa mga adults na naglalayong maunawaan ang buong katawan—mula mukha, buhok, balat, kili-kili, paa, double chin, tummy fat, hanggang sa glutes at personal freshness!</p>
             
             <div class="motivational-card">
                 <h3>💡 Tandaan Mo Ito:</h3>
-                <p>"Ang tunay na kumpyansa ay nagmumula sa pag-unawa at pag-aalaga sa sarili mo. Hindi mo kailangang maging perpekto; ang mahalaga ay alam mo kung paano pagandahin ang iyong overall look."</p>
+                <p>"Ang tiwala sa sarili ay lumalago kapag inaalagaan mo ang bawat detalye ng iyong katawan ayon sa iyong kagustuhan at kalusugan."</p>
             </div>
 
             <button class="start-btn" onclick="startLearning()">Simulan ang Pag-aaral! 🚀</button>
@@ -502,12 +545,22 @@
         <section id="lessonScreen" class="lesson-container">
             <div class="lesson-header">
                 <h2 id="lessonTitle">Lesson Title</h2>
-                <div class="audio-controls">
-                    <button class="audio-btn" onclick="toggleAudio()">🔊 Pakinggan ang Gabay</button>
-                    <span class="audio-status" id="audioStatus"></span>
-                </div>
             </div>
             
+            <!-- Audio Controls with Voice Selector Dropdown -->
+            <div class="audio-container">
+                <div class="audio-top-row">
+                    <button class="audio-btn" onclick="toggleAudio()">🔊 Pakinggan ang Gabay</button>
+                    <span class="audio-status" id="audioStatus">I-click para pakinggan</span>
+                </div>
+                <div class="voice-select-group">
+                    <label for="voiceSelect">Piliin ang Audio Voice:</label>
+                    <select id="voiceSelect" onchange="changeVoiceSelection()">
+                        <option value="">(Auto-detect pinakamalapit na boses)</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="topic-image-container">
                 <img id="lessonImage" src="" alt="Larawan ng Paksa">
             </div>
@@ -527,7 +580,7 @@
     </main>
 
     <script>
-        // Adult-Friendly & Tagalog Database with Confidence-Boosting Focus
+        // Ultimate Adult Confidence Database (Modules 1 to 10)
         const lessons = {
             'mod1_skintypes': {
                 title: "1.1 Alamin ang Iyong Skin Type (Oily, Dry, Combo)",
@@ -535,24 +588,18 @@
                 text: `
                     <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
                         <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Bakit kaya ang ganda ng resulta ng skincare ng iba pero nung ginamit mo, nagka-pimple ka o kaya naging sobrang tuyo ng mukha mo? Dahil magkaiba kayo ng skin type!</p>
+                        <p style="color: #1e3a8a;">Bakit kaya ang ganda ng resulta ng skincare ng iba pero nung ginamit mo, nagka-pimple ka? Dahil magkaiba kayo ng skin type!</p>
                     </div>
-
-                    <p>Bago ka bumili ng anumang produkto para gumanda ang kutis at lumabas ang kumpyansa mo, kailangan mong kilalanin ang mukha mo:</p>
+                    <p>Bago ka bumili ng anumang produkto, kailangan mong kilalanin ang mukha mo:</p>
                     <ul>
-                        <li><strong>Oily Skin:</strong> Mamantika ang buong mukha pagkalipas ng ilang oras, lalo na sa T-zone (noo, ilong, baba). Madaling tubuan ng tigyawat.</li>
+                        <li><strong>Oily Skin:</strong> Mamantika ang buong mukha, lalo na sa T-zone. Madaling tubuan ng tigyawat.</li>
                         <li><strong>Dry Skin:</strong> Parang laging hapdi o naninigas pagkatapos maghilamos. Kulang sa natural na langis.</li>
                         <li><strong>Combination Skin:</strong> Mamantika ang T-zone pero tuyo o normal ang pisngi.</li>
-                        <li><strong>Sensitive Skin:</strong> Madaling mamula, mahapdi, at nagrereact agad sa matapang na sabon o pabango.</li>
+                        <li><strong>Sensitive Skin:</strong> Madaling mamula at nagrereact agad sa matapang na sabon.</li>
                     </ul>
                 `,
                 quiz: [
-                    {
-                        q: "Aling bahagi ng mukha ang madalas maging mamantika sa mga taong may combination skin?",
-                        options: ["T-Zone (Noo, Ilong, Baba)", "Dulo ng tainga", "Pilikmata", "Labi"],
-                        correct: 0,
-                        explanation: "Tama! Ang T-zone ang sentro ng langis sa mga may combination skin."
-                    }
+                    { q: "Aling bahagi ng mukha ang madalas maging mamantika sa combination skin?", options: ["T-Zone (Noo, Ilong, Baba)", "Dulo ng tainga", "Pilikmata", "Labi"], correct: 0, explanation: "Tama! Ang T-zone ang sentro ng langis." }
                 ]
             },
             'mod1_barrier': {
@@ -561,23 +608,12 @@
                 text: `
                     <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
                         <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Kapag gumamit ka ng sobrang tapang na sabon o sabay-sabay na pampaputi, bakit parang humapdi ang mukha mo at madaling mamula sa init ng araw?</p>
+                        <p style="color: #1e3a8a;">Kapag gumamit ka ng sobrang tapang na sabon, bakit parang humapdi ang mukha mo at madaling mamula?</p>
                     </div>
-
-                    <p>Ang iyong balat ay may tinatawag na <strong>Skin Barrier</strong>. Sila ang mga semento (ceramides at lipids) na pumipigil para hindi pumasok ang polusyon at hindi lumabas ang moisture sa katawan mo.</p>
-
-                    <div class="clinical-case-box">
-                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
-                        <p>Kapag nasira ang barrier mo dahil sa maling produkto, magiging balat-sibuyas ka. Kailangan itong ibalik gamit ang gentle cleanser at moisturizer para sa malusog na glow.</p>
-                    </div>
+                    <p>Ang balat ay may tinatawag na <strong>Skin Barrier</strong> (ceramides at lipids) na pumipigil pumasok ang dumi. Kailangan itong ingatan gamit ang gentle products.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang tawag sa semento o taba sa balat na nagpapanatili ng moisture at pumipigil sa dumi?",
-                        options: ["Skin Barrier (Ceramides/Lipids)", "Mantika sa kusina", "Asin sa pawis", "Tubig alat"],
-                        correct: 0,
-                        explanation: "Magaling! Ang skin barrier ang pangunahing pananggalang ng mukha."
-                    }
+                    { q: "Ano ang tawag sa pananggalang ng balat na nagpapanatili ng moisture?", options: ["Skin Barrier", "Mantika sa kusina", "Asin sa pawis", "Tubig alat"], correct: 0, explanation: "Magaling! Skin barrier ang proteksyon ng mukha." }
                 ]
             },
             'mod2_brightening': {
@@ -586,309 +622,201 @@
                 text: `
                     <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
                         <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Gusto mo bang maging pantay at mas maliwanag ang kulay ng balat mo nang hindi nasusunog o nagiging pula kapag maaraw?</p>
+                        <p style="color: #1e3a8a;">Gusto mo bang maging pantay at mas maliwanag ang kulay ng balat mo nang hindi nasusunog sa araw?</p>
                     </div>
-
-                    <p>Ang pagpapaputi o brightening ay hindi tungkol sa pagpapalit ng kulay, kundi pag-alis ng mga nangingitim na peklat at pagpapanumbalik ng natural na kintab ng balat para mas lalo kang pumogi o gumanda sa tingin ng iba at sa sarili mo.</p>
-
-                    <div class="clinical-case-box">
-                        <h4>🔍 Ang Rule #1:</h4>
-                        <p>Hinding-hindi gaganda ang balat mo kung hindi ka nagsusuot ng <strong>Sunscreen</strong> araw-araw! Ang UV rays ang dahilan kung bakit pabalik-balik ang itim at peklat.</p>
-                    </div>
+                    <p>Ang brightening ay pag-alis ng dark spots at peklat. Huwag kalimutan ang Rule #1: **Sunscreen** araw-araw para protektahan ang kutis laban sa UV rays.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang pinakamahalagang produkto na kailangan mong isuot araw-araw para maprotektahan ang balat laban sa UV rays?",
-                        options: ["Sunscreen", "Mantsa remover", "Toothpaste", "Pabango"],
-                        correct: 0,
-                        explanation: "Tama! Sunscreen ang susi para maprotektahan ang balat laban sa araw."
-                    }
+                    { q: "Anong produkto ang kailangan isuot araw-araw para hindi mangitim at masunog ang balat?", options: ["Sunscreen", "Mantsa remover", "Toothpaste", "Pabango"], correct: 0, explanation: "Tama! Sunscreen ang susi laban sa UV rays." }
                 ]
             },
             'mod2_vitamins': {
                 title: "2.2 Bitamina at Sangkap (Vitamin C, Niacinamide, Glutathione)",
                 image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Nagkalat ang mga bitamina sa online shops. Alin ba dyan ang totoo at epektibo para sa glowing skin?</p>
-                    </div>
-
                     <ul>
-                        <li><strong>Vitamin C:</strong> Pampatingkad ng mukha, pamatay ng dark spots, at panlaban sa aging.</li>
-                        <li><strong>Niacinamide (Vitamin B3):</strong> Pampaliit ng pores, pampakalma sa namamagang balat, at pantanggal ng oily shine.</li>
-                        <li><strong>Glutathione:</strong> Makapangyarihang antioxidant na tumutulong linisin ang katawan mula sa toxins at nagbibigay ng pantay na kutis.</li>
+                        <li><strong>Vitamin C:</strong> Pampatingkad ng mukha at panlaban sa dark spots.</li>
+                        <li><strong>Niacinamide:</strong> Pampaliit ng pores at pampakalma sa oily skin.</li>
+                        <li><strong>Glutathione:</strong> Antioxidant na tumutulong linisin ang katawan mula sa toxins.</li>
                     </ul>
                 `,
                 quiz: [
-                    {
-                        q: "Anong bitamina ang kilala sa pagpapakalma ng balat, pagpapaliit ng pores, at pagbawas ng oil sa mukha?",
-                        options: ["Niacinamide (Vitamin B3)", "Vitamin K", "Tubig ulan", "Asin"],
-                        correct: 0,
-                        explanation: "Magaling! Niacinamide ang paborito para sa pores at oily skin."
-                    }
+                    { q: "Anong bitamina ang paborito para sa pores at oily skin?", options: ["Niacinamide (Vitamin B3)", "Vitamin K", "Tubig ulan", "Asin"], correct: 0, explanation: "Magaling! Niacinamide ang tumutulong sa pores." }
                 ]
             },
             'mod3_discoloration': {
                 title: "3.1 Bakit Nangingitim ang Kili-Kili at Bikini Area?",
                 image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Sino ba sa atin ang hindi nahihiya kapag nagsusuot ng sleeveless o swimsuit tapos mapapansin mong mas maitim ang kili-kili o singit mo?</p>
-                    </div>
-
-                    <p>Ang mga selula sa balat (Melanocytes) ay naglalabas ng itim na tinta kapag sila ay naiirita o nasasaktan:</p>
-                    <ul>
-                        <li><strong>Friction o Alitan:</strong> Masisikip na underwear o damit na nagkikiskisan.</li>
-                        <li><strong>Maling Pag-ahit:</strong> Paggamit ng blunted razors na sumusugat sa balat.</li>
-                        <li><strong>Hormones:</strong> Pagbabago sa hormones o mataas na insulin.</li>
-                    </ul>
+                    <p>Ang melanocytes sa balat ay naglalabas ng itim na tinta kapag sila ay naiirita dahil sa friction ng masikip na damit o maling pag-ahit.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang pangunahing dahilan kung bakit nagiging madilim o maitim ang kili-kili at singit?",
-                        options: ["Friction o alitan at iritasyon sa pag-ahit", "Kakulangan sa tulog", "Pagkain ng kanin", "Pag-inom ng malamig na tubig"],
-                        correct: 0,
-                        explanation: "Tama! Ang iritasyon at friction ang madalas nag-trigger ng pigmentation doon."
-                    }
+                    { q: "Ano ang pangunahing dahilan ng nangingitim na kili-kili at singit?", options: ["Friction at iritasyon sa pag-ahit", "Kakulangan sa tulog", "Pagkain ng kanin", "Pag-inom ng tubig"], correct: 0, explanation: "Tama! Friction at iritasyon ang dahilan." }
                 ]
             },
             'mod3_treatment': {
                 title: "3.2 Paano Ito Ligtas na Paputiin at Alagaan",
                 image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Paano natin ibabalik ang kumpyansa tuwing magsuot ng damit na may alindog nang hindi nasusunog sa matatapang na pampaputi?</p>
-                    </div>
-
-                    <p>Mga mabisang hakbang para pumuti at kuminis ang sensitive areas:</p>
-                    <ul>
-                        <li>Gumamit ng mga product na may <strong>Alpha Arbutin o Glycolic Acid</strong> para mag-exfoliate nang dahan-dahan.</li>
-                        <li>Magpalit ng hair removal method: Subukan ang laser hair removal sa halip na mag-ahit araw-araw.</li>
-                        <li>Magsuot ng maluwag na damit para mabawasan ang friction.</li>
-                    </ul>
+                    <p>Gumamit ng Alpha Arbutin o Glycolic Acid, at subukan ang laser hair removal para maiwasan ang sugat mula sa pag-ahit.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Alin sa mga sumusunod ang ligtas na sangkap para tumulong magpaputi ng mga dark spots sa kili-kili at singit?",
-                        options: ["Alpha Arbutin o Glycolic Acid", "Mantika at asin", "Grades ng gas", "Pulbos na bato"],
-                        correct: 0,
-                        explanation: "Magaling! Alpha Arbutin at mild acids ang tumutulong magpatingkad nang ligtas."
-                    }
+                    { q: "Alin ang ligtas na sangkap para magpaputi ng dark spots sa singit?", options: ["Alpha Arbutin o Glycolic Acid", "Mantika at asin", "Gas", "Pulbos na bato"], correct: 0, explanation: "Tama! Alpha arbutin ang mabisang sangkap." }
                 ]
             },
             'mod4_hairfall': {
                 title: "4.1 Bakit Nalalagas ang Buhok? (Sanhi at Stress)",
                 image: "https://images.unsplash.com/photo-1512290900722-9a70f8a85d39?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Bakit kaya tuwing maliligo o magsusuklay ka, parang ang dami ng buhok na naiiwan sa kamay mo? Paano ito makakaapekto sa mukha at itsura mo?</p>
-                    </div>
-
-                    <p>Ang hairfall ay pwedeng dulot ng:</p>
-                    <ul>
-                        <li><strong>Telogen Effluvium:</strong> Matinding stress sa buhay, puyat, o pagkakasakit kaya sabay-sabay na nalalagas ang buhok.</li>
-                        <li><strong>Hormones (Androgenetic Alopecia):</strong> Namamana o pagka-kalbo sa lalaki o manipis na buhok sa tuktok ng babae habang tumatanda.</li>
-                    </ul>
+                    <p>Ang hairfall ay maaaring dulot ng telogen effluvium (stress at puyat) o kaya ay pamamana sa pamilya.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang tawag sa biglaang paglalagas ng buhok na kadalasang dulot ng matinding stress o puyat?",
-                        options: ["Telogen Effluvium", "Pagtubo ng ngipin", "Balat-sibuyas", "Paskong dumarating"],
-                        correct: 0,
-                        explanation: "Tama! Telogen effluvium ang tawag sa stress-related hair fall."
-                    }
+                    { q: "Ano ang tawag sa paglalagas ng buhok na dulot ng stress at puyat?", options: ["Telogen Effluvium", "Pagtubo ng ngipin", "Balat-sibuyas", "Pasko"], correct: 0, explanation: "Magaling! Telogen effluvium ang tawag dito." }
                 ]
             },
             'mod4_hairvitamins': {
                 title: "4.2 Biotin, Zinc, at Tamang Alaga sa Buhok",
                 image: "https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Effective ba ang pag-inom ng mga bitamina para kumapal ulit ang buhok at bumalik ang iyong porma at kumpyansa?</p>
-                    </div>
-
-                    <p>Para lumakas ang ugat ng buhok:</p>
-                    <ul>
-                        <li><strong>Biotin (Vitamin B7):</strong> Tumutulong sa pagbuo ng keratin para maging matibay ang hibla ng buhok.</li>
-                        <li><strong>Zinc at Iron:</strong> Kumakalinga sa mga follicle para hindi sila manghina.</li>
-                        <li>Huwag gumamit ng mainit na blower araw-araw at huwag ding itali nang sobrang higpit ang buhok.</li>
-                    </ul>
+                    <p>Uminom ng Biotin (Vitamin B7) para sa keratin at tibay ng buhok, at iwasan ang sobrang higpit na pagtali.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Anong bitamina o B-complex ang sikat na pampatibay ng buhok, kuko, at balat?",
-                        options: ["Biotin (Vitamin B7)", "Vitamin Z", "Vitamin O", "Asukal"],
-                        correct: 0,
-                        explanation: "Magaling! Biotin ang kilalang bitamina para sa lakas ng buhok at kuko."
-                    }
+                    { q: "Anong bitamina ang kilala sa pagpapatibay ng buhok at kuko?", options: ["Biotin (Vitamin B7)", "Vitamin Z", "Vitamin O", "Asukal"], correct: 0, explanation: "Tama! Biotin ang sikat para sa buhok." }
                 ]
             },
             'mod5_acnebumps': {
                 title: "5.1 Mga Pula at Namamagang Bumps sa Mukha",
                 image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Bakit kaya kahit adult na tayo, may tumutubo pa ring masakit at malalim na bukol sa baba o panga tuwing malapit na ang regla o dahil sa stress sa trabaho?</p>
-                    </div>
-
-                    <p>Hormonal acne o deep cystic bumps ito. Nangyayari kapag ang langis sa ilalim ay hinarangan ng hormones kaya lumalalim ang pamamaga at sumisira sa magandang mukha.</p>
-
-                    <div class="clinical-case-box">
-                        <h4>🔍 Solusyon:</h4>
-                        <p>Gumamit ng mga sangkap na may <strong>Salicylic Acid (BHA)</strong> para linisin ang loob ng baradong pores, at huwag na huwag pipigain para maiwasan ang peklat.</p>
-                    </div>
+                    <p>Hormonal cystic acne ito na karaniwang tumutubo sa panga. Gamutin ito ng **Salicylic Acid** at huwag pipigain.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Anong sangkap ang mabisang pumasok sa loob ng baradong pores para tunawin ang langis at dumi sa tigyawat?",
-                        options: ["Salicylic Acid (BHA)", "Mantika ng niyog", "Asin sa dagat", "Mainit na tubig"],
-                        correct: 0,
-                        explanation: "Tama! Salicylic acid ang hari para sa oily pores at acne."
-                    }
+                    { q: "Anong sangkap ang pumapasok sa pores para tunawin ang langis ng tigyawat?", options: ["Salicylic Acid (BHA)", "Mantika", "Asin", "Tubig"], correct: 0, explanation: "Tama! Salicylic acid ang mabisang BHA." }
                 ]
             },
             'mod5_moleswarts': {
                 title: "5.2 Ngalan, Warts, at Moles na May Buhok",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">May nakikita ka bang dark brown na parang nunal minsan tinutubuan pa ng mahabang buhok? O kaya maliliit na skin tags sa leeg na nakakaabala sa pananamit mo?</p>
-                    </div>
-
-                    <p>Ito ay mga benign skin growths:</p>
-                    <ul>
-                        <li><strong>Moles na may buhok (Nevi):</strong> Normal at mabait ito. Ang buhok ay patunay na malusog at buhay ang ugat sa ilalim nito.</li>
-                        <li><strong>Skin Tags o Warts:</strong> Maliliit na umbok sa leeg dahil sa friction o HPV virus. Pwedeng ipatanggal nang ligtas sa dermatologist sa pamamagitan ng cautery.</li>
-                    </ul>
+                    <p>Ang hairy moles ay kadalasang normal at benign. Ang skin tags sa leeg ay maaalis nang ligtas sa pamamagitan ng cautery.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Kapag ang nunal ay tinutubuan ng buhok, ano ang ibig sabihin nito sa kalusugan ng nunal?",
-                        options: ["Kadalasan ay normal at mabait ito", "Kailangan na itong hiwain agad", "Sintomas ito ng lagnat", "Mawawala ito bukas"],
-                        correct: 0,
-                        explanation: "Magaling! Ang hairy mole ay kadalasang normal at benign."
-                    }
+                    { q: "Ano ang ibig sabihin ng nunal na tinutubuan ng buhok?", options: ["Kadalasan ay normal at mabait ito", "Kailangan hiwain agad", "Sintomas ng lagnat", "Mawawala bukas"], correct: 0, explanation: "Tama! Normal ang hairy moles." }
                 ]
             },
             'mod6_corns': {
                 title: "6.1 Bakit Pabalik-balik ang Matigas na Balat sa Paa?",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Bakit kaya ang mga daliri sa paa o gilid ng sakong ay nagkakaroon ng matigas na balat (kurad) na kahit anong kayod mo ay pabalik-balik lang?</p>
-                    </div>
-
-                    <p>Ang <strong>corn</strong> o <strong>kurad</strong> ay paraan ng balat para ipagtanggol ang sarili laban sa patuloy na alitan at diin mula sa masikip na sapatos.</p>
+                    <p>Ang kurad o corn ay proteksyon ng balat sa patuloy na friction ng masikip na sapatos.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang pangunahing sanhi ng pabalik-balik na kurad o corn sa mga daliri sa paa?",
-                        options: ["Patuloy na alitan at presyon mula sa masikip na sapatos", "Kakulangan sa bitamina C", "Masyadong malinis na medyas", "Pag-inom ng kape"],
-                        correct: 0,
-                        explanation: "Tama! Pressure at friction ang nagpapatigas sa balat kaya nagiging corn."
-                    }
+                    { q: "Ano ang sanhi ng pabalik-balik na kurad sa paa?", options: ["Alitan at presyon mula sa masikip na sapatos", "Bitamina C", "Medyas", "Kape"], correct: 0, explanation: "Tama! Friction mula sa sapatos ang dahilan." }
                 ]
             },
             'mod6_cornsfix': {
                 title: "6.2 Tamang Pag-alis at Pag-iwas sa Kurad",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Paano ba tuluyang mawawala ang matigas na kurad sa paa nang hindi nasusugatan o naiimpeksyon para komportable kang maglakad?</p>
-                    </div>
-
-                    <p>Para maalis ito nang maayos:</p>
-                    <ul>
-                        <li>Gumamit ng mga ointment o plaster na may <strong>Salicylic Acid</strong> para dahan-dahang tunawin ang patay at matigas na balat.</li>
-                        <li>I-babad ang paa sa maligamgam na tubig bago dahan-dahang kayurin gamit ang pumice stone.</li>
-                        <li>Bumili ng sapatos na maluwag at may malambot na insoles.</li>
-                    </ul>
+                    <p>Gamitin ang Salicylic Acid plasters at ibabad sa maligamgam na tubig bago kayurin ng pumice stone.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Anong acid ang karaniwang ginagamit sa mga corn plasters para tunawin ang matigas na kurad sa paa?",
-                        options: ["Salicylic Acid", "Asukal syrup", "Lemon juice lamang", "Sabon panlaba"],
-                        correct: 0,
-                        explanation: "Magaling! Salicylic acid ang tumutulong magpalambot at mag-alis ng corn."
-                    }
+                    { q: "Anong acid ang ginagamit sa corn plasters?", options: ["Salicylic Acid", "Asukal syrup", "Lemon juice", "Sabon"], correct: 0, explanation: "Magaling! Salicylic acid ang nagpapalambot ng corn." }
                 ]
             },
             'mod7_doublechin': {
                 title: "7.1 Paano Mawawala ang Double Chin (Leeg at Panga)",
                 image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Sino sa atin ang hindi naiinis kapag tumingin sa salamin o kaya ay may kumuha ng litrato mo mula sa ibaba, tapos makikita mong may 'double chin' o lumalawlaw na taba sa ilalim ng panga? Paano ba ito maaalis para mas luminaw ang pormahan ng mukha mo?</p>
-                    </div>
-
-                    <p>Ang double chin ay nangyayari kapag nagkakaroon ng labis na taba sa ilalim ng panga (submental fat), o kaya ay dahil sa paghina ng muscles sa leeg at kawalan ng tamang posture (gaya ng laging nakatungo sa cellphone—tinatawag na "tech neck").</p>
-
-                    <h4>Paano Ito Mapipigilan at Mapapaganda?</h4>
-                    <ul>
-                        <li><strong>Bawas Calories at Asukal:</strong> Walang "spot reduction" sa isang partikular na bahagi lamang ng mukha; pumapayat ang double chin kapag pangkalahatang bumababa ang taba sa katawan sa pamamagitan ng tamang pagkain at exercise.</li>
-                        <li><strong>Neck Exercises & Posture:</strong> Ituwid ang pag-upo at paglalakad. Subukang i-angat ang mukha at idikit ang dila sa roof ng bibig habang lumulunok para ma-stretch ang leeg.</li>
-                        <li><strong>Skincare at Firming Creams:</strong> Gumamit ng mga produkto na may **Peptides at Retinol** para humigpit at maging firm ang balat sa bandang leeg.</li>
-                    </ul>
-
-                    <div class="clinical-case-box">
-                        <h4>🔍 Confidence Booster Tip:</h4>
-                        <p>Ang maayos na tindig (good posture) at pag-angat ng ulo ay agad na nagtatago ng double chin at nagbibigay ng mas confident at matipunong itsura!</p>
-                    </div>
+                    <p>Ang submental fat o double chin ay nababawasan sa pangkalahatang pagbaba ng taba sa katawan, tamang posture, at neck exercises.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Ano ang tawag sa taba sa ilalim ng panga na nagiging sanhi ng double chin?",
-                        options: ["Submental Fat", "Belly Fat", "Facial Muscle", "Skin Barrier"],
-                        correct: 0,
-                        explanation: "Tama! Submental fat ang tawag sa taba sa ilalim ng baba o panga."
-                    }
+                    { q: "Ano ang tawag sa taba sa ilalim ng panga na nagiging double chin?", options: ["Submental Fat", "Belly Fat", "Facial Muscle", "Skin Barrier"], correct: 0, explanation: "Tama! Submental fat ang tawag dito." }
                 ]
             },
             'mod7_bellyfat': {
                 title: "7.2 Solusyon sa Matigas o Malaking Tiyan (Belly Fat)",
                 image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
-                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
-                        <p style="color: #1e3a8a;">Bakit kaya kahit anong damit ang suotin mo, parang laging lumalaki o lumalawit ang tiyan mo (tummy fat) pagkatapos kumain? Paano natin ito papaliitin para magkasya ulit ang mga paboritong damit at mabalik ang kumpyansa?</p>
-                    </div>
-
-                    <p>May dalawang klase ng tiyan: **Subcutaneous fat** (taba sa ibabaw na malambot hawakan) at **Visceral fat** (mapanganib na taba na nakapaligid sa loob ng bituka at organs).</p>
-
-                    <h4>Paano Mababawasan ang Tummy Fat?</h4>
-                    <ul>
-                        <li><strong>Bawasan ang Matatamis at Processed Foods:</strong> Ang sobrang asukal at softdrinks ang direktang dumidiretso bilang taba sa tiyan.</li>
-                        <li><strong>Dagdagan ang Protein at Fiber:</strong> Mas matagal kang busog sa itlog, isda, gulay, at prutas kaya hindi ka laging naghahanap ng kanin o junk foods.</li>
-                        <li><strong>Tulog at Bawas Stress:</strong> Ang puyat ay naglalabas ng stress hormone na tinatawag na **Cortisol**, na nag-uutos sa katawan na mag-imbak ng taba sa tiyan!</li>
-                    </ul>
-
-                    <div class="clinical-case-box">
-                        <h4>🔍 Tandaan:</h4>
-                        <p>Hindi kailangang maging "flat stomach" agad ang target. Ang pagbawas ng tummy fat ay para rin sa kalusugan ng puso at pangkalahatang lakas ng iyong katawan.</p>
-                    </div>
+                    <p>Bawasan ang asukal, dagdagan ang protein at fiber, at matulog nang sapat para mapababa ang stress hormone na **Cortisol**.</p>
                 `,
                 quiz: [
-                    {
-                        q: "Anong hormone ang tumataas kapag puyat o stress ka, na nagdudulot ng pag-iimbak ng taba sa tiyan?",
-                        options: ["Cortisol", "Vitamin C", "Biotin", "Melanin"],
-                        correct: 0,
-                        explanation: "Magaling! Cortisol ang stress hormone na nag-aambag sa belly fat."
-                    }
+                    { q: "Anong stress hormone ang tumataas kapag puyat ka na nagdudulot ng belly fat?", options: ["Cortisol", "Vitamin C", "Biotin", "Melanin"], correct: 0, explanation: "Magaling! Cortisol ang nag-aambag sa tummy fat." }
+                ]
+            },
+            'mod8_glutesgrowth': {
+                title: "8.1 Gabay sa Pagpapaganda at Pagpapatibay ng Glutes",
+                image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80",
+                text: `
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Gusto mo bang lumakas ang lower body at lumabas ang magandang porma ng glutes para mas maging confident ka suotin ang iyong paboritong damit o shorts?</p>
+                    </div>
+                    <p>Para lumaki at lumagay sa maayos na porma ang glutes (gluteal muscles):</p>
+                    <ul>
+                        <li><strong>Compound Exercises:</strong> Gawin ang squats, lunges, at hip thrusts na direktang nag-e-engganyo sa glute muscles.</li>
+                        <li><strong>Tamang Protein Intake:</strong> Kailangan ng muscles ang protina (itlog, manok, isda) para mag-repair at lumaki pagkatapos mag-ehersisyo.</li>
+                        <li><strong>Consistent Rest:</strong> Huwag kalimutang magpahinga para lumaki ang muscles.</li>
+                    </ul>
+                `,
+                quiz: [
+                    { q: "Anong uri ng ehersisyo ang epektibo para sa pagpapatibay at pagpormang ng glutes?", options: ["Hip Thrusts at Squats", "Pag-upo buong araw", "Pag-inom ng softdrinks", "Paghiga"], correct: 0, explanation: "Tama! Squats at hip thrusts ang pangunahing glute builder." }
+                ]
+            },
+            'mod8_cellulite': {
+                title: "8.2 Pag-unawa at Pag-minimize ng Cellulites",
+                image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=800&q=80",
+                text: `
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Normal ba ang mga tila 'orange peel' na itsura o dimples sa hita at glutes? Paano ito mababawasan?</p>
+                    </div>
+                    <p>Ang cellulites ay normal na taba sa ilalim ng balat na naka-push sa connective tissue. Lahat ng kababaihan ay nagkakaroon nito.</p>
+                    <ul>
+                        <li>Uminom ng maraming tubig para ma-hydrate ang balat.</li>
+                        <li>Mag-massage at mag-ehersisyo para lumakas ang sirkulasyon ng dugo.</li>
+                    </ul>
+                `,
+                quiz: [
+                    { q: "Normal ba ang pagkakaroon ng cellulites sa mga kababaihan?", options: ["Oo, normal na istruktura ito ng taba at tissues", "Sintomas ito ng malubhang sakit", "Kailangan itong operahan agad", "Mawawala sa isang araw"], correct: 0, explanation: "Magaling! Normal ang cellulites sa kababaihan." }
+                ]
+            },
+            'mod9_sweatodor': {
+                title: "9.1 Solusyon sa Labis na Pawis at Body Odor",
+                image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80",
+                text: `
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Paano natin maiiwasan ang pangangamoy at labis na pagpapawis para laging sariwa at panatag ang loob sa buong araw?</p>
+                    </div>
+                    <p>Ang pawis ay walang amoy; ang amoy ay nanggagaling sa bacteria na kumakain sa pawis.</p>
+                    <ul>
+                        <li>Gumamit ng antibacterial soap at antiperspirant.</li>
+                        <li>Magsuot ng breathable cotton clothes.</li>
+                    </ul>
+                `,
+                quiz: [
+                    { q: "Saan nanggagaling ang body odor sa katawan?", options: ["Sa bacteria na dumidikit at kumakain sa pawis", "Sa hangin sa labas", "Sa tubig na iniinom", "Sa buhok"], correct: 0, explanation: "Tama! Bacteria ang nagdudulot ng amoy kapag hinaluan ng pawis." }
+                ]
+            },
+            'mod10_whilesmile': {
+                title: "10.1 Puti ng Ngipin at Fresh Breath para sa Gandang Ngiti",
+                image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80",
+                text: `
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Ang magandang ngiti at sariwang hininga ang unang nagbibigay ng impresyon at nagpapalakas ng kumpyansa kapag nakikipag-usap ka.</p>
+                    </div>
+                    <p>Ugaliing mag-floss, mag-toothbrush dalawang beses sa isang araw, at magpatingin sa dentista taon-taon para iwas mantsa mula sa kape at tsaa.</p>
+                `,
+                quiz: [
+                    { q: "Ano ang pangunahing nagpapanatili ng white smile at malusog na ngipin?", options: ["Tamang pag-brush, pag-floss, at dental checkup", "Pag-inom ng softdrinks", "Pag-ihaw ng karne", "Pagtulog nang nakabuka ang bibig"], correct: 0, explanation: "Magaling! Ang tamang oral hygiene ang susi." }
                 ]
             }
         };
 
         let currentLessonKey = '';
+        let selectedVoiceIndex = null;
 
         // Toggle Sidebar visibility
         function toggleSidebar() {
@@ -898,6 +826,32 @@
             sidebar.classList.toggle('minimized');
             sidebar.classList.toggle('open');
             body.classList.toggle('sidebar-open');
+        }
+
+        // Populate available voices for the user selector dropdown
+        function populateVoices() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            const selectEl = document.getElementById('voiceSelect');
+            
+            // Keep the default option
+            selectEl.innerHTML = '<option value="">(Auto-detect pinakamalapit na boses)</option>';
+            
+            voices.forEach((v, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${v.name} (${v.lang})`;
+                selectEl.appendChild(option);
+            });
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        function changeVoiceSelection() {
+            const selectEl = document.getElementById('voiceSelect');
+            selectedVoiceIndex = selectEl.value === "" ? null : parseInt(selectEl.value);
         }
 
         // Get Started lands directly on content and loads first lesson
@@ -911,6 +865,8 @@
             sidebar.classList.remove('minimized');
             sidebar.classList.add('open');
             document.body.classList.add('sidebar-open');
+            
+            populateVoices();
         }
 
         // Load specific lesson
@@ -920,7 +876,7 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
             }
-            document.getElementById('audioStatus').innerText = '';
+            document.getElementById('audioStatus').innerText = 'I-click para pakinggan';
 
             currentLessonKey = key;
             const data = lessons[key];
@@ -977,7 +933,7 @@
             document.body.classList.remove('sidebar-open');
         }
 
-        // Audio reader with Filipino/Tagalog voice detection support
+        // Audio reader using the user's chosen voice or auto-detect
         function toggleAudio() {
             if (!('speechSynthesis' in window)) {
                 alert('Hindi suportado ng browser mo ang audio reader.');
@@ -1001,17 +957,28 @@
 
             const utterance = new SpeechSynthesisUtterance(speechString);
             utterance.rate = 0.95;
-            utterance.lang = 'fil-PH';
 
             const voices = window.speechSynthesis.getVoices();
-            const filipinoVoice = voices.find(voice => voice.lang.includes('fil') || voice.lang.includes('tl') || voice.name.toLowerCase().includes('filipino') || voice.name.toLowerCase().includes('tagalog'));
-            
-            if (filipinoVoice) {
-                utterance.voice = filipinoVoice;
+
+            // If user selected a specific voice from dropdown, use it!
+            if (selectedVoiceIndex !== null && voices[selectedVoiceIndex]) {
+                utterance.voice = voices[selectedVoiceIndex];
+            } else {
+                // Otherwise auto-detect Filipino/Tagalog voice
+                const filipinoVoice = voices.find(voice => 
+                    voice.lang.includes('fil') || 
+                    voice.lang.includes('tl') || 
+                    voice.name.toLowerCase().includes('filipino') || 
+                    voice.name.toLowerCase().includes('tagalog')
+                );
+                if (filipinoVoice) {
+                    utterance.voice = filipinoVoice;
+                    utterance.lang = 'fil-PH';
+                }
             }
 
             utterance.onstart = () => {
-                statusEl.innerText = '(Binabasa sa Tagalog...)';
+                statusEl.innerText = '(Binabasa...)';
             };
 
             utterance.onend = () => {
@@ -1019,19 +986,13 @@
             };
 
             utterance.onerror = () => {
-                statusEl.innerText = '';
+                statusEl.innerText = '(May error sa audio)';
             };
 
             window.speechSynthesis.cancel();
             setTimeout(() => {
                 window.speechSynthesis.speak(utterance);
             }, 100);
-        }
-
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                window.speechSynthesis.getVoices();
-            };
         }
 
         function completeLesson() {
@@ -1091,7 +1052,7 @@
                 loadLesson(keys[currentIndex + 1]);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                alert('Mabuhay! Natapos mo na ang lahat ng leksyon sa Dermacore Adult Care!');
+                alert('Mabuhay! Natapos mo na ang lahat ng leksyon sa Dermacore Ultimate Confidence Guide!');
                 location.reload();
             }
         }
