@@ -275,7 +275,7 @@
 
         .lesson-body h4 {
             color: var(--primary-dark);
-            margin-top: 20px;
+            margin-top: 22px;
             margin-bottom: 8px;
             font-size: 1.15rem;
         }
@@ -287,6 +287,29 @@
 
         .lesson-body li {
             margin-bottom: 6px;
+        }
+
+        /* Real-life scenario callout box */
+        .clinical-case-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 5px solid #10b981;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .clinical-case-box h4 {
+            color: #047857;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .clinical-case-box p {
+            margin-bottom: 0;
+            color: #065f46;
         }
 
         /* Complete Lesson & Quiz Area */
@@ -456,11 +479,11 @@
         <!-- Welcome Screen -->
         <section id="welcomeScreen" class="welcome-screen">
             <h1>Welcome to Dermacore</h1>
-            <p>Your premier interactive curriculum covering foundational histology to advanced clinical dermatology reviews.</p>
+            <p>Your premier interactive curriculum covering foundational histology to advanced clinical dermatology reviews with real-life case applications.</p>
             
             <div class="motivational-card">
                 <h3>💡 Daily Dermatological Insight</h3>
-                <p>"The skin is a window to internal health. Master its micro-anatomy and pathological signs to elevate your diagnostic precision today!"</p>
+                <p>"The skin is a window to internal health. Master its micro-anatomy and clinical presentation patterns to bridge textbook theory with real-world diagnosis!"</p>
             </div>
 
             <button class="start-btn" onclick="startLearning()">Get Started</button>
@@ -495,7 +518,7 @@
     </main>
 
     <script>
-        // Highly Detailed Textbook Curriculum Database (Modules 1-7)
+        // Highly Detailed Textbook Curriculum Database with Real-Life Clinical Scenarios (Modules 1-7)
         const lessons = {
             'mod1_epidermis': {
                 title: "1.1 Epidermis & Keratinocytes",
@@ -514,6 +537,11 @@
 
                     <h4>Key Cell Lines</h4>
                     <p>In addition to keratinocytes, which comprise over 90% of epidermal cells, the epidermis hosts melanocytes (pigment-producing cells residing in the basal layer that transfer melanin via melanosomes to shield DNA from UV radiation), Langerhans cells (antigen-presenting immune cells), and Merkel cells (mechanoreceptors sensitive to light touch).</p>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> Imagine examining a patient with severe chronic hand dermatitis who washes dishes or works in wet construction environments daily. The harsh chemicals strip away the lipid matrix secreted by the stratum granulosum. Without this waterproof seal, water escapes (transepidermal water loss) and irritants easily penetrate, causing painful skin fissures and chapping. Recognizing this micro-anatomy helps you explain to patients why intensive barrier repair creams (emollients containing ceramides) work much better than basic lotions.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -544,6 +572,11 @@
 
                     <h4>Cellular and Matrix Composition</h4>
                     <p>The principal resident cell of the dermis is the <strong>fibroblast</strong>, responsible for synthesizing the extracellular matrix (ECM), including collagen (types I and III), elastin, and glycosaminoglycans like hyaluronic acid. Other resident immune cells include mast cells (key mediators of immediate hypersensitivity and histamine release) and macrophages.</p>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When you see striae distensae (stretch marks) on a pregnant patient's abdomen or an individual who experienced rapid weight gain, you are looking at physical failure of the reticular dermis. Rapid mechanical stretching exceeds the tensile limit of type I collagen and elastic fiber networks synthesized by dermal fibroblasts, resulting in permanent micro-tears in the dermal matrix.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -565,6 +598,11 @@
                         <li><strong>Apocrine Glands:</strong> Confined primarily to intertriginous regions (axillae, groin, areolae), these glands empty their viscous, odorless protein-lipid secretions directly into hair follicles. Bacterial breakdown of these secretions produces distinctive body odor.</li>
                         <li><strong>Sebaceous Glands:</strong> Holocrine glands attached directly to pilosebaceous units. They secrete sebum—a rich mixture of triglycerides, wax esters, squalene, and cholesterol—into hair canals to lubricate and waterproof skin and hair.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> Patients presenting with hyperhidrosis (excessive sweating) of the palms or soles are dealing with overactive cholinergic stimulation of eccrine sweat glands. Conversely, areas rich in sebaceous glands (forehead, nose, upper chest) become greasy during puberty due to androgen surges, setting the stage for oil accumulation and clogged pores.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -587,6 +625,11 @@
                         <li><strong>Catagen Phase:</strong> A brief transitional regression phase (lasting a few weeks) where cell division ceases and the follicle shrinks.</li>
                         <li><strong>Telogen Phase:</strong> The resting phase where hair growth stops entirely before the old club hair eventually sheds and a new anagen cycle begins.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When evaluating a patient experiencing sudden hair shedding (telogen effluvium) 3 months after a severe physiological stressor (such as major surgery, childbirth, or severe illness), you recognize that stressors prematurely push a large wave of growing hair follicles (anagen) simultaneously into the resting phase (telogen), resulting in noticeable hair shedding months later.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -607,6 +650,11 @@
                         <li><strong>Papule:</strong> A solid, elevated, circumscribed skin lesion measuring less than 1 cm in diameter (e.g., small insect bites, early acne pimples).</li>
                         <li><strong>Plaque:</strong> A broad, elevated, plateau-like solid lesion greater than 1 cm in diameter, often formed by the coalescence of multiple papules (classic hallmark of psoriasis).</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> During a skin check, running your gloved fingertip gently across a lesion is the key diagnostic maneuver. If you cannot feel the spot at all, it is flat (macule or patch). If it catches your finger with palpable firmness and elevation, it is a papule or plaque. This distinction instantly narrows your differential diagnosis.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -627,6 +675,11 @@
                         <li><strong>Bulla:</strong> A large fluid-filled blister measuring 1 cm or greater in diameter, formed by intraepidermal or subepidermal cleavage (e.g., autoimmune pemphigus vulgaris or severe friction blisters).</li>
                         <li><strong>Pustule:</strong> A circumscribed skin elevation containing cloudy purulent exudate consisting of degenerated neutrophils and necrotic debris (e.g., bacterial folliculitis, pustular acne).</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When a patient presents with a painful cluster of small clear blisters on an erythematous base near their lip or genitalia, recognizing grouped vesicles immediately points you toward a herpes simplex virus outbreak, prompting viral swab or antiviral therapy.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -648,6 +701,11 @@
                         <li><strong>Bacterial Proliferation:</strong> <em>Cutibacterium acnes</em> (formerly <em>Propionibacterium acnes</em>), an anaerobic bacterium, multiplies rapidly within the lipid-rich occluded follicle.</li>
                         <li><strong>Inflammation:</strong> <em>C. acnes</em> triggers local immune responses, releasing pro-inflammatory cytokines that transform closed/open comedones into erythematous papules, pustules, and deep nodules.</li>
                     </ol>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> Understanding these 4 pathological steps explains why combination therapy works best in real life. You prescribe topical retinoids to unblock the keratin plug (step 1), benzoyl peroxide or antibiotics to reduce <em>C. acnes</em> (step 3), and anti-inflammatories to calm the red papules (step 4).</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -664,6 +722,11 @@
                 text: `
                     <p>Atopic dermatitis is a chronic, highly pruritic inflammatory skin disorder frequently associated with an atopic family history (asthma, allergic rhinitis). Key underlying mechanisms include genetic epidermal barrier defects—most notably loss-of-function mutations in the <strong>filaggrin</strong> gene—coupled with immune dysregulation skewed toward Th2 cytokine pathways (IL-4, IL-13).</p>
                     <p>Clinically, patients present with intense pruritus, xerosis (severe dryness), and erythematous weeping papules/plaques in acute phases, progressing to lichenified (thickened) plaques from chronic scratching.</p>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> You will often see infants with eczema presenting on the cheeks and extensor surfaces, while older children and adults present with characteristic flexural creases (antecubital and popliteal fossae). Recognizing this distribution pattern and the itch-scratch cycle is essential for diagnosis.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -680,6 +743,11 @@
                 text: `
                     <p>Psoriasis is a chronic immune-mediated inflammatory skin disease driven primarily by T-cell activation (Th1 and Th17 pathways) that prompts accelerated epidermal proliferation. Normal epidermal turnover drops from 28 days down to an abnormally rapid 3 to 5 days.</p>
                     <p>Classic plaque psoriasis manifests as sharply demarcated erythematous plaques covered by characteristic silvery-white micaceous scales. Scraping these scales reveals <strong>Auspitz sign</strong>—pinpoint capillary bleeding caused by trauma to elongated dermal papillae underlying a thin suprapapillary epidermis.</p>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> Look for well-demarcated pink plaques with silvery scale distributed symmetrically on extensor surfaces such as the elbows, knees, and scalp. Patients may also exhibit nail pitting or psoriatic arthritis joint pain.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -699,6 +767,11 @@
                         <li><strong>Impetigo:</strong> A highly contagious superficial skin infection common in children. Non-bullous impetigo evolves from small vesicles into characteristic honey-colored crusted plaques. Bullous impetigo features fragile fluid-filled blisters caused by staphylococcal exfoliative toxins.</li>
                         <li><strong>Cellulitis:</strong> An acute, spreading bacterial infection of the deep dermis and subcutaneous adipose tissue. Patients present with expanding local erythema, warmth, edema, and tenderness, frequently accompanied by systemic fever and chills.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> If a child presents to your clinic with sores around the nose and mouth covered by sticky, amber-colored crusts, suspect non-bullous impetigo. For adults presenting with unilateral lower leg redness, swelling, and tenderness following a minor scratch or tinea pedis breach, suspect spreading cellulitis.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -719,6 +792,11 @@
                         <li><strong>Candidiasis:</strong> Caused by <em>Candida albicans</em> yeast, thriving in warm, humid skin folds (intertrigo). It typically displays bright red macerated patches surrounded by characteristic satellite pustules.</li>
                     </ul>
                     <p><strong>Diagnostic Test:</strong> A bedside potassium hydroxide (KOH) skin scraping preparation dissolves keratinocytes while preserving fungal cell walls, displaying branching septate hyphae or yeast spores under microscopy.</p>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When examining an athlete with an itchy red ring on their forearm with a raised, scaly outer border and clearer center (ringworm/tinea corporis), performing a quick in-office KOH prep confirms the diagnosis before prescribing topical antifungals.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -738,6 +816,11 @@
                         <li><strong>Melanocytic Nevi (Moles):</strong> Benign proliferations of melanocytes that can be junctional, compound, or intradermal. They are typically symmetric, uniform in color, and well-demarcated.</li>
                         <li><strong>Seborrheic Keratosis:</strong> One of the most common benign epidermal neoplasms in older adults. They appear as well-circumscribed, pigmented plaques with a velvety, waxy, or rough 'stuck-on' appearance, often clinically mimicking melanoma despite being completely harmless.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> An older adult patient comes in worried about multiple rough, dark, "stuck-on" spots on their back. Knowing that these are benign seborrheic keratoses allows you to reassure the patient immediately without needing biopsies for every spot.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -761,6 +844,11 @@
                         <li><strong>D - Diameter:</strong> Greater than 6 mm (although melanomas can be smaller).</li>
                         <li><strong>E - Evolving:</strong> A lesion or mole that is changing in size, shape, color, or symptoms (itching, bleeding) over time.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When a patient points to a changing mole and says, "Doc, this one looks different from all my other moles and is starting to itch," your clinical suspicion should immediately rise. Evaluating it using the ABCDE criteria helps determine whether to perform an urgent diagnostic excisional biopsy.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -780,6 +868,11 @@
                         <li><strong>Topical Corticosteroids:</strong> Potent anti-inflammatory and immunosuppressive agents categorized by potency classes (I to VII). They inhibit phospholipase A2 and reduce inflammatory cytokine transcription. <em>Side effect of chronic overuse:</em> Skin atrophy, striae, and telangiectasias due to suppressed dermal collagen synthesis.</li>
                         <li><strong>Topical Retinoids:</strong> Vitamin A derivatives (e.g., tretinoin, adapalene) that normalize follicular keratinization and stimulate collagen production, widely used for acne vulgaris and photoaging.</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> If a patient has been applying a high-potency prescription steroid cream to their face for months to treat presumed eczema, they may develop skin thinning, visible spider veins (telangiectasias), and perioral dermatitis. Recognizing these side effects guides safe prescription potency selection and duration limits.</p>
+                    </div>
                 `,
                 quiz: [
                     {
@@ -799,6 +892,11 @@
                         <li><strong>Dermoscopy:</strong> A non-invasive handheld optical device utilizing polarized or non-polarized light and magnification. It eliminates surface reflection from the stratum corneum, enabling visualization of subsurface pigment networks, vascular structures, and globules crucial for diagnosing pigmented lesions.</li>
                         <li><strong>Skin Biopsy Techniques:</strong> Punch biopsy (obtaining a full-thickness cylindrical core of tissue), shave biopsy (for superficial epidermal/dermal lesions), and excisional biopsy (removing the entire lesion with a margin of normal skin for definitive histological staging).</li>
                     </ul>
+
+                    <div class="clinical-case-box">
+                        <h4>Real-Life Clinical Scenario & Identification</h4>
+                        <p><strong>In the Clinic:</strong> When examining a suspicious pigmented lesion where clinical distinction between a benign mole and melanoma is uncertain, you place a drop of immersion oil or use polarized light on the dermatoscope. Instantly, pigment networks and dots become clear, guiding whether a punch or excisional biopsy is warranted.</p>
+                    </div>
                 `,
                 quiz: [
                     {
