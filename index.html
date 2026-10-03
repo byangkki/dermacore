@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dermacore - Interactive Dermatology Learning</title>
+    <title>Dermacore - Advanced & Basic Dermatology Reviewer</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --accent: #06b6d4;
             --bg-main: #f8fafc;
-            --sidebar-width: 280px;
+            --sidebar-width: 300px;
             --text-color: #1e293b;
             --border-color: #e2e8f0;
         }
@@ -79,7 +79,7 @@
 
         .sidebar-header {
             padding: 20px;
-            padding-left: 65px; /* Space for hamburger button */
+            padding-left: 65px;
             border-bottom: 1px solid var(--border-color);
             font-size: 1.2rem;
             font-weight: bold;
@@ -98,21 +98,22 @@
 
         .module-title {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #64748b;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            margin-top: 10px;
         }
 
         .topic-link {
             display: block;
-            padding: 8px 12px;
+            padding: 7px 10px;
             color: #334155;
             text-decoration: none;
             border-radius: 6px;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
             transition: background 0.2s;
         }
 
@@ -193,20 +194,49 @@
         /* Lesson View */
         .lesson-container {
             display: none;
-            max-width: 800px;
+            max-width: 850px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 0 20px 60px 20px;
             width: 100%;
         }
 
         .lesson-header {
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .lesson-header h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #0f172a;
-            margin-bottom: 8px;
+        }
+
+        .audio-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .audio-btn:hover {
+            background: #334155;
+        }
+
+        .audio-status {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-left: 10px;
+            font-style: italic;
         }
 
         .topic-image-container {
@@ -239,14 +269,13 @@
             border-top: 1px solid var(--border-color);
             padding-top: 25px;
             margin-top: 30px;
-            padding-bottom: 50px;
         }
 
         .complete-btn {
             background: #10b981;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             border-radius: 6px;
             cursor: pointer;
@@ -261,34 +290,58 @@
             display: none;
             background: white;
             border: 1px solid var(--border-color);
-            padding: 25px;
-            border-radius: 8px;
+            padding: 30px;
+            border-radius: 10px;
             margin-top: 25px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
         .quiz-panel h3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
         }
 
         .quiz-options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .quiz-option {
-            padding: 10px 15px;
+            padding: 10px 14px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .quiz-option:hover {
             background: #f1f5f9;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
         }
 
         .next-lesson-btn {
@@ -296,10 +349,11 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            margin-top: 20px;
         }
 
         @media(max-width: 768px) {
@@ -328,58 +382,86 @@
         <span></span>
     </div>
 
-    <!-- Sidebar / Table of Contents Panel (Minimized by Default) -->
+    <!-- Sidebar / Content Panel (Minimized by default) -->
     <sidebar id="appSidebar" class="minimized">
         <div class="sidebar-header">Dermacore</div>
         <div class="sidebar-content">
             <div class="module-group">
-                <div class="module-title">Module 1: Skin Anatomy</div>
-                <a href="#" class="topic-link" onclick="loadLesson('epidermis', event)">1.1 The Epidermis Layers</a>
-                <a href="#" class="topic-link" onclick="loadLesson('dermis', event)">1.2 Dermis & Appendages</a>
+                <div class="module-title">Module 1: Basic Skin Anatomy</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod1_epidermis', event)">1.1 Epidermis & Keratinocytes</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod1_dermis', event)">1.2 Dermis & Fibroblasts</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 2: Pathologies</div>
-                <a href="#" class="topic-link" onclick="loadLesson('acne', event)">2.1 Acne Vulgaris Breakdown</a>
+                <div class="module-title">Module 2: Appendages & Glands</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod2_sebaceous', event)">2.1 Sebaceous & Sweat Glands</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod2_hair', event)">2.2 Hair Follicle Structure</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 3: Primary Lesions</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod3_macules', event)">3.1 Macules, Papules, & Plaques</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod3_vesicles', event)">3.2 Vesicles, Bullae, & Pustules</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 4: Inflammatory Skin Conditions</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_acne', event)">4.1 Acne Vulgaris & Comedones</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_eczema', event)">4.2 Atopic Dermatitis (Eczema)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_psoriasis', event)">4.3 Psoriasis Plaque Formations</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 5: Infections & Infestations</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod5_bacterial', event)">5.1 Bacterial: Impetigo & Cellulitis</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod5_fungal', event)">5.2 Fungal: Tinea & Candidiasis</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 6: Dermatologic Oncology</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod6_benign', event)">6.1 Benign Nevi & Seborrheic Keratosis</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod6_malignant', event)">6.2 Malignant: Melanoma & ABCDEs</a>
+            </div>
+            <div class="module-group">
+                <div class="module-title">Module 7: Advanced Therapies</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod7_topical', event)">7.1 Topical Retinoids & Steroids</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod7_procedures', event)">7.2 Dermatoscope & Clinical Diagnostics</a>
             </div>
         </div>
     </sidebar>
 
-    <!-- Main Dynamic Content Workspace -->
+    <!-- Main Dynamic Workspace -->
     <main id="mainWorkspace">
-        <!-- Full Display Welcome Page -->
+        <!-- Welcome Screen -->
         <section id="welcomeScreen" class="welcome-screen">
             <h1>Welcome to Dermacore</h1>
-            <p>Your comprehensive portal for mastering advanced dermatological concepts, structural layers, clinical assessments, and condition management.</p>
+            <p>Your premier interactive curriculum covering foundational histology to advanced clinical dermatology reviews.</p>
             
             <div class="motivational-card">
-                <h3>💡 Daily Learning Motivation</h3>
-                <p>"Every expert was once a beginner who refused to give up. Dive into your modules, understand the micro-structures of the skin, and sharpen your clinical eye today!"</p>
+                <h3>💡 Daily Dermatological Insight</h3>
+                <p>"The skin is a window to internal health. Master its micro-anatomy and pathological signs to elevate your diagnostic precision today!"</p>
             </div>
 
             <button class="start-btn" onclick="startLearning()">Get Started</button>
         </section>
 
-        <!-- Lesson View Template -->
+        <!-- Lesson Screen -->
         <section id="lessonScreen" class="lesson-container">
             <div class="lesson-header">
                 <h2 id="lessonTitle">Lesson Title</h2>
+                <div>
+                    <button class="audio-btn" onclick="toggleAudio()">🔊 Listen Lesson</button>
+                    <span class="audio-status" id="audioStatus"></span>
+                </div>
             </div>
             
-            <!-- Contextual Specific Image Container -->
             <div class="topic-image-container">
-                <img id="lessonImage" src="" alt="Topic Specific Illustration">
+                <img id="lessonImage" src="" alt="Contextual Topic Image">
             </div>
 
-            <div class="lesson-body" id="lessonText">
-                <!-- Dynamic text content loaded here -->
-            </div>
+            <div class="lesson-body" id="lessonText"></div>
 
             <div class="action-section">
-                <button class="complete-btn" id="completeBtn" onclick="completeLesson()">Mark Lesson Complete & Take Quiz</button>
+                <button class="complete-btn" id="completeBtn" onclick="completeLesson()">Complete Lesson & Take Quiz</button>
                 
                 <div class="quiz-panel" id="quizPanel">
-                    <h3 id="quizQuestion">Quick Check</h3>
-                    <div class="quiz-options" id="quizOptions"></div>
+                    <h3 id="quizHeader">Knowledge Check</h3>
+                    <div id="quizQuestionsContainer"></div>
                     <button class="next-lesson-btn" id="nextLessonBtn" onclick="nextLesson()">Proceed to Next Lesson ➔</button>
                 </div>
             </div>
@@ -387,31 +469,208 @@
     </main>
 
     <script>
-        // Lesson Database with contextually accurate images of specific parts
+        // Comprehensive Curriculum Database (Modules 1-7)
         const lessons = {
-            'epidermis': {
-                title: "1.1 The Epidermis Layers",
+            'mod1_epidermis': {
+                title: "1.1 Epidermis & Keratinocytes",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
-                text: "The epidermis is the outermost layer of the skin, providing a waterproof barrier and creating our skin tone. It consists of multiple sub-layers including the stratum corneum, stratum granulosum, stratum spinosum, and stratum basale where keratinocytes originate and push upward.",
-                question: "Which sub-layer of the epidermis is responsible for the continuous production of new keratinocytes?",
-                options: ["Stratum Corneum", "Stratum Basale", "Stratum Lucidum"],
-                correct: 1
+                text: "The epidermis is the avascular outermost layer of skin. It is stratified into layers including the stratum corneum, granulosum, spinosum, and basale. Keratinocytes form the primary cell line, migrating upward from the basal layer while synthesizing keratin and generating a protective waterproof barrier.",
+                quiz: [
+                    {
+                        q: "Which basal layer cell component is primarily responsible for generating new keratinocytes?",
+                        options: ["Melanocytes", "Stratum Basale Stem Cells", "Langerhans Cells", "Fibroblasts"],
+                        correct: 1,
+                        explanation: "Stem cells located in the stratum basale undergo active mitosis, pushing daughter cells upward into suprabasal epidermal compartments."
+                    },
+                    {
+                        q: "What waterproof protein accumulates heavily within cells of the stratum corneum?",
+                        options: ["Collagen", "Elastin", "Keratin", "Fibrin"],
+                        correct: 2,
+                        explanation: "Keratin is a tough, fibrous structural protein that provides the structural integrity and water impermeability of the outer skin layer."
+                    }
+                ]
             },
-            'dermis': {
-                title: "1.2 Dermis & Appendages",
+            'mod1_dermis': {
+                title: "1.2 Dermis & Fibroblasts",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
-                text: "Located right beneath the epidermis, the dermis contains tough connective tissue, hair follicles, and sweat glands. It is primarily divided into two layers: the papillary layer and the reticular layer, housing robust collagen and elastin networks.",
-                question: "What primary protein fibers provide the dermis with its strength and tensile resilience?",
-                options: ["Collagen", "Keratin", "Melanin"],
-                correct: 0
+                text: "Lying directly beneath the basement membrane, the dermis gives skin its mechanical strength and elasticity. It contains vascular networks, nerve endings, and specialized dermal cells called fibroblasts that synthesize extracellular matrix proteins like type I and III collagen.",
+                quiz: [
+                    {
+                        q: "Which primary dermal cell type synthesizes collagen and elastin fibers?",
+                        options: ["Adipocytes", "Fibroblasts", "Mast cells", "Macrophage"],
+                        correct: 1,
+                        explanation: "Fibroblasts are the principal connective tissue cells responsible for maintaining the dermal extracellular matrix framework."
+                    }
+                ]
             },
-            'acne': {
-                title: "2.1 Acne Vulgaris Breakdown",
+            'mod2_sebaceous': {
+                title: "2.1 Sebaceous & Sweat Glands",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
-                text: "Acne vulgaris is a long-term skin condition that occurs when hair follicles become clogged with dead skin cells and oil from the skin. It manifests as blackheads, whiteheads, pimples, or deeper cysts, heavily tied to sebaceous gland activity.",
-                question: "Which gland is primarily responsible for the excess sebum production seen in acne flare-ups?",
-                options: ["Eccrine sweat gland", "Sebaceous gland", "Apocrine gland"],
-                correct: 1
+                text: "Cutaneous glands include eccrine sweat glands (thermoregulation), apocrine glands (odor production in intertriginous zones), and holocrine sebaceous glands, which secrete lipid-rich sebum into hair follicles to lubricate skin and hair.",
+                quiz: [
+                    {
+                        q: "What secretory mechanism do sebaceous glands utilize to release sebum?",
+                        options: ["Merocrine", "Apocrine", "Holocrine", "Endocrine"],
+                        correct: 2,
+                        explanation: "Holocrine secretion involves the complete rupture and breakdown of mature glandular cells, releasing their lipid contents as sebum."
+                    }
+                ]
+            },
+            'mod2_hair': {
+                title: "2.2 Hair Follicle Structure",
+                image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+                text: "Hair follicles are complex invaginations of the epidermis housing dermal papillae, matrix cells, and arrector pili muscles. Growth cycles progress through anagen (active), catagen (regression), and telogen (resting) phases.",
+                quiz: [
+                    {
+                        q: "Which muscle contraction causes 'goosebumps' associated with hair follicles?",
+                        options: ["Frontalis muscle", "Arrector pili muscle", "Platysma", "Masseter"],
+                        correct: 1,
+                        explanation: "The arrector pili muscle is a smooth muscle band attached to hair follicles that contracts under sympathetic nervous stimulation."
+                    }
+                ]
+            },
+            'mod3_macules': {
+                title: "3.1 Macules, Papules, & Plaques",
+                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
+                text: "Primary dermatologic lesions define initial pathological changes. A macule is a flat, non-palpable color change smaller than 1 cm (e.g., freckle). A papule is solid and elevated (< 1 cm), while a plaque is a broader elevated plateau-like lesion (> 1 cm).",
+                quiz: [
+                    {
+                        q: "How is a macule structurally distinguished from a papule upon physical examination?",
+                        options: ["Macules are elevated; papules are flat", "Macules are flat and non-palpable; papules are solid and elevated", "Macules exceed 2 cm in diameter", "Macules contain purulent fluid"],
+                        correct: 1,
+                        explanation: "A macule is flat with color variance only, whereas a papule presents palpable elevation above the skin plane."
+                    }
+                ]
+            },
+            'mod3_vesicles': {
+                title: "3.2 Vesicles, Bullae, & Pustules",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+                text: "Fluid-filled skin lesions include small vesicles (< 1 cm, like herpes simplex blisters), large bullae (> 1 cm, like pemphigus vulgaris), and pustules containing cloudy purulent white blood cell exudate.",
+                quiz: [
+                    {
+                        q: "What defines a fluid-filled skin blister larger than 1 centimeter in clinical terminology?",
+                        options: ["Vesicle", "Bulla", "Nodule", "Wheal"],
+                        correct: 1,
+                        explanation: "A bulla is a circumscribed fluid-filled epidermal blister measuring greater than 1 cm in diameter."
+                    }
+                ]
+            },
+            'mod4_acne': {
+                title: "4.1 Acne Vulgaris & Comedones",
+                image: "https://images.unsplash.com/photo-1512290900722-9a70f8a85d39?auto=format&fit=crop&w=800&q=80",
+                text: "Acne vulgaris is driven by hyperkeratinization of the pilosebaceous unit, excess sebum secretion, proliferation of Cutibacterium acnes, and localized inflammation resulting in open/closed comedones, papules, and cysts.",
+                quiz: [
+                    {
+                        q: "Which bacterial microorganism plays a major role in the inflammatory cascade of acne vulgaris?",
+                        options: ["Staphylococcus aureus", "Cutibacterium acnes", "Pseudomonas aeruginosa", "Streptococcus pyogenes"],
+                        correct: 1,
+                        explanation: "Cutibacterium acnes thrives in anaerobic sebum-rich blocked follicles, triggering immune responses and inflammation."
+                    }
+                ]
+            },
+            'mod4_eczema': {
+                title: "4.2 Atopic Dermatitis (Eczema)",
+                image: "https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80",
+                text: "Atopic dermatitis is a chronic pruritic inflammatory skin disease linked to filaggrin gene mutations, epidermal barrier dysfunction, and Th2-mediated immune skewing, manifesting as dry erythematous scaly patches.",
+                quiz: [
+                    {
+                        q: "Which structural protein deficiency is commonly associated with defective skin barrier function in atopic dermatitis?",
+                        options: ["Filaggrin", "Keratin-14", "Dystrophin", "Spectrin"],
+                        correct: 0,
+                        explanation: "Filaggrin mutations impair keratinocyte aggregation and natural moisturizing factor production, causing severe skin dryness."
+                    }
+                ]
+            },
+            'mod4_psoriasis': {
+                title: "4.3 Psoriasis Plaque Formations",
+                image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80",
+                text: "Psoriasis is an immune-mediated chronic papulosquamous disease characterized by accelerated keratinocyte proliferation (reduced epidermal turnover time down to 3-5 days), featuring silvery-white scales over well-demarcated red plaques.",
+                quiz: [
+                    {
+                        q: "What physical bleeding sign typically appears when silvery scales are scraped off a psoriatic plaque?",
+                        options: ["Nikolsky's sign", "Auspitz sign", "Tinel's sign", "Darier's sign"],
+                        correct: 1,
+                        explanation: "Auspitz sign describes pinpoint capillary bleeding revealed after stripping thin psoriatic scales overlying elongated dermal papillae."
+                    }
+                ]
+            },
+            'mod5_bacterial': {
+                title: "5.1 Bacterial: Impetigo & Cellulitis",
+                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+                text: "Common skin infections include contagious honey-colored crusted impetigo (Staph/Strep) and deeper dermal spreading erythema known as cellulitis.",
+                quiz: [
+                    {
+                        q: "What distinct clinical feature characterizes non-bullous impetigo lesions?",
+                        options: ["Honey-colored crusts", "Targetoid rings", "Purplish bullae", "Flesh-colored umbilicated papules"],
+                        correct: 0,
+                        explanation: "Non-bullous impetigo typically ruptures rapidly to leave characteristic amber honey-colored crusts around the face and extremities."
+                    }
+                ]
+            },
+            'mod5_fungal': {
+                title: "5.2 Fungal: Tinea & Candidiasis",
+                image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
+                text: "Superficial dermatophytoses (tinea infections caused by Trichophyton, Microsporum, or Epidermophyton) present with annular active-border scaling, whereas Candida yeast flourishes in warm, moist skin folds.",
+                quiz: [
+                    {
+                        q: "What diagnostic microscopy technique utilizes potassium hydroxide (KOH) to reveal fungal hyphae?",
+                        options: ["Gram stain", "KOH skin scraping preparation", "Acid-fast stain", "Tzanck smear"],
+                        correct: 1,
+                        explanation: "KOH solution dissolves keratinocytes while preserving fungal cell walls, displaying branching septate hyphae or spores."
+                    }
+                ]
+            },
+            'mod6_benign': {
+                title: "6.1 Benign Nevi & Seborrheic Keratosis",
+                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+                text: "Benign cutaneous growths include acquired melanocytic nevi and stuck-on waxy seborrheic keratoses, which present harmless pigmented features common with aging.",
+                quiz: [
+                    {
+                        q: "Which classic clinical description best fits a seborrheic keratosis lesion?",
+                        options: ["Ulcerated pearly papule", "Stuck-on waxy hyperpigmented plaque", "Translucent fluid vesicle", "Painful erythematous subcutaneous nodule"],
+                        correct: 1,
+                        explanation: "Seborrheic keratoses characteristically look stuck onto the skin surface with a rough, velvety, or waxy texture."
+                    }
+                ]
+            },
+            'mod6_malignant': {
+                title: "6.2 Malignant: Melanoma & ABCDEs",
+                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
+                text: "Cutaneous malignancies include basal cell carcinoma, squamous cell carcinoma, and malignant melanoma. Melanoma screening uses the ABCDE criteria: Asymmetry, Border irregularity, Color variation, Diameter > 6mm, and Evolving morphology.",
+                quiz: [
+                    {
+                        q: "In the melanoma ABCDE screening guide, what does the letter 'E' stand for?",
+                        options: ["Erythematous", "Evolving", "Elevated", "Exudative"],
+                        correct: 1,
+                        explanation: "'E' stands for Evolving, representing a mole or skin lesion changing in size, shape, color, or symptoms over time."
+                    }
+                ]
+            },
+            'mod7_topical': {
+                title: "7.1 Topical Retinoids & Steroids",
+                image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
+                text: "Dermatological pharmacology heavily relies on topical corticosteroids for anti-inflammatory control and topical retinoids (vitamin A derivatives) for acne and anti-aging cell turnover regulation.",
+                quiz: [
+                    {
+                        q: "What is a primary cutaneous side effect of prolonged potent topical corticosteroid application?",
+                        options: ["Skin thickening and hyperpigmentation", "Skin atrophy and telangiectasias", "Excessive collagen hardening", "Increased subcutaneous fat accumulation"],
+                        correct: 1,
+                        explanation: "Topical steroid overuse suppresses local fibroblast collagen synthesis, leading to skin thinning (atrophy), striae, and visible blood vessels (telangiectasias)."
+                    }
+                ]
+            },
+            'mod7_procedures': {
+                title: "7.2 Dermatoscope & Clinical Diagnostics",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+                text: "Diagnostic procedures include dermoscopy (polarized and non-polarized magnification for subsurface pigmented pattern analysis), Wood's lamp examination, and diagnostic skin punch biopsies.",
+                quiz: [
+                    {
+                        q: "What main diagnostic advantage does a dermatoscope provide during skin examination?",
+                        options: ["It measures internal body temperature", "It visualizes subsurface skin structures hidden beneath the stratum corneum", "It completely replaces histopathology staining", "It delivers targeted ultraviolet therapy"],
+                        correct: 1,
+                        explanation: "Dermoscopy uses cross-polarized light and magnification to eliminate surface glare and visualize diagnostic subsurface vascular and pigment patterns."
+                    }
+                ]
             }
         };
 
@@ -427,24 +686,31 @@
             body.classList.toggle('sidebar-open');
         }
 
-        // Open content list and jump straight to the first lesson when Get Started is clicked
+        // Get Started lands directly on the content list and loads the first lesson
         function startLearning() {
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('lessonScreen').style.display = 'block';
             
             // Load first lesson
-            loadLesson('epidermis');
+            loadLesson('mod1_epidermis');
 
-            // Explicitly open/unhide the sidebar content panel
+            // Open/unhide the sidebar content panel
             const sidebar = document.getElementById('appSidebar');
             sidebar.classList.remove('minimized');
             sidebar.classList.add('open');
             document.body.classList.add('sidebar-open');
         }
 
-        // Load a specific lesson and minimize/hide the sidebar automatically
+        // Load specific lesson and minimize sidebar so user focuses on content
         function loadLesson(key, event) {
             if (event) event.preventDefault();
+            
+            // Stop any ongoing speech when switching lessons
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            document.getElementById('audioStatus').innerText = '';
+
             currentLessonKey = key;
             const data = lessons[key];
 
@@ -452,68 +718,162 @@
             document.getElementById('lessonImage').src = data.image;
             document.getElementById('lessonText').innerText = data.text;
 
-            // Reset quiz and action UI states
+            // Reset action & quiz elements
             document.getElementById('completeBtn').style.display = 'inline-block';
             document.getElementById('quizPanel').style.display = 'none';
             document.getElementById('nextLessonBtn').style.display = 'none';
 
-            // Setup Quiz Options
-            const optionsContainer = document.getElementById('quizOptions');
-            optionsContainer.innerHTML = '';
-            document.getElementById('quizQuestion').innerText = data.question;
+            // Build dynamic 1-5 quiz questions
+            const container = document.getElementById('quizQuestionsContainer');
+            container.innerHTML = '';
+            
+            data.quiz.forEach((qItem, qIdx) => {
+                const block = document.createElement('div');
+                block.className = 'question-block';
+                
+                const title = document.createElement('div');
+                title.className = 'question-title';
+                title.innerText = `Q${qIdx + 1}: ${qItem.q}`;
+                block.appendChild(title);
 
-            data.options.forEach((opt, index) => {
-                const div = document.createElement('div');
-                div.className = 'quiz-option';
-                div.innerText = opt;
-                div.onclick = () => selectOption(index, data.correct);
-                optionsContainer.appendChild(div);
+                const optsDiv = document.createElement('div');
+                optsDiv.className = 'quiz-options';
+
+                qItem.options.forEach((optText, optIdx) => {
+                    const optBtn = document.createElement('div');
+                    optBtn.className = 'quiz-option';
+                    optBtn.innerText = optText;
+                    optBtn.onclick = () => selectQuizOption(qIdx, optIdx, qItem.correct, block);
+                    optsDiv.appendChild(optBtn);
+                });
+
+                block.appendChild(optsDiv);
+
+                const expBox = document.createElement('div');
+                expBox.className = 'explanation-box';
+                expBox.id = `exp_${qIdx}`;
+                block.appendChild(expBox);
+
+                container.appendChild(block);
             });
 
-            // Highlight active link in sidebar
+            // Update active menu link state
             document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
             if(event && event.target) {
                 event.target.classList.add('active');
             }
 
-            // Minimize/hide the sidebar panel once a lesson loads so it doesn't block the screen
+            // Minimize sidebar panel after selection
             const sidebar = document.getElementById('appSidebar');
             sidebar.classList.add('minimized');
             sidebar.classList.remove('open');
             document.body.classList.remove('sidebar-open');
         }
 
-        // Reveal Quiz only after hitting Complete Lesson
+        // Audio reader with browser safety queue check
+        function toggleAudio() {
+            if (!('speechSynthesis' in window)) {
+                alert('Text-to-speech audio is not supported in your browser.');
+                return;
+            }
+
+            const statusEl = document.getElementById('audioStatus');
+            
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                statusEl.innerText = '(Stopped)';
+                return;
+            }
+
+            const titleText = document.getElementById('lessonTitle').innerText;
+            const bodyText = document.getElementById('lessonText').innerText;
+            const speechString = titleText + ". " + bodyText;
+
+            const utterance = new SpeechSynthesisUtterance(speechString);
+            utterance.rate = 1.0;
+
+            utterance.onstart = () => {
+                statusEl.innerText = '(Playing audio...)';
+            };
+
+            utterance.onend = () => {
+                statusEl.innerText = '(Finished)';
+            };
+
+            utterance.onerror = () => {
+                statusEl.innerText = '';
+            };
+
+            // Cancel any prior queues and start speech safely
+            window.speechSynthesis.cancel();
+            setTimeout(() => {
+                window.speechSynthesis.speak(utterance);
+            }, 100);
+        }
+
+        // Reveal quiz panel upon clicking Complete Lesson
         function completeLesson() {
             document.getElementById('completeBtn').style.display = 'none';
             document.getElementById('quizPanel').style.display = 'block';
         }
 
-        function selectOption(selectedIndex, correctIndex) {
-            const options = document.querySelectorAll('.quiz-option');
+        // Handle Quiz choice selection with instant feedback and explanation
+        function selectQuizOption(qIdx, selectedOptIdx, correctOptIdx, blockElement) {
+            const options = blockElement.querySelectorAll('.quiz-option');
+            const data = lessons[currentLessonKey];
+            const explanation = data.quiz[qIdx].explanation;
+            const expBox = blockElement.querySelector(`#exp_${qIdx}`);
+
+            // Lock options for this question
             options.forEach((opt, idx) => {
                 opt.style.pointerEvents = 'none';
-                if(idx === correctIndex) {
+                if (idx === correctOptIdx) {
                     opt.style.background = '#dcfce7';
                     opt.style.borderColor = '#10b981';
                     opt.style.color = '#065f46';
                     opt.style.fontWeight = 'bold';
-                } else if(idx === selectedIndex) {
+                } else if (idx === selectedOptIdx) {
                     opt.style.background = '#fee2e2';
                     opt.style.borderColor = '#ef4444';
                     opt.style.color = '#991b1b';
                 }
             });
-            document.getElementById('nextLessonBtn').style.display = 'inline-block';
+
+            // Display explanation
+            const isCorrect = (selectedOptIdx === correctOptIdx);
+            expBox.style.display = 'block';
+            expBox.style.background = isCorrect ? '#f0fdf4' : '#fef2f2';
+            expBox.style.borderColor = isCorrect ? '#10b981' : '#ef4444';
+            expBox.innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${explanation}`;
+
+            // Check if all questions in this quiz are answered to show Proceed button
+            checkAllAnswered();
+        }
+
+        function checkAllAnswered() {
+            const blocks = document.querySelectorAll('.question-block');
+            let answeredCount = 0;
+            blocks.forEach(b => {
+                const locked = b.querySelector('.quiz-option').style.pointerEvents === 'none';
+                if (locked) answeredCount++;
+            });
+
+            if (answeredCount === blocks.length) {
+                document.getElementById('nextLessonBtn').style.display = 'inline-block';
+            }
         }
 
         function nextLesson() {
+            // Stop speech
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
             const keys = Object.keys(lessons);
             const currentIndex = keys.indexOf(currentLessonKey);
-            if(currentIndex < keys.length - 1) {
+            if (currentIndex < keys.length - 1) {
                 loadLesson(keys[currentIndex + 1]);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                alert('Congratulations! You have completed all available lessons.');
+                alert('Congratulations! You have successfully completed Modules 1 through 7 of the Dermacore curriculum.');
                 location.reload();
             }
         }
