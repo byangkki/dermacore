@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dermacore - Comprehensive Dermatology Reviewer</title>
+    <title>Dermacore Kids - Ang Kwento at Alaga ng Balat Mo</title>
     <style>
         :root {
-            --primary: #2563eb;
+            --primary: #3b82f6;
             --primary-dark: #1d4ed8;
-            --accent: #06b6d4;
-            --bg-main: #f8fafc;
+            --accent: #10b981;
+            --bg-main: #f0fdf4;
             --sidebar-width: 320px;
             --text-color: #1e293b;
-            --border-color: #e2e8f0;
+            --border-color: #cbd5e1;
         }
 
         * {
@@ -37,11 +37,11 @@
             left: 15px;
             z-index: 1000;
             background: white;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--primary);
             padding: 10px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -51,8 +51,8 @@
         .menu-toggle span {
             display: block;
             width: 22px;
-            height: 2px;
-            background-color: var(--text-color);
+            height: 3px;
+            background-color: var(--primary);
             border-radius: 2px;
             transition: 0.3s;
         }
@@ -70,7 +70,7 @@
             z-index: 999;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.05);
         }
 
         sidebar.minimized {
@@ -81,9 +81,10 @@
             padding: 20px;
             padding-left: 65px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--primary);
+            background: #eff6ff;
         }
 
         .sidebar-content {
@@ -97,30 +98,30 @@
         }
 
         .module-title {
-            font-weight: 600;
+            font-weight: bold;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #64748b;
+            color: #047857;
             margin-bottom: 6px;
             margin-top: 12px;
         }
 
         .topic-link {
             display: block;
-            padding: 7px 10px;
+            padding: 8px 12px;
             color: #334155;
             text-decoration: none;
             border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 3px;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
             transition: background 0.2s;
         }
 
         .topic-link:hover, .topic-link.active {
             background: #eff6ff;
             color: var(--primary);
-            font-weight: 500;
+            font-weight: bold;
         }
 
         /* Main Workspace Area */
@@ -148,47 +149,50 @@
         }
 
         .welcome-screen h1 {
-            font-size: 2.5rem;
-            color: #0f172a;
+            font-size: 2.8rem;
+            color: #1e3a8a;
             margin-bottom: 20px;
         }
 
         .welcome-screen p {
-            font-size: 1.1rem;
-            color: #475569;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            color: #334155;
+            line-height: 1.7;
             margin-bottom: 30px;
         }
 
         .motivational-card {
-            background: linear-gradient(135deg, #eff6ff, #e0f2fe);
-            border-left: 5px solid var(--primary);
+            background: linear-gradient(135deg, #dbeafe, #ccfbf1);
+            border-left: 6px solid var(--primary);
             padding: 25px;
-            border-radius: 8px;
+            border-radius: 12px;
             text-align: left;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .motivational-card h3 {
             color: var(--primary-dark);
             margin-bottom: 10px;
+            font-size: 1.2rem;
         }
 
         .start-btn {
-            background: var(--primary);
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 6px;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s, background 0.2s;
         }
 
         .start-btn:hover {
-            background: var(--primary-dark);
+            background: #059669;
+            transform: scale(1.05);
         }
 
         /* Lesson View */
@@ -211,7 +215,7 @@
 
         .lesson-header h2 {
             font-size: 1.8rem;
-            color: #0f172a;
+            color: #1e3a8a;
         }
 
         .audio-controls {
@@ -221,21 +225,22 @@
         }
 
         .audio-btn {
-            background: #0f172a;
+            background: var(--primary);
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-weight: bold;
             transition: background 0.2s;
         }
 
         .audio-btn:hover {
-            background: #334155;
+            background: var(--primary-dark);
         }
 
         .audio-status {
@@ -246,14 +251,15 @@
 
         .topic-image-container {
             width: 100%;
-            height: 320px;
+            height: 300px;
             background: #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .topic-image-container img {
@@ -263,21 +269,21 @@
         }
 
         .lesson-body {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             line-height: 1.8;
-            color: #334155;
+            color: #1e293b;
             margin-bottom: 30px;
         }
 
         .lesson-body p {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .lesson-body h4 {
-            color: var(--primary-dark);
-            margin-top: 22px;
-            margin-bottom: 8px;
-            font-size: 1.15rem;
+            color: #047857;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
 
         .lesson-body ul {
@@ -286,25 +292,26 @@
         }
 
         .lesson-body li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         /* Real-life scenario callout box */
         .clinical-case-box {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-left: 5px solid #10b981;
-            padding: 20px;
-            border-radius: 8px;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-left: 6px solid var(--accent);
+            padding: 22px;
+            border-radius: 10px;
             margin-top: 25px;
             margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .clinical-case-box h4 {
             color: #047857;
             margin-top: 0;
             margin-bottom: 8px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
         .clinical-case-box p {
@@ -320,14 +327,15 @@
         }
 
         .complete-btn {
-            background: #10b981;
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 28px;
             font-size: 1rem;
-            border-radius: 6px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
         }
 
         .complete-btn:hover {
@@ -339,9 +347,9 @@
             background: white;
             border: 1px solid var(--border-color);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-top: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .quiz-panel h3 {
@@ -357,7 +365,7 @@
         }
 
         .question-title {
-            font-weight: 600;
+            font-weight: bold;
             margin-bottom: 12px;
             color: #1e293b;
         }
@@ -365,29 +373,31 @@
         .quiz-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 12px;
         }
 
         .quiz-option {
-            padding: 10px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            background: #f8fafc;
         }
 
         .quiz-option:hover {
-            background: #f1f5f9;
+            background: #eff6ff;
+            border-color: var(--primary);
         }
 
         .explanation-box {
             display: none;
-            margin-top: 10px;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
             background: #f8fafc;
             border-left: 4px solid var(--primary);
             line-height: 1.5;
@@ -398,10 +408,10 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 12px 28px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: bold;
             margin-top: 20px;
         }
 
@@ -431,45 +441,45 @@
         <span></span>
     </div>
 
-    <!-- Sidebar / Content Panel (Minimized by default) -->
+    <!-- Sidebar / Content Panel -->
     <sidebar id="appSidebar" class="minimized">
-        <div class="sidebar-header">Dermacore</div>
+        <div class="sidebar-header">🛡️ Dermacore Kids</div>
         <div class="sidebar-content">
             <div class="module-group">
-                <div class="module-title">Module 1: Basic Skin Anatomy</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod1_epidermis', event)">1.1 Epidermis & Keratinocytes</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod1_dermis', event)">1.2 Dermis & Fibroblasts</a>
+                <div class="module-title">Module 1: Ang Superhero Shield Mo</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod1_epidermis', event)">1.1 Ang Balat sa Labas (Epidermis)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod1_dermis', event)">1.2 Ang Unan sa Loob (Dermis)</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 2: Appendages & Glands</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod2_sebaceous', event)">2.1 Sebaceous & Sweat Glands</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod2_hair', event)">2.2 Hair Follicle Structure</a>
+                <div class="module-title">Module 2: Mga Kagamitan sa Katawan</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod2_sebaceous', event)">2.1 Pabrika ng Langis at Pawis</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod2_hair', event)">2.2 Buhok at ang Cycle Nito</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 3: Primary Lesions</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod3_macules', event)">3.1 Macules, Papules, & Plaques</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod3_vesicles', event)">3.2 Vesicles, Bullae, & Pustules</a>
+                <div class="module-title">Module 3: Pagtukoy sa mga Pantal</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod3_macules', event)">3.1 Patag at Umbok (Macules & Papules)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod3_vesicles', event)">3.2 Mga Taghiyawat at Butlig na May Tubig</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 4: Inflammatory Conditions</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod4_acne', event)">4.1 Acne Vulgaris & Pathogenesis</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod4_eczema', event)">4.2 Atopic Dermatitis (Eczema)</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod4_psoriasis', event)">4.3 Psoriasis Plaque Formations</a>
+                <div class="module-title">Module 4: Mga Karaniwang Kwento sa Balat</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_acne', event)">4.1 Bakit May Tigyawat Paglaki? (Acne)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_eczema', event)">4.2 Balat-Sibuyas at Kati-Kati (Eczema)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod4_psoriasis', event)">4.3 Pula at Makintab na Pantal (Psoriasis)</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 5: Infections & Infestations</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod5_bacterial', event)">5.1 Bacterial: Impetigo & Cellulitis</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod5_fungal', event)">5.2 Fungal: Tinea & Candidiasis</a>
+                <div class="module-title">Module 5: Sugat at Kati</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod5_bacterial', event)">5.1 Sugat na May Kulay Honey (Impetigo)</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod5_fungal', event)">5.2 Singsing na Kati sa Balat (Ringworm)</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 6: Dermatologic Oncology</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod6_benign', event)">6.1 Benign Nevi & Keratoses</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod6_malignant', event)">6.2 Malignant: Melanoma & ABCDEs</a>
+                <div class="module-title">Module 6: Pag-iingat sa mga Ngalan</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod6_benign', event)">6.1 Mga Normal na Ngalan at Bunot</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod6_malignant', event)">6.2 Paano Babantayan ang mga Moles (ABCDE)</a>
             </div>
             <div class="module-group">
-                <div class="module-title">Module 7: Advanced Therapies</div>
-                <a href="#" class="topic-link" onclick="loadLesson('mod7_topical', event)">7.1 Topical Retinoids & Steroids</a>
-                <a href="#" class="topic-link" onclick="loadLesson('mod7_procedures', event)">7.2 Dermatoscope & Biopsy Techniques</a>
+                <div class="module-title">Module 7: Pag-alaga at Gamot</div>
+                <a href="#" class="topic-link" onclick="loadLesson('mod7_topical', event)">7.1 Paano Gamitin ang mga Cream</a>
+                <a href="#" class="topic-link" onclick="loadLesson('mod7_procedures', event)">7.2 Ang Magic Magnifying Glass (Dermatoscope)</a>
             </div>
         </div>
     </sidebar>
@@ -478,15 +488,15 @@
     <main id="mainWorkspace">
         <!-- Welcome Screen -->
         <section id="welcomeScreen" class="welcome-screen">
-            <h1>Welcome to Dermacore</h1>
-            <p>Your premier interactive curriculum covering foundational histology to advanced clinical dermatology reviews with real-life case applications.</p>
+            <h1>Maligayang Pagdating sa Dermacore Kids! 🌟</h1>
+            <p>Alamin natin kung paano gumagana ang iyong balat—ang iyong paboritong superhero shield laban sa init, lamig, at mga mikrobyo!</p>
             
             <div class="motivational-card">
-                <h3>💡 Daily Dermatological Insight</h3>
-                <p>"The skin is a window to internal health. Master its micro-anatomy and clinical presentation patterns to bridge textbook theory with real-world diagnosis!"</p>
+                <h3>💡 Tandaan Mo Ito:</h3>
+                <p>"Ang katawan mo ay parang isang magandang kaharian. Kapag kilala mo kung paano ito alagaan sa totoong buhay, masaya at malusog kang makakapaglaro araw-araw!"</p>
             </div>
 
-            <button class="start-btn" onclick="startLearning()">Get Started</button>
+            <button class="start-btn" onclick="startLearning()">Simulan ang Pakikipagsapalaran! 🚀</button>
         </section>
 
         <!-- Lesson Screen -->
@@ -494,416 +504,444 @@
             <div class="lesson-header">
                 <h2 id="lessonTitle">Lesson Title</h2>
                 <div class="audio-controls">
-                    <button class="audio-btn" onclick="toggleAudio()">🔊 Listen Lesson</button>
+                    <button class="audio-btn" onclick="toggleAudio()">🔊 Pakinggan ang Kwento</button>
                     <span class="audio-status" id="audioStatus"></span>
                 </div>
             </div>
             
             <div class="topic-image-container">
-                <img id="lessonImage" src="" alt="Contextual Topic Image">
+                <img id="lessonImage" src="" alt="Larawan ng Paksa">
             </div>
 
             <div class="lesson-body" id="lessonText"></div>
 
             <div class="action-section">
-                <button class="complete-btn" id="completeBtn" onclick="completeLesson()">Complete Lesson & Take Quiz</button>
+                <button class="complete-btn" id="completeBtn" onclick="completeLesson()">Tapusin ang Leksyon at Mag-Quiz! 🎯</button>
                 
                 <div class="quiz-panel" id="quizPanel">
-                    <h3 id="quizHeader">Knowledge Check</h3>
+                    <h3>Pasulit Para sa Super Hero! 🧠</h3>
                     <div id="quizQuestionsContainer"></div>
-                    <button class="next-lesson-btn" id="nextLessonBtn" onclick="nextLesson()">Proceed to Next Lesson ➔</button>
+                    <button class="next-lesson-btn" id="nextLessonBtn" onclick="nextLesson()">Sunod na Leksyon ➔</button>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        // Highly Detailed Textbook Curriculum Database with Real-Life Clinical Scenarios (Modules 1-7)
+        // Kid-Friendly & Filipino Tagalog Database with Real-Life Analogies
         const lessons = {
             'mod1_epidermis': {
-                title: "1.1 Epidermis & Keratinocytes",
+                title: "1.1 Ang Balat sa Labas (Epidermis)",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>The epidermis is the outermost cellular layer of the cutaneous system, serving as the primary physical and biochemical shield against environmental toxins, microbial pathogens, and excessive moisture loss. Because it is completely avascular, all epidermal cells rely on diffusion from the underlying dermal capillary loops for nourishment and gas exchange.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Napansin mo ba kapag naghugas ka ng plato o naglaro ka sa labas buong araw, hindi naman pumapasok ang dumi sa loob ng katawan mo? Parang suot mong invisible jacket ang iyong balat na nagpapanatili ng tubig sa loob at humaharang sa mga dumi sa labas!</p>
+                    </div>
+
+                    <p>Ang pinakalabas na parte ng balat mo ay tinatawag na <strong>Epidermis</strong>. Wala itong sariling ugat ng dugo, kaya umaasa lang ito sa ibaba para sa pagkain at hangin.</p>
                     
-                    <h4>Stratified Sub-Layers</h4>
-                    <p>From deepest to most superficial, the epidermis is structured into four primary strata (five in thick palmar/plantar skin):</p>
+                    <h4>Ang mga Patong ng Balat Mo:</h4>
                     <ul>
-                        <li><strong>Stratum Basale (Germinativum):</strong> A single layer of cuboidal or columnar stem cells anchored to the basement membrane by hemidesmosomes. This is the site of active mitotic division. As basal stem cells divide, daughter cells are pushed upward to begin terminal differentiation.</li>
-                        <li><strong>Stratum Spinosum ('Prickle Cell' Layer):</strong> Characterized by polyhedral keratinocytes connected tightly via prominent intercellular desmosomes, giving them a spiny appearance under light microscopy. Langerhans cells (immune sentinels) reside here.</li>
-                        <li><strong>Stratum Granulosum:</strong> Contains flattened keratinocytes filled with basophilic keratohyalin granules and lamellar bodies. These lamellar bodies secrete lipids into the extracellular space, establishing the vital waterproof barrier.</li>
-                        <li><strong>Stratum Corneum:</strong> The outermost horny layer composed of 15 to 30 layers of dead, anucleated, flattened corneocytes packed with robust structural keratin fibers embedded in a lipid matrix.</li>
+                        <li><strong>Stratum Basale:</strong> Ang pabrika sa ilalim kung saan ipinapanganak ang mga bagong selula ng balat. Kapag lumaki sila, umaakyat sila sa itaas.</li>
+                        <li><strong>Stratum Corneum:</strong> Ang pinakataas na baluti o pader. Binubuo ito ng mga matigas at patay na selula na pumipigil para hindi matuyo ang katawan mo kapag maaraw.</li>
                     </ul>
 
-                    <h4>Key Cell Lines</h4>
-                    <p>In addition to keratinocytes, which comprise over 90% of epidermal cells, the epidermis hosts melanocytes (pigment-producing cells residing in the basal layer that transfer melanin via melanosomes to shield DNA from UV radiation), Langerhans cells (antigen-presenting immune cells), and Merkel cells (mechanoreceptors sensitive to light touch).</p>
-
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> Imagine examining a patient with severe chronic hand dermatitis who washes dishes or works in wet construction environments daily. The harsh chemicals strip away the lipid matrix secreted by the stratum granulosum. Without this waterproof seal, water escapes (transepidermal water loss) and irritants easily penetrate, causing painful skin fissures and chapping. Recognizing this micro-anatomy helps you explain to patients why intensive barrier repair creams (emollients containing ceramides) work much better than basic lotions.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Kung mahilig kang magbabad sa tubig sa beach o swimming pool tapos nagbabalat ka pagkatapos, ibig sabihin ay na-damage ang iyong baluti sa itaas kaya natanggal ang mga lumang balat para palitan ng bago!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which basal layer cell component is primarily responsible for generating new keratinocytes?",
-                        options: ["Melanocytes", "Stratum Basale Stem Cells", "Langerhans Cells", "Fibroblasts"],
-                        correct: 1,
-                        explanation: "Stem cells located in the stratum basale undergo active mitosis, pushing daughter cells upward into suprabasal epidermal compartments to replace shed skin cells."
-                    },
-                    {
-                        q: "What waterproof barrier structure is secreted by keratinocytes in the stratum granulosum?",
-                        options: ["Collagen fibrils", "Lamellar lipid bodies", "Melanosome granules", "Elastin networks"],
-                        correct: 1,
-                        explanation: "Lamellar bodies release lipid-rich contents into the intercellular spaces of the stratum granulosum and corneum, forming an impenetrable waterproof seal."
+                        q: "Ano ang tawag sa pinakalabas na baluti ng balat mo na pumipigil para hindi matuyo ang katawan mo?",
+                        options: ["Stratum Corneum", "Ugat sa Puso", "Buto sa Tuhod", "Kuko sa Daliri"],
+                        correct: 0,
+                        explanation: "Tama! Ang Stratum Corneum ang pinakataas na layer na nagsisilbing matibay na shield o pader."
                     }
                 ]
             },
             'mod1_dermis': {
-                title: "1.2 Dermis & Fibroblasts",
+                title: "1.2 Ang Unan sa Loob (Dermis)",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Lying directly beneath the epidermal basement membrane, the dermis is a robust, fibrous connective tissue matrix that provides the skin with its mechanical strength, elasticity, resilience, and vascular supply. It houses hair follicles, sebaceous glands, sweat glands, blood vessels, lymphatic channels, and cutaneous nerve receptors.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Subukan mong pisilin ang pisngi mo at bitawan. Nakita mo bang bumalik kaagad ito sa dati? Dahil 'yan sa "springy mattress" o malambot at matibay na unan sa loob ng balat mo!</p>
+                    </div>
 
-                    <h4>Anatomical Divisions</h4>
+                    <p>Nasa ilalim ng epidermis ang <strong>Dermis</strong>. Dito matatagpuan ang mga ugat ng dugo, ugat ng pakiramdam (para makaramdam ka kung mainit o malamig), at mga hibla na nagbibigay ng lakas sa balat.</p>
+
+                    <h4>Ang mga Kasama sa Dermis:</h4>
                     <ul>
-                        <li><strong>Papillary Dermis:</strong> The thin, superficial layer adjacent to the epidermis. It consists of loose connective tissue forming dermal papillae that interdigitate with epidermal rete ridges, increasing surface area for nutrient exchange and anchoring strength.</li>
-                        <li><strong>Reticular Dermis:</strong> The thicker, deeper layer composed of dense irregular connective tissue. It is dominated by thick bundles of type I collagen fibers and elastic fibers that provide tensile strength and recoil capability.</li>
+                        <li><strong>Fibroblasts:</strong> Sila ang mga manggagawa na gumagawa ng collagen (ang nagbibigay tibay) at elastin (ang nagbibigay kintab at pagkalastiko).</li>
                     </ul>
 
-                    <h4>Cellular and Matrix Composition</h4>
-                    <p>The principal resident cell of the dermis is the <strong>fibroblast</strong>, responsible for synthesizing the extracellular matrix (ECM), including collagen (types I and III), elastin, and glycosaminoglycans like hyaluronic acid. Other resident immune cells include mast cells (key mediators of immediate hypersensitivity and histamine release) and macrophages.</p>
-
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When you see striae distensae (stretch marks) on a pregnant patient's abdomen or an individual who experienced rapid weight gain, you are looking at physical failure of the reticular dermis. Rapid mechanical stretching exceeds the tensile limit of type I collagen and elastic fiber networks synthesized by dermal fibroblasts, resulting in permanent micro-tears in the dermal matrix.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Kapag ang isang tao ay mabilis tumaba o pumayat, o kaya naman ay nagdadalang-tao, minsan ay naiunat nang sobra ang dermis kaya nagkakaroon ng mga guhit o stretch marks. Natural lang ito dahil umabot sa limitasyon ang mga hibla doon!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which primary dermal cell type synthesizes collagen and elastin extracellular matrix proteins?",
-                        options: ["Adipocytes", "Fibroblasts", "Mast cells", "Melanocytes"],
+                        q: "Aling bahagi ng balat ang nagbibigay ng lambot at tumutulong para bumalik sa dati ang pisngi mo pagkatapos pisilin?",
+                        options: ["Ang Buhok", "Ang Dermis", "Ang Kuko", "Ang Ngipin"],
                         correct: 1,
-                        explanation: "Fibroblasts are specialized connective tissue cells that continuously manufacture and maintain the collagen and elastin framework of the dermis."
+                        explanation: "Magaling! Ang Dermis ang parang unan o springy mattress sa ilalim."
                     }
                 ]
             },
             'mod2_sebaceous': {
-                title: "2.1 Sebaceous & Sweat Glands",
+                title: "2.1 Pabrika ng Langis at Pawis",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Cutaneous exocrine glands are critical for thermoregulation, hydration, chemical defense, and lubrication. Clinicians categorize them into three main glandular structures:</p>
-                    
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Pagkatapos mong tumakbo at maglaro sa labas ng bahay, bakit basang-basa ka sa pawis at parang madulas ang mukha mo? Dahil 'yan sa mga natural na aircon at oil cooler ng katawan mo!</p>
+                    </div>
+
+                    <p>May mga maliliit tayong glandula o pabrika sa balat:</p>
                     <ul>
-                        <li><strong>Eccrine Sweat Glands:</strong> Widely distributed across the body surface, these simple coiled tubular glands open directly onto the skin surface via pores. They secrete a hypotonic, watery fluid rich in sodium chloride and water, regulated by cholinergic sympathetic fibers to manage thermoregulation.</li>
-                        <li><strong>Apocrine Glands:</strong> Confined primarily to intertriginous regions (axillae, groin, areolae), these glands empty their viscous, odorless protein-lipid secretions directly into hair follicles. Bacterial breakdown of these secretions produces distinctive body odor.</li>
-                        <li><strong>Sebaceous Glands:</strong> Holocrine glands attached directly to pilosebaceous units. They secrete sebum—a rich mixture of triglycerides, wax esters, squalene, and cholesterol—into hair canals to lubricate and waterproof skin and hair.</li>
+                        <li><strong>Eccrine Glands:</strong> Ang mga naglalabas ng tubig at asin para palamigin ka kapag naiinitan ka o naglalaro.</li>
+                        <li><strong>Sebaceous Glands:</strong> Ang mga pabrika ng langis na nagpapatingkad at nagpapanatili ng lambot sa balat at buhok mo para hindi magbitak-bitak.</li>
                     </ul>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> Patients presenting with hyperhidrosis (excessive sweating) of the palms or soles are dealing with overactive cholinergic stimulation of eccrine sweat glands. Conversely, areas rich in sebaceous glands (forehead, nose, upper chest) become greasy during puberty due to androgen surges, setting the stage for oil accumulation and clogged pores.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Kapag sumapit na ang "tween" years o pagdadalaga at pagbibinata, ang mga pabrika ng langis na ito ay nagiging sobrang aktibo kaya nagiging medyo mamantika ang ilong at noo mo!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What specialized secretory mechanism do sebaceous glands use to discharge sebum?",
-                        options: ["Merocrine exocytosis", "Apocrine pinching", "Holocrine cell rupture", "Endocrine diffusion"],
+                        q: "Ano ang ginagawa ng mga sweat glands o pawis sa katawan kapag naglalaro ka sa ilalim ng araw?",
+                        options: ["Nagpapakain ng buhok", "Pumapalakpak", "Nagpapalamig sa katawan", "Nagpapanilaw ng ngipin"],
                         correct: 2,
-                        explanation: "Holocrine secretion involves total cellular degeneration; mature sebaceous cells burst open, releasing their accumulated lipid contents into the follicle duct."
+                        explanation: "Tama! Ang pawis ay paraan ng katawan para palamigin ang sarili kapag mainit."
                     }
                 ]
             },
             'mod2_hair': {
-                title: "2.2 Hair Follicle Structure",
+                title: "2.2 Buhok at ang Cycle Nito",
                 image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>The hair follicle is a complex epidermal invagination that cycles continuously through distinct physiological phases. At its base, the bulb expands around the dermal papilla, where matrix keratinocytes proliferate rapidly.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Bakit kaya kusang nalalagas ang mga buhok sa suklay mo paminsan-minsan pero patuloy pa rin itong humahaba? May sarili silang schedule ng paglaki at pahinga!</p>
+                    </div>
 
-                    <h4>The Hair Growth Cycle</h4>
+                    <p>Ang bawat buhok sa ulo mo ay nakatanim sa isang maliit na lungga na tinatawag na follicle. Dumaan ito sa tatlong yugto:</p>
                     <ul>
-                        <li><strong>Anagen Phase:</strong> The active growth phase lasting years on the scalp, during which matrix cells proliferate rapidly and push the hair shaft upward.</li>
-                        <li><strong>Catagen Phase:</strong> A brief transitional regression phase (lasting a few weeks) where cell division ceases and the follicle shrinks.</li>
-                        <li><strong>Telogen Phase:</strong> The resting phase where hair growth stops entirely before the old club hair eventually sheds and a new anagen cycle begins.</li>
+                        <li><strong>Anagen:</strong> Ang panahon kung kailan mabilis itong humahaba (umaabot ng ilang taon).</li>
+                        <li><strong>Catagen & Telogen:</strong> Ang panahon ng pamamahinga hanggang sa tuluyan itong malagas para may sumulpot na bagong buhok sa pwesto niya.</li>
                     </ul>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When evaluating a patient experiencing sudden hair shedding (telogen effluvium) 3 months after a severe physiological stressor (such as major surgery, childbirth, or severe illness), you recognize that stressors prematurely push a large wave of growing hair follicles (anagen) simultaneously into the resting phase (telogen), resulting in noticeable hair shedding months later.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Normal lang na makakita ng ilang buhok sa unan mo sa umaga dahil bahagi ito ng natural na pagpapalit ng buhok ng katawan!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which physiological hair cycle stage represents the active period of rapid cellular proliferation?",
-                        options: ["Telogen", "Catagen", "Anagen", "Exogen"],
-                        correct: 2,
-                        explanation: "Anagen is the prolonged active growth stage where hair matrix cells divide rapidly to lengthen the hair shaft."
+                        q: "Ano ang tawag sa yugto kung kailan aktibong humahaba ang buhok mo sa ulo?",
+                        options: ["Anagen Phase", "Sleeping Phase", "Freezing Phase", "Stopping Phase"],
+                        correct: 0,
+                        explanation: "Magaling! Ang Anagen ay ang active growth phase ng buhok."
                     }
                 ]
             },
             'mod3_macules': {
-                title: "3.1 Macules, Papules, & Plaques",
+                title: "3.1 Patag at Umbok (Macules & Papules)",
                 image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Accurate dermatologic diagnosis begins with precise physical examination terminology used to categorize primary skin lesions based on size, elevation, and consistency.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Kapag may nakita kang kulay brown sa balat mo, paano mo malalaman kung pekas lang ito o kaya ay bukol na nakakapa mo?</p>
+                    </div>
+
+                    <p>Ginagamit ng mga doktor ang mga salitang ito para ilarawan ang hitsura ng balat:</p>
                     <ul>
-                        <li><strong>Macule:</strong> A flat, circumscribed area of distinct color change that is non-palpable (neither raised nor depressed), measuring less than 1 cm in diameter (e.g., freckles, flat pigmented moles). If larger than 1 cm, it is termed a <strong>patch</strong>.</li>
-                        <li><strong>Papule:</strong> A solid, elevated, circumscribed skin lesion measuring less than 1 cm in diameter (e.g., small insect bites, early acne pimples).</li>
-                        <li><strong>Plaque:</strong> A broad, elevated, plateau-like solid lesion greater than 1 cm in diameter, often formed by the coalescence of multiple papules (classic hallmark of psoriasis).</li>
+                        <li><strong>Macule (o Patch):</strong> Kulay lang ito sa balat na flat o patag. Kapag hinawakan mo, hindi mo ito mararamdamang umbok (tulad ng pekas o nunal na flat).</li>
+                        <li><strong>Papule (o Plaque):</strong> Ito naman ay matigas at umbok na pwedeng kapain ng daliri mo pataas (tulad ng kagat ng lamok).</li>
                     </ul>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> During a skin check, running your gloved fingertip gently across a lesion is the key diagnostic maneuver. If you cannot feel the spot at all, it is flat (macule or patch). If it catches your finger with palpable firmness and elevation, it is a papule or plaque. This distinction instantly narrows your differential diagnosis.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Kapag nakaramdam ka ng kati at may nakapa kang maliit na bukol, alam mo na agad na papule o umbok ito dahil naiangat nito ang balat mo!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What structural characteristic differentiates a macule from a papule during palpation?",
-                        options: ["Macules are elevated; papules are flat", "Macules are flat and non-palpable; papules present solid elevation", "Macules contain purulent exudate", "Macules exceed 5 cm in size"],
+                        q: "Kapag hinaplos mo ang isang kulay brown sa balat mo at wala kang maramdamang umbok, ano ang tawag dito?",
+                        options: ["Papule", "Macule o Flat spot", "Pustule", "Bulla"],
                         correct: 1,
-                        explanation: "A macule is purely a flat color alteration with zero elevation, whereas a papule is palpable and elevated above the surrounding skin plane."
+                        explanation: "Tama! Ang macule ay flat color change na hindi nakakapa."
                     }
                 ]
             },
             'mod3_vesicles': {
-                title: "3.2 Vesicles, Bullae, & Pustules",
+                title: "3.2 Mga Taghiyawat at Butlig na May Tubig",
                 image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Fluid-filled lesions are categorized according to their size and the exact nature of the fluid contained within the epidermal or subepidermal compartments:</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Naranasan mo na bang magsuot ng bagong sapatos na masikip kaya nagkabukol sa sakong mo na puno ng malinaw na tubig? O kaya naman ay bulutong?</p>
+                    </div>
+
+                    <p>Ang mga butlig na may lamang likido ay may kanya-kanyang pangalan:</p>
                     <ul>
-                        <li><strong>Vesicle:</strong> A small, circumscribed, fluid-filled blister measuring less than 1 cm in diameter, containing clear serous fluid (e.g., herpes simplex viral clusters, acute contact dermatitis).</li>
-                        <li><strong>Bulla:</strong> A large fluid-filled blister measuring 1 cm or greater in diameter, formed by intraepidermal or subepidermal cleavage (e.g., autoimmune pemphigus vulgaris or severe friction blisters).</li>
-                        <li><strong>Pustule:</strong> A circumscribed skin elevation containing cloudy purulent exudate consisting of degenerated neutrophils and necrotic debris (e.g., bacterial folliculitis, pustular acne).</li>
+                        <li><strong>Vesicle:</strong> Maliit na paltos na may malinaw na tubig (mas mababa sa 1 cm).</li>
+                        <li><strong>Bulla:</strong> Malaking paltos dahil sa init o alitan sa sapatos.</li>
+                        <li><strong>Pustule:</strong> Butlig na may lamang dilaw o maputing nana (tulad ng nana sa malaking tigyawat).</li>
                     </ul>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When a patient presents with a painful cluster of small clear blisters on an erythematous base near their lip or genitalia, recognizing grouped vesicles immediately points you toward a herpes simplex virus outbreak, prompting viral swab or antiviral therapy.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Huwag na huwag mong dudurugin o susundutin ang mga paltos na ito para hindi pasukan ng maduming mikrobyo ang balat mo!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What defines a circumscribed fluid-filled skin blister measuring 1 centimeter or greater in diameter?",
-                        options: ["Vesicle", "Bulla", "Papule", "Nodule"],
+                        q: "Ano ang tawag sa butlig na may lamang nana o dilaw na likido sa loob?",
+                        options: ["Macule", "Pustule", "Patag", "Ugaling tuyo"],
                         correct: 1,
-                        explanation: "A bulla is a large blister (>= 1 cm) containing serous or serosanguinous fluid caused by separation of skin layers."
+                        explanation: "Magaling! Pustule ang tawag kapag may nana sa loob."
                     }
                 ]
             },
             'mod4_acne': {
-                title: "4.1 Acne Vulgaris & Pathogenesis",
+                title: "4.1 Bakit May Tigyawat Paglaki? (Acne)",
                 image: "https://images.unsplash.com/photo-1512290900722-9a70f8a85d39?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Acne vulgaris is a chronic inflammatory disease of the pilosebaceous unit affecting nearly 85% of adolescents and young adults. Its multifaceted pathogenesis involves four hallmark mechanisms:</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Pagdating ng mga tinedyer, bakit kaya biglang may tumutubong pula sa mukha? Normal ba ito? Oo naman! Lahat ay dumadaan diyan.</p>
+                    </div>
+
+                    <p>Ang tigyawat o acne ay nangyayari dahil sa 4 na hakbang:</p>
                     <ol>
-                        <li><strong>Follicular Hyperkeratinization:</strong> Abnormal shedding and accumulation of corneocytes within the follicular duct creates a microcomedo block.</li>
-                        <li><strong>Secretion Overload (Seborrhea):</strong> Androgenic stimulation increases sebaceous gland size and sebum output.</li>
-                        <li><strong>Bacterial Proliferation:</strong> <em>Cutibacterium acnes</em> (formerly <em>Propionibacterium acnes</em>), an anaerobic bacterium, multiplies rapidly within the lipid-rich occluded follicle.</li>
-                        <li><strong>Inflammation:</strong> <em>C. acnes</em> triggers local immune responses, releasing pro-inflammatory cytokines that transform closed/open comedones into erythematous papules, pustules, and deep nodules.</li>
+                        <li>Nagbara ang mga patay na balat sa daanan.</li>
+                        <li>Uminit at dumami ang langis dahil sa paglaki ng katawan.</li>
+                        <li>Pumasok ang mga pasaway na bacteria na kumakain ng langis.</li>
+                        <li>Namaga at namula ang mukha kaya nabuo ang pimple!</li>
                     </ol>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> Understanding these 4 pathological steps explains why combination therapy works best in real life. You prescribe topical retinoids to unblock the keratin plug (step 1), benzoyl peroxide or antibiotics to reduce <em>C. acnes</em> (step 3), and anti-inflammatories to calm the red papules (step 4).</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Huwag mong pipigain ang pimple dahil mas lalo itong mamumula at maaaring mag-iwan ng maitim na peklat sa mukha mo!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which anaerobic bacterium plays a central role in driving inflammation within occluded pilosebaceous units in acne?",
-                        options: ["Staphylococcus aureus", "Cutibacterium acnes", "Pseudomonas aeruginosa", "Streptococcus pyogenes"],
-                        correct: 1,
-                        explanation: "Cutibacterium acnes thrives in anaerobic sebum-plugged follicles, metabolizing lipids and activating innate immune pathways that cause inflammation."
+                        q: "Anong uri ng mikrobyo ang mahilig sa madulas na baradong daanan ng balat na nagiging sanhi ng tigyawat?",
+                        options: ["Cutibacterium acnes", "Bulate sa tiyan", "Uod sa halaman", "Langaw"],
+                        correct: 0,
+                        explanation: "Tama! Ito ang bacteria na nagdudulot ng pamamaga kapag nagbara ang langis."
                     }
                 ]
             },
             'mod4_eczema': {
-                title: "4.2 Atopic Dermatitis (Eczema)",
+                title: "4.2 Balat-Sibuyas at Kati-Kati (Eczema)",
                 image: "https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Atopic dermatitis is a chronic, highly pruritic inflammatory skin disorder frequently associated with an atopic family history (asthma, allergic rhinitis). Key underlying mechanisms include genetic epidermal barrier defects—most notably loss-of-function mutations in the <strong>filaggrin</strong> gene—coupled with immune dysregulation skewed toward Th2 cytokine pathways (IL-4, IL-13).</p>
-                    <p>Clinically, patients present with intense pruritus, xerosis (severe dryness), and erythematous weeping papules/plaques in acute phases, progressing to lichenified (thickened) plaques from chronic scratching.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">May kakilala ka bang sobrang kati ng balat lalo na kapag mainit ang panahon o kapag nakasuot sila ng damit na may magaspang na tela?</p>
+                    </div>
+
+                    <p>Ang tawag dito ay <strong>Atopic Dermatitis</strong> o Eczema. Nangyayari ito dahil ang proteksyon ng balat nila ay medyo kulang sa isang protina na tinatawag na <strong>filaggrin</strong>, kaya madali itong matuyo at mangati.</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> You will often see infants with eczema presenting on the cheeks and extensor surfaces, while older children and adults present with characteristic flexural creases (antecubital and popliteal fossae). Recognizing this distribution pattern and the itch-scratch cycle is essential for diagnosis.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Para maiwasan ang matinding kati, mas magandang magpahid ng mga moisturizing cream at magsuot ng malambot na damit na gawa sa bulak (cotton)!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Loss-of-function mutations in which key structural epidermal protein are heavily implicated in atopic dermatitis barrier failure?",
-                        options: ["Filaggrin", "Collagen Type VII", "Laminin-332", "Keratin-5"],
+                        q: "Anong protina ang medyo kulang sa mga may eczema kaya madaling matuyo at mangati ang kanilang balat?",
+                        options: ["Filaggrin", "Iron", "Sugar", "Vitamin C"],
                         correct: 0,
-                        explanation: "Filaggrin deficiency impairs keratinocyte aggregation and natural moisturizing factor synthesis, resulting in severe skin barrier leakage and dryness."
+                        explanation: "Magaling! Ang filaggrin protein ang tumutulong sa pagbubuod ng barrier ng balat."
                     }
                 ]
             },
             'mod4_psoriasis': {
-                title: "4.3 Psoriasis Plaque Formations",
+                title: "4.3 Pula at Makintab na Pantal (Psoriasis)",
                 image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Psoriasis is a chronic immune-mediated inflammatory skin disease driven primarily by T-cell activation (Th1 and Th17 pathways) that prompts accelerated epidermal proliferation. Normal epidermal turnover drops from 28 days down to an abnormally rapid 3 to 5 days.</p>
-                    <p>Classic plaque psoriasis manifests as sharply demarcated erythematous plaques covered by characteristic silvery-white micaceous scales. Scraping these scales reveals <strong>Auspitz sign</strong>—pinpoint capillary bleeding caused by trauma to elongated dermal papillae underlying a thin suprapapillary epidermis.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">May mga taong nagkakaroon ng makapal, pulang pantal sa siko o tuhod na may kasamang kulay pilak na balat sa ibabaw.</p>
+                    </div>
+
+                    <p>Sa <strong>Psoriasis</strong>, nagmamadali ang mga selula ng balat na umakyat sa ibabaw. Sa halip na maghintay ng halos isang buwan, umaakyat sila sa loob lamang ng 3 hanggang 5 araw!</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> Look for well-demarcated pink plaques with silvery scale distributed symmetrically on extensor surfaces such as the elbows, knees, and scalp. Patients may also exhibit nail pitting or psoriatic arthritis joint pain.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Hindi ito nakakahawa! Isa itong senyales na naguguluhan ang depensa ng katawan kaya mabilis dumami ang mga selula ng balat.</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What diagnostic physical sign is demonstrated when scraping silvery scales off a psoriatic plaque reveals pinpoint capillary bleeding?",
-                        options: ["Nikolsky's sign", "Auspitz sign", "Darier's sign", "Tinel's sign"],
-                        correct: 1,
-                        explanation: "Auspitz sign occurs because epidermal cell turnover thins the plate over elongated, engorged dermal blood vessels, which rupture upon minor scale scraping."
+                        q: "Ilang araw karaniwang umaakyat ang mga selula ng balat sa taong may psoriasis?",
+                        options: ["3 hanggang 5 araw", "1 taon", "100 araw", "10 taon"],
+                        correct: 0,
+                        explanation: "Tama! Mabilis na mabilis ang pagdami at pag-akyat nila kaya kumakapal ang balat."
                     }
                 ]
             },
             'mod5_bacterial': {
-                title: "5.1 Bacterial: Impetigo & Cellulitis",
+                title: "5.1 Sugat na May Kulay Honey (Impetigo)",
                 image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Bacterial skin infections are frequently encountered in clinical practice, commonly caused by <em>Staphylococcus aureus</em> and <em>Streptococcus pyogenes</em>:</p>
-                    <ul>
-                        <li><strong>Impetigo:</strong> A highly contagious superficial skin infection common in children. Non-bullous impetigo evolves from small vesicles into characteristic honey-colored crusted plaques. Bullous impetigo features fragile fluid-filled blisters caused by staphylococcal exfoliative toxins.</li>
-                        <li><strong>Cellulitis:</strong> An acute, spreading bacterial infection of the deep dermis and subcutaneous adipose tissue. Patients present with expanding local erythema, warmth, edema, and tenderness, frequently accompanied by systemic fever and chills.</li>
-                    </ul>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Nakakita ka na ba ng sugat sa mukha ng bata malapit sa ilong na parang natuyong pulot-pukyutan (honey) ang kulay?</p>
+                    </div>
+
+                    <p>Ito ay tinatawag na <strong>Impetigo</strong>, isang klase ng impeksyon mula sa bacteria tulad ng <em>Staphylococcus</em> o <em>Streptococcus</em> na madaling kumalat sa mga bata kapag naglalaro.</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> If a child presents to your clinic with sores around the nose and mouth covered by sticky, amber-colored crusts, suspect non-bullous impetigo. For adults presenting with unilateral lower leg redness, swelling, and tenderness following a minor scratch or tinea pedis breach, suspect spreading cellulitis.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Ugaliing maghugas ng kamay ng sabon at tubig araw-araw para hindi pumasok ang mga masasamang bacteria na ito sa mga gasgas mo!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which distinct macroscopic finding characterizes non-bullous impetigo lesions?",
-                        options: ["Honey-colored crusts", "Targetoid erythematous rings", "Waxy stuck-on papules", "Flesh-colored umbilicated nodules"],
+                        q: "Anong kulay ng crust o tutong ang karaniwang nakikita sa impeksyong impetigo malapit sa ilong at bibig?",
+                        options: ["Kulay honey o dilaw-pulot", "Kulay asul na neon", "Kulay lila", "Kulay itim na karbon"],
                         correct: 0,
-                        explanation: "Non-bullous impetigo vesicles rupture rapidly, drying to form classic amber honey-colored crusts primarily around the nose and mouth."
+                        explanation: "Magaling! Kulay honey ang tutong nito."
                     }
                 ]
             },
             'mod5_fungal': {
-                title: "5.2 Fungal: Tinea & Candidiasis",
+                title: "5.2 Singsing na Kati sa Balat (Ringworm)",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Superficial mycoses involve the keratinized layers of skin, hair, and nails:</p>
-                    <ul>
-                        <li><strong>Dermatophytosis (Tinea):</strong> Caused by dermatophyte molds (<em>Trichophyton</em>, <em>Microsporum</em>, <em>Epidermophyton</em>) that feed on keratin. Lesions often present as annular (ring-shaped) plaques with central clearing and an active, scaly leading border.</li>
-                        <li><strong>Candidiasis:</strong> Caused by <em>Candida albicans</em> yeast, thriving in warm, humid skin folds (intertrigo). It typically displays bright red macerated patches surrounded by characteristic satellite pustules.</li>
-                    </ul>
-                    <p><strong>Diagnostic Test:</strong> A bedside potassium hydroxide (KOH) skin scraping preparation dissolves keratinocytes while preserving fungal cell walls, displaying branching septate hyphae or yeast spores under microscopy.</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Bakit kaya tinawag na ringworm o buni ang kati na hugis singsing sa braso? Akala ng iba may uod sa loob, pero fungi pala ito!</p>
+                    </div>
+
+                    <p>Ang <strong>Tinea</strong> o buni ay nabubuhay sa mamasa-masang balat. Pabilog ito na may pulang gilid at mas malinaw sa gitna.</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When examining an athlete with an itchy red ring on their forearm with a raised, scaly outer border and clearer center (ringworm/tinea corporis), performing a quick in-office KOH prep confirms the diagnosis before prescribing topical antifungals.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Huwag makipaghiraman ng tuwalya o damit sa ibang tao para hindi mo makuha ang mga ganitong klase ng fungi!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What bedside diagnostic solution is applied to skin scrapings to dissolve keratinocytes and visualize fungal hyphae under a microscope?",
-                        options: ["Gram stain solution", "Potassium Hydroxide (KOH)", "Acetic acid solution", "Methylene blue"],
-                        correct: 1,
-                        explanation: "KOH solution clears epidermal keratin debris, allowing clinicians to clearly visualize branching fungal hyphae or spores."
+                        q: "Anong solusyon ang ginagamit ng mga doktor sa ilalim ng microscope para matunaw ang balat at makita ang fungi?",
+                        options: ["Potassium Hydroxide (KOH)", "Mantika", "Toyo at Suka", "Tubig alat"],
+                        correct: 0,
+                        explanation: "Tama! KOH prep ang ginagamit para masuri ang fungi."
                     }
                 ]
             },
             'mod6_benign': {
-                title: "6.1 Benign Nevi & Keratoses",
+                title: "6.1 Mga Normal na Ngalan at Bunot",
                 image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Differentiating benign lesions from malignant growths is essential in dermatology:</p>
-                    <ul>
-                        <li><strong>Melanocytic Nevi (Moles):</strong> Benign proliferations of melanocytes that can be junctional, compound, or intradermal. They are typically symmetric, uniform in color, and well-demarcated.</li>
-                        <li><strong>Seborrheic Keratosis:</strong> One of the most common benign epidermal neoplasms in older adults. They appear as well-circumscribed, pigmented plaques with a velvety, waxy, or rough 'stuck-on' appearance, often clinically mimicking melanoma despite being completely harmless.</li>
-                    </ul>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Marami tayong nunal o moles sa katawan. Paano mo malalaman kung ang mga ito ay ligtas o kaibigan lang natin?</p>
+                    </div>
+
+                    <p>Karamihan sa mga nunal (nevi) at mga parang "stuck-on" na kulubot sa matatanda (seborrheic keratosis) ay mabait at hindi nakakasama.</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> An older adult patient comes in worried about multiple rough, dark, "stuck-on" spots on their back. Knowing that these are benign seborrheic keratoses allows you to reassure the patient immediately without needing biopsies for every spot.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Huwag mangamba kung may nakita kang flat brown mole na pabilog dahil normal na bahagi ito ng iyong katawan.</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Which clinical description best matches a benign seborrheic keratosis lesion?",
-                        options: ["Pearly ulcerated nodule with telangiectasias", "Stuck-on waxy hyperpigmented velvety plaque", "Rapidly evolving asymmetric dark macule", "Tense fluid-filled subepidermal bulla"],
-                        correct: 1,
-                        explanation: "Seborrheic keratoses classically appear 'stuck-on' to the skin with a waxy, stuck-on texture and varied brown-to-black pigmentation."
+                        q: "Ano ang tawag sa karaniwang mabait na bukol sa matatanda na parang 'nakadikit o stuck-on' sa balat?",
+                        options: ["Seborrheic Keratosis", "Melanoma", "Cellulitis", "Eczema"],
+                        correct: 0,
+                        explanation: "Magaling! Seborrheic keratosis ang tawag dito."
                     }
                 ]
             },
             'mod6_malignant': {
-                title: "6.2 Malignant: Melanoma & ABCDEs",
+                title: "6.2 Paano Babantayan ang mga Moles (ABCDE)",
                 image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Cutaneous malignancies include basal cell carcinoma (most common, locally invasive), squamous cell carcinoma, and malignant melanoma (the deadliest skin cancer arising from melanocytes).</p>
-                    <p>Early clinical detection of melanoma relies heavily on the <strong>ABCDE criteria</strong>:</p>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">May mga nunal ba sa katawan mo na biglang lumalaki o nag-iiba ng kulay? Mahalagang tandaan ang ABCDE guide!</p>
+                    </div>
+
                     <ul>
-                        <li><strong>A - Asymmetry:</strong> One half of the lesion does not match the other half.</li>
-                        <li><strong>B - Border irregularity:</strong> Edges are ragged, notched, or blurred.</li>
-                        <li><strong>C - Color variation:</strong> Pigmentation is not uniform, showing shades of brown, black, tan, red, or blue.</li>
-                        <li><strong>D - Diameter:</strong> Greater than 6 mm (although melanomas can be smaller).</li>
-                        <li><strong>E - Evolving:</strong> A lesion or mole that is changing in size, shape, color, or symptoms (itching, bleeding) over time.</li>
+                        <li><strong>A - Asymmetry:</strong> Hindi pareho ang kaliwa at kanang bahagi ng nunal.</li>
+                        <li><strong>B - Border:</strong> Malabo o gaspang ang gilid nito.</li>
+                        <li><strong>C - Color:</strong> Maraming kulay (itim, brown, pula, o puti).</li>
+                        <li><strong>D - Diameter:</strong> Malaki sa 6 millimeters.</li>
+                        <li><strong>E - Evolving:</strong> Patuloy na nagbabago o sumasakit sa paglipas ng panahon.</li>
                     </ul>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When a patient points to a changing mole and says, "Doc, this one looks different from all my other moles and is starting to itch," your clinical suspicion should immediately rise. Evaluating it using the ABCDE criteria helps determine whether to perform an urgent diagnostic excisional biopsy.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Kung may napansin kang nunal na may ganitong katangian, sabihin kaagad sa magulang o doktor para masuri ito!</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "In the melanoma ABCDE screening guidelines, what does the letter 'E' represent?",
-                        options: ["Erythematous border", "Evolving and changing morphology", "Exudative surface crust", "Elevated papular depth"],
-                        correct: 1,
-                        explanation: "'E' stands for Evolving, highlighting that any mole or spot undergoing changes in size, shape, color, or elevation warrants urgent evaluation."
+                        q: "Sa gabay na ABCDE para sa nunal, ano ang ibig sabihin ng letrang 'E'?",
+                        options: ["Evolving (Nagbabago o lumalaki)", "Eksakto", "Electric", "Epektibo"],
+                        correct: 0,
+                        explanation: "Tama! Ang Evolving ay nangangahulugang nagbabago ang hugis, kulay, o laki."
                     }
                 ]
             },
             'mod7_topical': {
-                title: "7.1 Topical Retinoids & Steroids",
+                title: "7.1 Paano Gamitin ang mga Cream",
                 image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Topical pharmacological agents are the cornerstone of dermatologic therapy:</p>
-                    <ul>
-                        <li><strong>Topical Corticosteroids:</strong> Potent anti-inflammatory and immunosuppressive agents categorized by potency classes (I to VII). They inhibit phospholipase A2 and reduce inflammatory cytokine transcription. <em>Side effect of chronic overuse:</em> Skin atrophy, striae, and telangiectasias due to suppressed dermal collagen synthesis.</li>
-                        <li><strong>Topical Retinoids:</strong> Vitamin A derivatives (e.g., tretinoin, adapalene) that normalize follicular keratinization and stimulate collagen production, widely used for acne vulgaris and photoaging.</li>
-                    </ul>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Kapag binigyan ka ng doktor ng cream o ointment para sa kati, paano mo ito dapat ipahid nang tama?</p>
+                    </div>
+
+                    <p>May mga gamot na panlabas tulad ng topical steroids para sa pamamaga at retinoids para sa tigyawat. Kailangan itong gamitin nang tama ang dami at tagal para hindi manipis ang balat.</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> If a patient has been applying a high-potency prescription steroid cream to their face for months to treat presumed eczema, they may develop skin thinning, visible spider veins (telangiectasias), and perioral dermatitis. Recognizing these side effects guides safe prescription potency selection and duration limits.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Huwag gagamit ng malalakas na steroid cream sa mukha nang walang payo ng doktor para hindi numipis at mamula ang balat mo.</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What is a well-known cutaneous adverse effect associated with prolonged potent topical corticosteroid misuse?",
-                        options: ["Marked dermal thickening and hyperpigmentation", "Skin atrophy, striae, and telangiectasias", "Excessive subcutaneous adipose accumulation", "Accelerated hair follicle proliferation"],
-                        correct: 1,
-                        explanation: "Chronic potent topical steroids suppress local fibroblast activity and collagen production, leading to skin thinning (atrophy), striae, and prominent visible blood vessels."
+                        q: "Ano ang maaring mangyari kapag ginamit ang malalakas na steroid cream sa mukha sa napakahabang panahon?",
+                        options: ["Numipis at lumabas ang maliliit na ugat", "Maging kasingtigas ng bato", "Lumago ang buhok sa ilong", "Maging kulay asul"],
+                        correct: 0,
+                        explanation: "Tama! Maari itong magdulot ng skin atrophy o pagnipis ng balat."
                     }
                 ]
             },
             'mod7_procedures': {
-                title: "7.2 Dermatoscope & Biopsy Techniques",
+                title: "7.2 Ang Magic Magnifying Glass (Dermatoscope)",
                 image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
                 text: `
-                    <p>Advanced diagnostic procedures allow clinicians to look beyond the naked eye:</p>
-                    <ul>
-                        <li><strong>Dermoscopy:</strong> A non-invasive handheld optical device utilizing polarized or non-polarized light and magnification. It eliminates surface reflection from the stratum corneum, enabling visualization of subsurface pigment networks, vascular structures, and globules crucial for diagnosing pigmented lesions.</li>
-                        <li><strong>Skin Biopsy Techniques:</strong> Punch biopsy (obtaining a full-thickness cylindrical core of tissue), shave biopsy (for superficial epidermal/dermal lesions), and excisional biopsy (removing the entire lesion with a margin of normal skin for definitive histological staging).</li>
-                    </ul>
+                    <div class="clinical-case-box" style="background: #eff6ff; border-color: #93c5fd; border-left-color: #3b82f6;">
+                        <h4 style="color: #1e40af;">🌍 Bakit Mahalaga Ito sa Totoong Buhay?</h4>
+                        <p style="color: #1e3a8a;">Paano kaya tinitingnan ng doktor ang maliliit na guhit at kulay sa loob ng nunal nang malapitan?</p>
+                    </div>
+
+                    <p>Gumagamit sila ng isang espesyal na magnifying glass na may ilaw na tinatawag na <strong>Dermatoscope</strong>. Tinatanggal nito ang liwanag mula sa ibabaw ng balat para makita ang mga sekretong disenyo sa loob!</p>
 
                     <div class="clinical-case-box">
-                        <h4>Real-Life Clinical Scenario & Identification</h4>
-                        <p><strong>In the Clinic:</strong> When examining a suspicious pigmented lesion where clinical distinction between a benign mole and melanoma is uncertain, you place a drop of immersion oil or use polarized light on the dermatoscope. Instantly, pigment networks and dots become clear, guiding whether a punch or excisional biopsy is warranted.</p>
+                        <h4>🔍 Sitwasyon sa Totoong Buhay:</h4>
+                        <p>Para itong superhero gadget na tumutulong sa doktor na malaman kung ligtas ang isang nunal nang hindi na kailangang galawin o hiwain agad.</p>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "What primary clinical advantage does dermoscopy offer over standard visual inspection?",
-                        options: ["It measures internal body temperature accurately", "It visualizes subsurface pigment networks and vascular structures hidden beneath the stratum corneum", "It completely replaces the need for histopathologic confirmation", "It administers localized ultraviolet therapy"],
-                        correct: 1,
-                        explanation: "Dermoscopy utilizes polarized magnification to eliminate surface glare, allowing clinicians to evaluate diagnostic subsurface patterns invisible to the naked eye."
+                        q: "Ano ang pangalan ng espesyal na salamin o gadget na may ilaw na ginagamit ng doktor para silipin ang loob ng nunal?",
+                        options: ["Dermatoscope", "Teleskopyo sa bituin", "Microscope sa lupa", "Camera sa pelikula"],
+                        correct: 0,
+                        explanation: "Magaling! Dermatoscope ang tawag sa magnifying tool na ito."
                     }
                 ]
             }
@@ -911,7 +949,7 @@
 
         let currentLessonKey = '';
 
-        // Toggle Sidebar visibility via Top-Left 3-dash hamburger menu
+        // Toggle Sidebar visibility
         function toggleSidebar() {
             const sidebar = document.getElementById('appSidebar');
             const body = document.body;
@@ -921,26 +959,23 @@
             body.classList.toggle('sidebar-open');
         }
 
-        // Get Started lands directly on the content list and loads the first lesson
+        // Get Started lands directly on content and loads first lesson
         function startLearning() {
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('lessonScreen').style.display = 'block';
             
-            // Load first lesson
             loadLesson('mod1_epidermis');
 
-            // Open/unhide the sidebar content panel
             const sidebar = document.getElementById('appSidebar');
             sidebar.classList.remove('minimized');
             sidebar.classList.add('open');
             document.body.classList.add('sidebar-open');
         }
 
-        // Load specific lesson and minimize sidebar so user focuses on content
+        // Load specific lesson
         function loadLesson(key, event) {
             if (event) event.preventDefault();
             
-            // Stop any ongoing speech when switching lessons
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
             }
@@ -953,12 +988,10 @@
             document.getElementById('lessonImage').src = data.image;
             document.getElementById('lessonText').innerHTML = data.text;
 
-            // Reset action & quiz elements
             document.getElementById('completeBtn').style.display = 'inline-block';
             document.getElementById('quizPanel').style.display = 'none';
             document.getElementById('nextLessonBtn').style.display = 'none';
 
-            // Build dynamic quiz questions
             const container = document.getElementById('quizQuestionsContainer');
             container.innerHTML = '';
             
@@ -968,7 +1001,7 @@
                 
                 const title = document.createElement('div');
                 title.className = 'question-title';
-                title.innerText = `Q${qIdx + 1}: ${qItem.q}`;
+                title.innerText = `Tanong ${qIdx + 1}: ${qItem.q}`;
                 block.appendChild(title);
 
                 const optsDiv = document.createElement('div');
@@ -992,23 +1025,21 @@
                 container.appendChild(block);
             });
 
-            // Update active menu link state
             document.querySelectorAll('.topic-link').forEach(l => l.classList.remove('active'));
             if(event && event.target) {
                 event.target.classList.add('active');
             }
 
-            // Minimize sidebar panel after selection
             const sidebar = document.getElementById('appSidebar');
             sidebar.classList.add('minimized');
             sidebar.classList.remove('open');
             document.body.classList.remove('sidebar-open');
         }
 
-        // Audio reader with browser safety queue check
+        // Audio reader
         function toggleAudio() {
             if (!('speechSynthesis' in window)) {
-                alert('Text-to-speech audio is not supported in your browser.');
+                alert('Hindi suportado ng browser mo ang audio reader.');
                 return;
             }
 
@@ -1016,12 +1047,11 @@
             
             if (window.speechSynthesis.speaking) {
                 window.speechSynthesis.cancel();
-                statusEl.innerText = '(Stopped)';
+                statusEl.innerText = '(Itinigil)';
                 return;
             }
 
             const titleText = document.getElementById('lessonTitle').innerText;
-            // Extract clean text without HTML tags for speech reader
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = document.getElementById('lessonText').innerHTML;
             const bodyText = tempDiv.textContent || tempDiv.innerText || "";
@@ -1029,42 +1059,38 @@
             const speechString = titleText + ". " + bodyText;
 
             const utterance = new SpeechSynthesisUtterance(speechString);
-            utterance.rate = 1.0;
+            utterance.rate = 0.95;
 
             utterance.onstart = () => {
-                statusEl.innerText = '(Playing audio...)';
+                statusEl.innerText = '(Nagbabasa...)';
             };
 
             utterance.onend = () => {
-                statusEl.innerText = '(Finished)';
+                statusEl.innerText = '(Tapos na)';
             };
 
             utterance.onerror = () => {
                 statusEl.innerText = '';
             };
 
-            // Cancel any prior queues and start speech safely
             window.speechSynthesis.cancel();
             setTimeout(() => {
                 window.speechSynthesis.speak(utterance);
             }, 100);
         }
 
-        // Reveal quiz panel upon clicking Complete Lesson
         function completeLesson() {
             document.getElementById('completeBtn').style.display = 'none';
             document.getElementById('quizPanel').style.display = 'block';
             window.scrollBy({ top: 300, behavior: 'smooth' });
         }
 
-        // Handle Quiz choice selection with instant feedback and explanation
         function selectQuizOption(qIdx, selectedOptIdx, correctOptIdx, blockElement) {
             const options = blockElement.querySelectorAll('.quiz-option');
             const data = lessons[currentLessonKey];
             const explanation = data.quiz[qIdx].explanation;
             const expBox = blockElement.querySelector(`#exp_${qIdx}`);
 
-            // Lock options for this question
             options.forEach((opt, idx) => {
                 opt.style.pointerEvents = 'none';
                 if (idx === correctOptIdx) {
@@ -1079,14 +1105,12 @@
                 }
             });
 
-            // Display explanation
             const isCorrect = (selectedOptIdx === correctOptIdx);
             expBox.style.display = 'block';
             expBox.style.background = isCorrect ? '#f0fdf4' : '#fef2f2';
             expBox.style.borderColor = isCorrect ? '#10b981' : '#ef4444';
-            expBox.innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${explanation}`;
+            expBox.innerHTML = `<strong>${isCorrect ? '🎉 Tama ka diyan!' : '❌ Ay, mali.'}</strong> ${explanation}`;
 
-            // Check if all questions in this quiz are answered to show Proceed button
             checkAllAnswered();
         }
 
@@ -1104,7 +1128,6 @@
         }
 
         function nextLesson() {
-            // Stop speech
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
             const keys = Object.keys(lessons);
@@ -1113,7 +1136,7 @@
                 loadLesson(keys[currentIndex + 1]);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                alert('Congratulations! You have successfully completed Modules 1 through 7 of the Dermacore curriculum.');
+                alert('Mabuhay! Natapos mo na ang lahat ng leksyon sa Dermacore Kids!');
                 location.reload();
             }
         }
