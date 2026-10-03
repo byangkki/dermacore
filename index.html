@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaCore – Clinical Dermatology Reviewer</title>
+  <style>
+    :root {
+      --bg-slate-900: #0f172a;
+      --bg-slate-800: #1e293b;
+      --bg-slate-700: #334155;
+      --accent-teal: #0d9488;
+      --accent-teal-light: #14b8a6;
+      --accent-sky: #0284c7;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-slate-900);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--bg-slate-800);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-sky));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: white;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--accent-teal-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* PROGRESS TRACKER */
+    .header-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .progress-bar-bg {
+      width: 100px;
+      height: 8px;
+      background: var(--bg-slate-700);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-teal-light));
+      transition: width 0.4s ease;
+    }
+
+    .progress-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    /* MAIN APP LAYOUT */
+    .app-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 850px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SIDEBAR NAVIGATION */
+    .sidebar {
+      background: var(--bg-slate-800);
+      border-right: 1px solid var(--border-subtle);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+    }
+
+    .sidebar-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    .nav-btn.active {
+      background: rgba(13, 148, 136, 0.15);
+      border-color: rgba(13, 148, 136, 0.3);
+      color: var(--accent-teal-light);
+    }
+
+    .check-icon {
+      font-size: 0.85rem;
+      opacity: 0;
+      color: var(--accent-teal-light);
+    }
+
+    .nav-btn.completed .check-icon {
+      opacity: 1;
+    }
+
+    /* MAIN CONTENT AREA */
+    .content-area {
+      padding: 2rem;
+      overflow-y: auto;
+      max-width: 900px;
+    }
+
+    /* AUDIO CONTROLLER BAR */
+    .audio-player-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+    }
+
+    .audio-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .audio-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(13, 148, 136, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-teal-light);
+      font-size: 1.1rem;
+    }
+
+    .audio-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .audio-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-audio {
+      background: var(--accent-teal);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+
+    .btn-audio:hover {
+      background: var(--accent-teal-light);
+    }
+
+    .btn-audio.stop {
+      background: var(--bg-slate-700);
+      color: var(--text-secondary);
+    }
+
+    /* CHAPTER CONTENT FORMATTING */
+    .chapter-badge {
+      display: inline-block;
+      background: rgba(2, 132, 199, 0.15);
+      color: var(--accent-sky);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .chapter-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .chapter-text {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card {
+      background: var(--bg-slate-800);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .clinical-note {
+      background: rgba(13, 148, 136, 0.1);
+      border-left: 3px solid var(--accent-teal);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .clinical-note-title {
+      font-weight: 700;
+      color: var(--accent-teal-light);
+      margin-bottom: 0.25rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    /* ACTION BUTTON */
+    .btn-complete {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-sky));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-complete:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">D</div>
+      <div>
+        <div class="brand-title">DermaCore</div>
+        <div class="brand-subtitle">Clinical Dermatology Reviewer</div>
+      </div>
+    </div>
+
+    <div class="header-progress">
+      <div class="progress-bar-bg">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+      </div>
+      <div id="progress-text" class="progress-text">0% Completed</div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-container">
+    
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="sidebar-section-label">Module 1: Foundations</div>
+      <button class="nav-btn active" onclick="loadChapter(0)">
+        <span>1. Skin Microanatomy</span>
+        <span class="check-icon">✓</span>
+      </button>
+      <button class="nav-btn" onclick="loadChapter(1)">
+        <span>2. Epidermal Layers & Cells</span>
+        <span class="check-icon">✓</span>
+      </button>
+
+      <div class="sidebar-section-label">Module 2: Diagnostics</div>
+      <button class="nav-btn" onclick="loadChapter(2)">
+        <span>3. Primary Lesions</span>
+        <span class="check-icon">✓</span>
+      </button>
+      <button class="nav-btn" onclick="loadChapter(3)">
+        <span>4. Secondary Lesions</span>
+        <span class="check-icon">✓</span>
+      </button>
+
+      <div class="sidebar-section-label">Module 3: Pathologies</div>
+      <button class="nav-btn" onclick="loadChapter(4)">
+        <span>5. Inflammatory Conditions</span>
+        <span class="check-icon">✓</span>
+      </button>
+    </nav>
+
+    <!-- CONTENT AREA -->
+    <main class="content-area">
+      
+      <!-- AUDIO LECTURE BAR -->
+      <div class="audio-player-card">
+        <div class="audio-info">
+          <div class="audio-icon">🎧</div>
+          <div>
+            <div id="audio-chapter-title" class="audio-title">Audio Lecture: Chapter 1</div>
+            <div id="audio-status" class="audio-status">Text-to-Speech Ready</div>
+          </div>
+        </div>
+        <div class="audio-controls">
+          <button id="btn-play-audio" class="btn-audio" onclick="toggleAudio()">
+            <span id="play-icon">▶</span> <span id="play-text">Listen</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TEXTBOOK CHAPTER CONTENT -->
+      <div id="chapter-container">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // --- CHAPTER DATABASE ---
+    const chapters = [
+      {
+        id: 0,
+        badge: "Module 1 • Foundations",
+        title: "1. Skin Microanatomy & Functions",
+        audioText: "Skin Microanatomy and Functions. The human integumentary system is the largest organ of the body, making up approximately 16 percent of total body weight. It serves primary functions in physical barrier protection, thermoregulation, metabolic synthesis of Vitamin D3, and neurosensory perception. The skin is structurally divided into three distinct layers: the Epidermis, Dermis, and Hypodermis.",
+        content: `
+          <p class="chapter-text">The human integumentary system is the largest organ of the body, accounting for roughly 16% of total body weight. It provides vital barrier protection, thermoregulation, and neurosensory input.</p>
+          
+          <div class="section-card">
+            <h3>🔬 The Three Primary Structural Layers</h3>
+            <p class="chapter-text">1. <strong>Epidermis:</strong> A stratified squamous keratinized epithelium consisting primarily of keratinocytes. It is completely avascular and relies on dermal diffusion for nutrients.<br><br>
+            2. <strong>Dermis:</strong> Dense irregular connective tissue providing tensile strength and elasticity. Richly supplied with blood vessels, nerves, lymphatic vessels, and cutaneous appendages.<br><br>
+            3. <strong>Hypodermis (Subcutanea):</strong> Adipose-rich tissue functioning as shock absorption, thermal insulation, and energy storage.</p>
+          </div>
+
+          <div class="clinical-note">
+            <div class="clinical-note-title">💡 Clinical Pearl</div>
+            Skin thickness varies dramatically across the body: eyelid skin measures roughly 0.05 mm, whereas palmar and plantar skin can exceed 1.5 mm in epidermal thickness alone.
+          </div>
+        `
+      },
+      {
+        id: 1,
+        badge: "Module 1 • Foundations",
+        title: "2. Epidermal Layers & Key Cell Types",
+        audioText: "Epidermal Layers and Key Cell Types. The epidermis consists of five distinct histological strata. From deep to superficial, these are: Stratum Basale, Stratum Spinosum, Stratum Granulosum, Stratum Lucidum, and Stratum Corneum. Key cell types include Keratinocytes, Melanocytes, Langerhans Cells, and Merkel Cells.",
+        content: `
+          <p class="chapter-text">Keratinization involves the progressive maturation of keratinocytes as they migrate upward from the basal layer to the cornified surface layer over approximately 28 to 40 days.</p>
+          
+          <div class="section-card">
+            <h3>🧱 Histological Strata (Deep to Superficial)</h3>
+            <p class="chapter-text">
+              • <strong>Stratum Basale:</strong> Single layer of mitotically active cuboidal stem cells attached to the basement membrane.<br>
+              • <strong>Stratum Spinosum:</strong> Polyhedral cells linked by prominent desmosomes ("spines").<br>
+              • <strong>Stratum Granulosum:</strong> Keratohyalin granules containing filaggrin precursor proteins.<br>
+              • <strong>Stratum Lucidum:</strong> Clear, dead cell layer present only in thick skin (palms and soles).<br>
+              • <strong>Stratum Corneum:</strong> Anucleated, flattened keratinized squames forming the main barrier layer.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <h3>🧬 Resident Non-Keratinocyte Cells</h3>
+            <p class="chapter-text">
+              • <strong>Melanocytes:</strong> Neural crest-derived cells producing melanin to protect against UV radiation.<br>
+              • <strong>Langerhans Cells:</strong> Epidermal dendritic antigen-presenting immune cells.<br>
+              • <strong>Merkel Cells:</strong> Mechanoreceptors responsible for light touch sensitivity.
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        badge: "Module 2 • Diagnostics",
+        title: "3. Primary Cutaneous Lesions",
+        audioText: "Primary Cutaneous Lesions. Primary lesions are original, unmodified skin changes resulting directly from pathology. Key flat lesions include Macules under 1 centimeter and Patches over 1 centimeter. Raised solid lesions include Papules under 1 centimeter, Plaques, and Nodules.",
+        content: `
+          <p class="chapter-text">Primary lesions represent initial pathological skin changes unaffected by scratching, secondary infection, or trauma.</p>
+
+          <div class="section-card">
+            <h3>🔍 Flat vs. Elevated Lesions</h3>
+            <p class="chapter-text">
+              • <strong>Macule:</strong> Flat, circumscribed color change &lt; 1.0 cm (e.g., freckle).<br>
+              • <strong>Patch:</strong> Flat, non-palpable color change &gt; 1.0 cm (e.g., vitiligo).<br>
+              • <strong>Papule:</strong> Elevated solid lesion &lt; 1.0 cm (e.g., acne comedone).<br>
+              • <strong>Plaque:</strong> Elevated plateau-like lesion &gt; 1.0 cm (e.g., psoriasis).<br>
+              • <strong>Nodule:</strong> Firm, palpable deep lesion &gt; 1.0 cm involving dermis or hypodermis.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <h3>💧 Fluid-Filled Primary Lesions</h3>
+            <p class="chapter-text">
+              • <strong>Vesicle:</strong> Serous fluid-filled blister &lt; 1.0 cm (e.g., Herpes simplex).<br>
+              • <strong>Bulla:</strong> Large fluid-filled blister &gt; 1.0 cm (e.g., Pemphigus vulgaris).<br>
+              • <strong>Pustule:</strong> Circumscribed elevation containing purulent exudate.
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        badge: "Module 2 • Diagnostics",
+        title: "4. Secondary Cutaneous Lesions",
+        audioText: "Secondary Cutaneous Lesions. Secondary lesions result from the evolution, regression, or external manipulation of primary lesions. These include Scale, Crust, Excoriation, Erosion, Ulceration, and Lichenification.",
+        content: `
+          <p class="chapter-text">Secondary lesions develop as primary lesions progress, heal, or undergo external trauma such as excoriation or infection.</p>
+
+          <div class="section-card">
+            <h3>📋 Key Secondary Findings</h3>
+            <p class="chapter-text">
+              • <strong>Scale:</strong> Shedding stratum corneum flakes (e.g., post-inflammatory desquamation).<br>
+              • <strong>Crust:</strong> Dried exudate consisting of serum, blood, or pus (e.g., impetigo honey-colored crusts).<br>
+              • <strong>Erosion:</strong> Superficial epidermal loss that heals without scarring.<br>
+              • <strong>Ulcer:</strong> Full-thickness loss of epidermis extending into dermis; heals with scarring.<br>
+              • <strong>Lichenification:</strong> Thickened skin with accentuated skin markings due to chronic rubbing or scratching.
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        badge: "Module 3 • Pathologies",
+        title: "5. Inflammatory Dermatoses & Psoriasis",
+        audioText: "Inflammatory Dermatoses and Psoriasis. Psoriasis vulgaris is a chronic autoimmune papulosquamous disorder characterized by epidermal hyperproliferation. Histologically, it displays hyperkeratosis, parakeratosis, and elongation of rete ridges. Key clinical signs include Auspitz sign and Koebner phenomenon.",
+        content: `
+          <p class="chapter-text">Psoriasis vulgaris is a T-cell mediated inflammatory disease leading to keratinocyte hyperproliferation and reduced epidermal transit time (from 28 days down to 4 days).</p>
+
+          <div class="section-card">
+            <h3>🩺 Classic Clinical Features</h3>
+            <p class="chapter-text">
+              • Erythematous plaques covered with silvery-white micaceous scales.<br>
+              • Predilection for extensor surfaces (elbows, knees, scalp, lumbosacral region).<br>
+              • <strong>Auspitz Sign:</strong> Pinpoint bleeding when scale is scraped, due to dilated dermal capillaries.<br>
+              • <strong>Koebner Phenomenon:</strong> Development of lesions at sites of cutaneous trauma.
+            </p>
+          </div>
+
+          <div class="clinical-note">
+            <div class="clinical-note-title">💡 Histopathology Highlight</div>
+            Look for <strong>Munro microabscesses</strong> (neutrophils in the stratum corneum) and epidermal regular acanthosis on biopsy.
+          </div>
+        `
+      }
+    ];
+
+    // --- STATE MANAGEMENT ---
+    let currentChapterIndex = 0;
+    let completedChapters = new Set(JSON.parse(localStorage.getItem('dermacore_completed') || '[]'));
+    let speechSynth = window.speechSynthesis;
+    let isSpeaking = false;
+
+    // --- UI RENDER FUNCTIONS ---
+    function renderChapter() {
+      const ch = chapters[currentChapterIndex];
+      const isCompleted = completedChapters.has(ch.id);
+
+      document.getElementById('audio-chapter-title').textContent = `Audio Lecture: ${ch.title}`;
+      stopAudio();
+
+      const html = `
+        <span class="chapter-badge">${ch.badge}</span>
+        <h1 class="chapter-title">${ch.title}</h1>
+        ${ch.content}
+        <button class="btn-complete" onclick="toggleChapterComplete(${ch.id})">
+          ${isCompleted ? '✓ Mark as Uncompleted' : '✓ Mark Chapter as Completed'}
+        </button>
+      `;
+
+      document.getElementById('chapter-container').innerHTML = html;
+
+      // Update active state in sidebar
+      const navBtns = document.querySelectorAll('.nav-btn');
+      navBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === currentChapterIndex);
+        btn.classList.toggle('completed', completedChapters.has(idx));
+      });
+
+      updateProgress();
+    }
+
+    function loadChapter(idx) {
+      currentChapterIndex = idx;
+      renderChapter();
+    }
+
+    function toggleChapterComplete(id) {
+      if (completedChapters.has(id)) {
+        completedChapters.delete(id);
+      } else {
+        completedChapters.add(id);
+      }
+      localStorage.setItem('dermacore_completed', JSON.stringify([...completedChapters]));
+      renderChapter();
+    }
+
+    function updateProgress() {
+      const pct = Math.round((completedChapters.size / chapters.length) * 100);
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+      document.getElementById('progress-text').textContent = `${pct}% Completed`;
+    }
+
+    // --- AUDIO LECTURE (TEXT-TO-SPEECH) ---
+    function toggleAudio() {
+      if (isSpeaking) {
+        stopAudio();
+      } else {
+        playAudio();
+      }
+    }
+
+    function playAudio() {
+      if (!speechSynth) return;
+      speechSynth.cancel();
+
+      const ch = chapters[currentChapterIndex];
+      const utterance = new SpeechSynthesisUtterance(ch.audioText);
+      utterance.rate = 0.95;
+
+      utterance.onend = () => {
+        isSpeaking = false;
+        updateAudioBtn();
+      };
+
+      speechSynth.speak(utterance);
+      isSpeaking = true;
+      updateAudioBtn();
+    }
+
+    function stopAudio() {
+      if (speechSynth) {
+        speechSynth.cancel();
+      }
+      isSpeaking = false;
+      updateAudioBtn();
+    }
+
+    function updateAudioBtn() {
+      const btn = document.getElementById('btn-play-audio');
+      const icon = document.getElementById('play-icon');
+      const text = document.getElementById('play-text');
+      const status = document.getElementById('audio-status');
+
+      if (isSpeaking) {
+        btn.classList.add('stop');
+        icon.textContent = '⏹';
+        text.textContent = 'Pause';
+        status.textContent = 'Playing Audio Lecture...';
+      } else {
+        btn.classList.remove('stop');
+        icon.textContent = '▶';
+        text.textContent = 'Listen';
+        status.textContent = 'Text-to-Speech Ready';
+      }
+    }
+
+    // INITIALIZE
+    window.addEventListener('DOMContentLoaded', () => {
+      renderChapter();
+    });
+  </script>
+</body>
+</html>
